@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://n5f1wqfj5v6u"]
+
+[ext_resource type="Texture2D" uid="uid://yn6cmfnx2px1" path="res://Assets/Adventurer-1.5/adventurer-v1.5-Sheet.png" id="1_q454j"]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_q454j")
+hframes = 7
+vframes = 16
