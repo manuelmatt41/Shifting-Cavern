@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://n5f1wqfj5v6u"]
+
+[ext_resource type="Texture2D" uid="uid://yn6cmfnx2px1" path="res://Assets/Adventurer-1.5/adventurer-v1.5-Sheet.png" id="1_q454j"]
+[ext_resource type="Script" path="res://Entities/Player/Player.cs" id="1_vfry5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqrj3"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_vfry5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_q454j")
+hframes = 7
+vframes = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 7)
+shape = SubResource("RectangleShape2D_tqrj3")
