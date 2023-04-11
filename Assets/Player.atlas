@@ -1,0 +1,55 @@
+
+Player.png
+size: 4096, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+noBKG_KnightAttack_strip
+  rotate: false
+  xy: 2, 266
+  size: 3168, 64
+  orig: 3168, 64
+  offset: 0, 0
+  index: -1
+noBKG_KnightDeath_strip
+  rotate: false
+  xy: 2, 68
+  size: 1440, 64
+  orig: 1440, 64
+  offset: 0, 0
+  index: -1
+noBKG_KnightIdle_strip
+  rotate: false
+  xy: 2, 2
+  size: 960, 64
+  orig: 960, 64
+  offset: 0, 0
+  index: -1
+noBKG_KnightJumpAndFall_strip
+  rotate: false
+  xy: 2, 134
+  size: 2160, 64
+  orig: 2160, 64
+  offset: 0, 0
+  index: -1
+noBKG_KnightRoll_strip
+  rotate: false
+  xy: 2, 200
+  size: 2700, 64
+  orig: 2700, 64
+  offset: 0, 0
+  index: -1
+noBKG_KnightRun_strip
+  rotate: false
+  xy: 3172, 266
+  size: 768, 64
+  orig: 768, 64
+  offset: 0, 0
+  index: -1
+noBKG_KnightShield_strip
+  rotate: false
+  xy: 2704, 200
+  size: 672, 64
+  orig: 672, 64
+  offset: 0, 0
+  index: -1
