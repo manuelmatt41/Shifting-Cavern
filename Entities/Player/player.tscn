@@ -1,13 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://n5f1wqfj5v6u"]
+[gd_scene load_steps=23 format=3 uid="uid://byosrlrkk00n5"]
 
 [ext_resource type="Script" path="res://Entities/Player/Player.cs" id="1_vfry5"]
-[ext_resource type="Texture2D" uid="uid://dhdwuuvq5hcgy" path="res://Assets/red hood itch free Copy-Sheet.png" id="2_xq0bt"]
+[ext_resource type="Texture2D" uid="uid://dhdwuuvq5hcgy" path="res://Entities/Player/Assets/red hood itch free Copy-Sheet.png" id="2_l3ns2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqrj3"]
 size = Vector2(18, 20)
 
-[sub_resource type="Animation" id="Animation_4re5a"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_uxvbh"]
+resource_name = "Idle"
+length = 1.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -15,10 +17,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.1, 0.7),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [82]
+"values": [50, 51]
 }
 
 [sub_resource type="Animation" id="Animation_jl8mu"]
@@ -38,10 +40,8 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 }
 
-[sub_resource type="Animation" id="Animation_uxvbh"]
-resource_name = "Idle"
-length = 1.2
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_4re5a"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -49,10 +49,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 0.7),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [50, 51]
+"values": [82]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_70u68"]
@@ -116,7 +116,7 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_5f0ma"]
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_28hsc")
 states/Idle/position = Vector2(329, 100)
-states/Start/position = Vector2(189, 100)
+states/Start/position = Vector2(188, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_d3lmf")
 states/Walk/position = Vector2(481, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_w7dry"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_s80h1"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_v2q06")]
@@ -128,7 +128,7 @@ script = ExtResource("1_vfry5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_xq0bt")
+texture = ExtResource("2_l3ns2")
 hframes = 12
 vframes = 11
 frame = 82
@@ -147,5 +147,5 @@ tree_root = SubResource("AnimationNodeStateMachine_5f0ma")
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_fr4ay")
-parameters/Idle/blend_position = Vector2(0.3664, 0.0655022)
+parameters/Idle/blend_position = Vector2(-0.0656, 0.158151)
 parameters/Walk/blend_position = Vector2(-1, 0.0131004)
