@@ -918,8 +918,9 @@ sources/1 = SubResource("TileSetAtlasSource_aoaje")
 [node name="GameLevel" type="Node2D"]
 y_sort_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_y5sf4")]
+[node name="Player" parent="." node_paths=PackedStringArray("Camera") instance=ExtResource("1_y5sf4")]
 position = Vector2(49, 81)
+Camera = NodePath("../Camera2D")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
@@ -942,6 +943,10 @@ layer_1/tile_data = PackedInt32Array(262151, 458752, 14, 327687, 65536, 11, 3932
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(49, 81)
+limit_left = 0
+limit_top = 0
+limit_right = 865
+limit_bottom = 400
 
 [node name="Goblin" parent="." instance=ExtResource("4_5gkkg")]
 position = Vector2(37, 20)

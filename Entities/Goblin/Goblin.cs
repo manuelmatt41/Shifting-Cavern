@@ -25,7 +25,7 @@ public partial class Goblin : CharacterBody2D
             .As<AnimationNodeStateMachinePlayback>();
 
         this.SelectNewDirection();
-        this.PickNewState(this.CurrentState);
+        //this.ChangeState(this.CurrentState);
     }
 
     public override void _PhysicsProcess(double delta)
