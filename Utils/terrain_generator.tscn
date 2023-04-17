@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bqky6w3b7bp07"]
 
-[ext_resource type="Script" path="res://Utils/TerrainGenerator.cs" id="1_bvysj"]
+[ext_resource type="Script" path="res://Utils/TerrainGenerator.cs" id="1_5u0ht"]
 
 [node name="TerrainGenerator" type="Node"]
-script = ExtResource("1_bvysj")
+script = ExtResource("1_5u0ht")

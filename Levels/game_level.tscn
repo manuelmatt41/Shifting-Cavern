@@ -30,5 +30,3 @@ position = Vector2(959, 542)
 
 [node name="TerrainGenerator" parent="." node_paths=PackedStringArray("TileMap") instance=ExtResource("5_hx2ky")]
 TileMap = NodePath("../TileMap")
-Width = 500
-Height = 500
