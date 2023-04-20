@@ -85,7 +85,6 @@ z_index = 3
 texture_filter = 1
 motion_mode = 1
 script = ExtResource("1_8k5pl")
-MoveSpeed = 110.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_062nq")
