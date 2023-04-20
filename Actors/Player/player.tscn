@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://kqpaqyp620wq"]
+[gd_scene load_steps=44 format=3 uid="uid://kqpaqyp620wq"]
 
 [ext_resource type="Script" path="res://Actors/Player/Player.cs" id="1_vfry5"]
 [ext_resource type="Texture2D" uid="uid://dhdwuuvq5hcgy" path="res://Actors/Player/Assets/red hood itch free Copy-Sheet.png" id="2_l3ns2"]
@@ -21,6 +21,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [57, 58, 59, 60, 61, 62]
+}
+
+[sub_resource type="Animation" id="Animation_fv8ys"]
+resource_name = "Dash"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [56, 52, 53, 54, 55, 56]
 }
 
 [sub_resource type="Animation" id="Animation_uxvbh"]
@@ -57,7 +73,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_jl8mu"]
 resource_name = "Walk"
-length = 2.4
+length = 2.5
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -75,6 +91,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_70u68"]
 _data = {
 "Attack": SubResource("Animation_vifaw"),
+"Dash": SubResource("Animation_fv8ys"),
 "Idle": SubResource("Animation_uxvbh"),
 "RESET": SubResource("Animation_4re5a"),
 "Walk": SubResource("Animation_jl8mu")
@@ -100,6 +117,28 @@ blend_point_1/pos = Vector2(0, 1)
 blend_point_2/node = SubResource("AnimationNodeAnimation_kwkce")
 blend_point_2/pos = Vector2(1, 0)
 blend_point_3/node = SubResource("AnimationNodeAnimation_cgje0")
+blend_point_3/pos = Vector2(0, -0.9)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jg2dr"]
+animation = &"Dash"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_trcie"]
+animation = &"Dash"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e7db8"]
+animation = &"Dash"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mtwdm"]
+animation = &"Dash"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_8718x"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_jg2dr")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_trcie")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_e7db8")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_mtwdm")
 blend_point_3/pos = Vector2(0, -0.9)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b5hy0"]
@@ -165,16 +204,27 @@ advance_mode = 0
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m6mcj"]
 advance_mode = 0
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ppb41"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0xond"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ho0g6"]
+advance_mode = 0
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_5f0ma"]
 states/Attack/node = SubResource("AnimationNodeBlendSpace2D_e8glx")
 states/Attack/position = Vector2(407, 214)
+states/Dash/node = SubResource("AnimationNodeBlendSpace2D_8718x")
+states/Dash/position = Vector2(407, 6)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_28hsc")
 states/Idle/position = Vector2(329, 100)
 states/Start/position = Vector2(188, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_d3lmf")
 states/Walk/position = Vector2(485, 100)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_w7dry"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_s80h1"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_v2q06"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_q135k"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_60pmh"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_i5ajw"), "Attack", "Walk", SubResource("AnimationNodeStateMachineTransition_m6mcj")]
-graph_offset = Vector2(-46, 52)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_w7dry"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_s80h1"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_v2q06"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_q135k"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_60pmh"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_i5ajw"), "Attack", "Walk", SubResource("AnimationNodeStateMachineTransition_m6mcj"), "Walk", "Dash", SubResource("AnimationNodeStateMachineTransition_ppb41"), "Dash", "Walk", SubResource("AnimationNodeStateMachineTransition_0xond"), "Dash", "Idle", SubResource("AnimationNodeStateMachineTransition_ho0g6")]
+graph_offset = Vector2(103, -38)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_fr4ay"]
 
@@ -185,6 +235,7 @@ size = Vector2(8.15561, 17.5205)
 z_index = 3
 motion_mode = 1
 script = ExtResource("1_vfry5")
+DashSpeed = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -209,6 +260,7 @@ anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_fr4ay")
 parameters/Attack/blend_position = Vector2(-0.9936, 0.0165746)
+parameters/Dash/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(-0.0656, 0.158151)
 parameters/Walk/blend_position = Vector2(-1, 0.0131004)
 
@@ -221,6 +273,10 @@ collision_mask = 2
 position = Vector2(-1.19209e-07, 18)
 scale = Vector2(0.73569, -1.14152)
 shape = SubResource("RectangleShape2D_r5a2h")
+
+[node name="DashCooldownTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
 
 [connection signal="animation_finished" from="AnimationTree" to="." method="OnAnimationPlayerFinished"]
 [connection signal="animation_started" from="AnimationTree" to="." method="OnAniamtionPlayerStarted"]

@@ -14,9 +14,12 @@ public partial class Player : CharacterBody2D
     [Export]
     public double Life { get; set; } = 100;
 
+    [Export]
+    public float DashSpeed { get; set; } = 2f;
+
     private Camera2D Camera;
 
-    public Vector2 MoveDirection { get; set; } = new Vector2(0, 1);
+    private Vector2 moveDirection = new(0, 1);
 
     private AnimationTree animationTree;
 
@@ -26,20 +29,29 @@ public partial class Player : CharacterBody2D
 
     private AnimationNodeStateMachinePlayback stateMachine;
 
-    private bool isAttckAnimationDone = false;
+    private Timer dasCooldownTimer;
+
+    private bool isAttackAnimationDone = false;
+
+    private bool isDashAnimationDone = false;
 
     private bool wantToWalk
     {
-        get => this.MoveDirection != Vector2.Zero;
+        get => this.moveDirection != Vector2.Zero;
     }
     private bool wantToIdle
     {
-        get => this.MoveDirection == Vector2.Zero;
+        get => this.moveDirection == Vector2.Zero;
     }
 
     private bool wantToAttack
     {
         get => Input.GetActionStrength("Attack") == 1;
+    }
+
+    private bool wantToDash
+    {
+        get => Input.GetActionStrength("Dash") == 1 && this.dasCooldownTimer.IsStopped();
     }
 
     public override void _Ready()
@@ -48,6 +60,7 @@ public partial class Player : CharacterBody2D
         this.animationPlayer = this.GetNode<AnimationPlayer>("AnimationPlayer");
         this.sprite = this.GetNode<Sprite2D>("Sprite2D");
         this.Camera = this.GetNode<Camera2D>("Camera2D");
+        this.dasCooldownTimer = this.GetNode<Timer>("DashCooldownTimer");
 
         this.stateMachine = this.animationTree
             .Get("parameters/playback")
@@ -61,9 +74,9 @@ public partial class Player : CharacterBody2D
         SelectNewDirection();
         UpdateAnimationParameters();
 
-        if (this.CurrentState == PlayerState.Walk)
+        if (this.CurrentState == PlayerState.Walk || this.CurrentState == PlayerState.Dash)
         {
-            this.Velocity = MoveDirection.Normalized() * MoveSpeed;
+            this.Velocity = moveDirection.Normalized() * (MoveSpeed * (this.CurrentState == PlayerState.Dash ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
             this.MoveAndSlide();
         }
 
@@ -75,14 +88,14 @@ public partial class Player : CharacterBody2D
         var movX = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
         var movY = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
 
-        this.MoveDirection = new Vector2(movX, movY);
+        this.moveDirection = new Vector2(movX, movY);
     }
 
     private void UpdateAnimationParameters()
     {
-        this.sprite.FlipH = this.MoveDirection.X == 1;
+        this.sprite.FlipH = this.moveDirection.X == 1;
 
-        animationTree.Set("parameters/Idle/blend_position", this.MoveDirection);
+        animationTree.Set("parameters/Idle/blend_position", this.moveDirection);
     }
 
     public void UpdateState() //TODO Cambiar la state machine por el addons o rehacer parte del addon
@@ -114,9 +127,34 @@ public partial class Player : CharacterBody2D
 
                     return;
                 }
+
+                if (this.wantToDash)
+                {
+                    this.ChangeState(PlayerState.Dash);
+
+                    return;
+                }
                 break;
             case PlayerState.Attack:
-                if (this.isAttckAnimationDone)
+                if (this.isAttackAnimationDone)
+                {
+                    if (this.wantToWalk)
+                    {
+                        this.ChangeState(PlayerState.Walk);
+
+                        return;
+                    }
+
+                    if (this.wantToIdle)
+                    {
+                        this.ChangeState(PlayerState.Idle);
+
+                        return;
+                    }
+                }
+                break;
+            case PlayerState.Dash:
+                if (this.isDashAnimationDone)
                 {
                     if (this.wantToWalk)
                     {
@@ -149,6 +187,11 @@ public partial class Player : CharacterBody2D
             case PlayerState.Attack:
                 this.stateMachine.Travel(nextState.ToString());
                 break;
+            case PlayerState.Dash:
+                this.stateMachine.Travel(nextState.ToString());
+
+
+                break;
         }
 
         this.CurrentState = nextState;
@@ -158,8 +201,11 @@ public partial class Player : CharacterBody2D
     {
         switch (animName)
         {
-            case "Attack":
-                this.isAttckAnimationDone = false;
+            case nameof(PlayerState.Attack):
+                this.isAttackAnimationDone = false;
+                break;
+            case nameof(PlayerState.Dash):
+                this.isDashAnimationDone = false;
                 break;
         }
     }
@@ -168,8 +214,12 @@ public partial class Player : CharacterBody2D
     {
         switch (animName)
         {
-            case "Attack":
-                this.isAttckAnimationDone = true;
+            case nameof(PlayerState.Attack):
+                this.isAttackAnimationDone = true;
+                break;
+            case nameof(PlayerState.Dash):
+                this.isDashAnimationDone = true;
+                this.dasCooldownTimer.Start();
                 break;
         }
     }
@@ -185,5 +235,6 @@ public enum PlayerState
 {
     Idle,
     Walk,
-    Attack
+    Attack,
+    Dash
 }
