@@ -30,7 +30,7 @@ public partial class HurtBox : Area2D
                 switch (this.HurtBoxType)
                 {
                     case HurtBoxType.Cooldown:
-                        this.collisionShape2D.SetDeferred("Disabled", true);
+                        this.collisionShape2D.CallDeferred("set_disabled", true);
                         this.cooldownTimer.Start();
                         break;
                     case HurtBoxType.DisableHitBox:
@@ -45,7 +45,7 @@ public partial class HurtBox : Area2D
 
     private void OnCooldownTimeout()
     {
-        this.collisionShape2D.SetDeferred("Disabled", false);
+        this.collisionShape2D.CallDeferred("set_disabled", false);
     }
 }
 
