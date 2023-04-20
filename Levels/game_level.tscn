@@ -1,32 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://ogt2gm0bohwe"]
+[gd_scene load_steps=7 format=3 uid="uid://c6383ylmp6pgp"]
 
 [ext_resource type="Texture2D" uid="uid://b5v8fb8eud3gs" path="res://Levels/Assets/TopDownFantasy-Forest/Tiles/Tileset.png" id="2_2w3nd"]
-[ext_resource type="PackedScene" uid="uid://bqky6w3b7bp07" path="res://Utils/terrain_generator.tscn" id="5_hx2ky"]
+[ext_resource type="PackedScene" uid="uid://kqpaqyp620wq" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
+[ext_resource type="PackedScene" uid="uid://uqyvgisnobvp" path="res://Actors/Goblin/goblin.tscn" id="4_jqyiv"]
+[ext_resource type="PackedScene" uid="uid://diulqrjnhc7c" path="res://Utils/TerrainGenerator/terrain_generator.tscn" id="5_hx2ky"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qtf0i"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1rxw2"]
 texture = ExtResource("2_2w3nd")
 1:1/0 = 0
-1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-1:1/0/physics_layer_0/angular_velocity = 0.0
 1:11/0 = 0
-1:11/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-1:11/0/physics_layer_0/angular_velocity = 0.0
 
-[sub_resource type="TileSet" id="TileSet_lmfku"]
-physics_layer_0/collision_layer = 1
-sources/3 = SubResource("TileSetAtlasSource_qtf0i")
+[sub_resource type="TileSet" id="TileSet_oqbjp"]
+sources/0 = SubResource("TileSetAtlasSource_1rxw2")
 
 [node name="GameLevel" type="Node2D"]
 y_sort_enabled = true
 
-[node name="TileMap" type="TileMap" parent="."]
-texture_filter = 1
-position = Vector2(0, -3)
-tile_set = SubResource("TileSet_lmfku")
-format = 2
+[node name="TerrainGenerator" parent="." instance=ExtResource("5_hx2ky")]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(959, 542)
+[node name="TileMap" parent="TerrainGenerator" index="0"]
+tile_set = SubResource("TileSet_oqbjp")
 
-[node name="TerrainGenerator" parent="." node_paths=PackedStringArray("TileMap") instance=ExtResource("5_hx2ky")]
-TileMap = NodePath("../TileMap")
+[node name="Player" parent="." instance=ExtResource("3_kgnd1")]
+position = Vector2(688, 369)
+
+[node name="Goblin" parent="." instance=ExtResource("4_jqyiv")]
+position = Vector2(476, 284)
+
+[node name="Goblin2" parent="." instance=ExtResource("4_jqyiv")]
+position = Vector2(999, 309)
+
+[editable path="TerrainGenerator"]
