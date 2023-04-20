@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://diulqrjnhc7c"]
+
+[ext_resource type="Script" path="res://Utils/TerrainGenerator/TerrainGenerator.cs" id="1_5u0ht"]
+
+[node name="TerrainGenerator" type="Node"]
+script = ExtResource("1_5u0ht")
+
+[node name="TileMap" type="TileMap" parent="."]
+z_index = 1
+format = 2
