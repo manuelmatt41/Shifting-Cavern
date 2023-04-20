@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1gy3wjutwxxt"]
+
+[ext_resource type="Script" path="res://Utils/HurtBox/HurtBox.cs" id="1_qcn2u"]
+
+[node name="HurtBox" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_qcn2u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="timeout" from="CooldownTimer" to="." method="OnCooldownTimeout"]
