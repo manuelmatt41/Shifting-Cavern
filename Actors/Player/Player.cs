@@ -2,87 +2,141 @@ using Godot;
 
 public partial class Player : CharacterBody2D
 {
+    /// <summary>
+    /// Velocidad de movimiento del jugador
+    /// </summary>
     [Export]
     public float MoveSpeed { get; set; } = 100f;
 
+    /// <summary>
+    /// Estado que se encuentra el jugador actualmente
+    /// </summary>
     [Export]
     public PlayerState CurrentState { get; set; } = PlayerState.Idle;
 
-    [Export]
-    public bool IsRooted { get; set; } = false;
-
+    /// <summary>
+    /// Vida del jugador
+    /// </summary>
     [Export]
     public double Life { get; set; } = 100;
 
+    /// <summary>
+    /// Velocidad del movimiento Dash
+    /// </summary>
     [Export]
     public float DashSpeed { get; set; } = 2f;
 
+    /// <summary>
+    /// Camara principal del juego
+    /// </summary>
     private Camera2D Camera;
 
+    /// <summary>
+    /// Direccion del movimiento del jugador
+    /// </summary>
     private Vector2 moveDirection = new(0, 1);
 
+    /// <summary>
+    /// Arbol que lleva las animaciones del personaje
+    /// </summary>
     private AnimationTree animationTree;
 
-    private AnimationPlayer animationPlayer;
-
+    /// <summary>
+    /// Imagen que representa al personaje con sus animaciones
+    /// </summary>
     private Sprite2D sprite;
 
+    /// <summary>
+    /// Maquina de estados para manejar los cambios entre ellos del personaje
+    /// </summary>
     private AnimationNodeStateMachinePlayback stateMachine;
 
-    private Timer dasCooldownTimer;
+    /// <summary>
+    /// <c>Timer</c>  para esperar un tiempo determinado para volver ejecutar el movimiento Dash
+    /// </summary>
+    private Timer dashCooldownTimer;
 
+    /// <summary>
+    /// Valor que si esta <c>true</c> indica que la animacion de Ataque a terminado y si no es <c>false</c>
+    /// </summary>
     private bool isAttackAnimationDone = false;
 
+    /// <summary>
+    /// Valor que si esta <c>true</c> indica que la animacion de Dash a terminado y si no es <c>false</c>
+    /// </summary>
     private bool isDashAnimationDone = false;
 
+    /// <summary>
+    /// Comprueba que el personaje quiere cambiar a <c>PlayerState.Walk</c>
+    /// </summary>
     private bool wantToWalk
     {
         get => this.moveDirection != Vector2.Zero;
     }
+
+    /// <summary>
+    /// Comprueba que el personaje quiere cambiar a <c>PlayerState.Idle</c>
+    /// </summary>
     private bool wantToIdle
     {
         get => this.moveDirection == Vector2.Zero;
     }
 
+    /// <summary>
+    /// Comprueba que el personaje quiere cambiar a <c>PlayerState.Attack</c>
+    /// </summary>
     private bool wantToAttack
     {
         get => Input.GetActionStrength("Attack") == 1;
     }
 
+    /// <summary>
+    /// Comprueba que el personaje quiere cambiar a <c>PlayerState.Dash</c>
+    /// </summary>
     private bool wantToDash
     {
-        get => Input.GetActionStrength("Dash") == 1 && this.dasCooldownTimer.IsStopped();
+        get => Input.GetActionStrength("Dash") == 1 && this.dashCooldownTimer.IsStopped();
     }
 
+    /// <summary>
+    /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Player</c>
+    /// </summary>
     public override void _Ready()
     {
         this.animationTree = this.GetNode<AnimationTree>("AnimationTree");
-        this.animationPlayer = this.GetNode<AnimationPlayer>("AnimationPlayer");
         this.sprite = this.GetNode<Sprite2D>("Sprite2D");
         this.Camera = this.GetNode<Camera2D>("Camera2D");
-        this.dasCooldownTimer = this.GetNode<Timer>("DashCooldownTimer");
+        this.dashCooldownTimer = this.GetNode<Timer>("DashCooldownTimer");
 
         this.stateMachine = this.animationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
-
-        UpdateAnimationParameters();
     }
 
+    /// <summary>
+    /// Funcion integrada de Godot que se ejecuta 1 / 60 frames para trabajar con mas facilmente con las fisicas del juego, se encarga del movimiento del personaje y comprobar si quiere un nuevo estado
+    /// </summary>
+    /// <param name="delta">Valor del tiempo entre frames</param>
     public override void _PhysicsProcess(double delta)
     {
-        SelectNewDirection();
-        UpdateAnimationParameters();
+        this.SelectNewDirection();
+        this.UpdateAnimationParameters();
 
+        // Comprueba que esta en el  Walk o Dash
         if (this.CurrentState == PlayerState.Walk || this.CurrentState == PlayerState.Dash)
         {
-            this.Velocity = moveDirection.Normalized() * (MoveSpeed * (this.CurrentState == PlayerState.Dash ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
+            this.Velocity =
+                moveDirection.Normalized()
+                * (MoveSpeed * (this.CurrentState == PlayerState.Dash ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
             this.MoveAndSlide();
         }
 
-        UpdateState();
+        this.UpdateState();
     }
 
+    /// <summary>
+    /// Selecciona una nueva direccion de movimiento dependiendo de las teclas que se esten pulsando
+    /// </summary>
     private void SelectNewDirection()
     {
         var movX = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
@@ -91,14 +145,20 @@ public partial class Player : CharacterBody2D
         this.moveDirection = new Vector2(movX, movY);
     }
 
+    /// <summary>
+    /// Cambia la direccion de la animacion
+    /// </summary>
     private void UpdateAnimationParameters()
     {
-        this.sprite.FlipH = this.moveDirection.X == 1;
+        this.sprite.FlipH = this.moveDirection.X == 1; // TODO Cuando se tenga los sprites adecuados no deberia hacer falta
 
-        animationTree.Set("parameters/Idle/blend_position", this.moveDirection);
+        this.animationTree.Set("parameters/Idle/blend_position", this.moveDirection);
     }
 
-    public void UpdateState() //TODO Cambiar la state machine por el addons o rehacer parte del addon
+    /// <summary>
+    /// Comprueba el estado actual y valora si quiere cambiar de estado dependiendo del actual
+    /// </summary>
+    public void UpdateState() //TODO Cambiar la state machine por el addons o rehacer parte del addon, pero hay que mejorar esta funcion
     {
         switch (this.CurrentState)
         {
@@ -174,6 +234,10 @@ public partial class Player : CharacterBody2D
         }
     }
 
+    /// <summary>
+    /// Cambia el estado actual por el que se le pasa por parametro
+    /// </summary>
+    /// <param name="nextState">Estado al cual se va a cambiar</param>
     public void ChangeState(PlayerState nextState)
     {
         switch (nextState)
@@ -190,13 +254,16 @@ public partial class Player : CharacterBody2D
             case PlayerState.Dash:
                 this.stateMachine.Travel(nextState.ToString());
 
-
                 break;
         }
 
         this.CurrentState = nextState;
     }
 
+    /// <summary>
+    /// Evento que se ejecuta al comenzar una animacion
+    /// </summary>
+    /// <param name="animName">Nombre de la animacion</param>
     private void OnAniamtionPlayerStarted(StringName animName)
     {
         switch (animName)
@@ -210,6 +277,10 @@ public partial class Player : CharacterBody2D
         }
     }
 
+    /// <summary>
+    /// Evento que se ejecuta al terminar una animacion, no funciona para animaciones LOOP
+    /// </summary>
+    /// <param name="animName"></param>
     private void OnAnimationPlayerFinished(StringName animName)
     {
         switch (animName)
@@ -219,11 +290,15 @@ public partial class Player : CharacterBody2D
                 break;
             case nameof(PlayerState.Dash):
                 this.isDashAnimationDone = true;
-                this.dasCooldownTimer.Start();
+                this.dashCooldownTimer.Start();
                 break;
         }
     }
 
+    /// <summary>
+    /// Evento que ejecuta al recibir daño
+    /// </summary>
+    /// <param name="damage">Daño recibido</param>
     private void OnHurtBoxHurt(double damage)
     {
         this.Life -= damage;
@@ -231,6 +306,9 @@ public partial class Player : CharacterBody2D
     }
 }
 
+/// <summary>
+/// Estados que puede estar el jugador
+/// </summary>
 public enum PlayerState
 {
     Idle,
