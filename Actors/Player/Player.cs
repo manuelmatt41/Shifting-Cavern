@@ -49,13 +49,14 @@ public partial class Player : CharacterBody2D
     /// <summary>
     /// Maquina de estados para manejar los cambios entre ellos del personaje
     /// </summary>
-    private AnimationNodeStateMachinePlayback stateMachine;
+    public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; set; }
 
     /// <summary>
     /// <c>Timer</c>  para esperar un tiempo determinado para volver ejecutar el movimiento Dash
     /// </summary>
     private Timer dashCooldownTimer;
 
+    public DefaultStateMachine<Player, IState<Player>> DefaultStateMachine { get; set; }
     /// <summary>
     /// Valor que si esta <c>true</c> indica que la animacion de Ataque a terminado y si no es <c>false</c>
     /// </summary>
@@ -108,7 +109,7 @@ public partial class Player : CharacterBody2D
         this.Camera = this.GetNode<Camera2D>("Camera2D");
         this.dashCooldownTimer = this.GetNode<Timer>("DashCooldownTimer");
 
-        this.stateMachine = this.animationTree
+        this.AnimationStateMachineTree = this.animationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
     }
@@ -243,16 +244,16 @@ public partial class Player : CharacterBody2D
         switch (nextState)
         {
             case PlayerState.Idle:
-                this.stateMachine.Travel(nextState.ToString());
+                this.AnimationStateMachineTree.Travel(nextState.ToString());
                 break;
             case PlayerState.Walk:
-                this.stateMachine.Travel(nextState.ToString());
+                this.AnimationStateMachineTree.Travel(nextState.ToString());
                 break;
             case PlayerState.Attack:
-                this.stateMachine.Travel(nextState.ToString());
+                this.AnimationStateMachineTree.Travel(nextState.ToString());
                 break;
             case PlayerState.Dash:
-                this.stateMachine.Travel(nextState.ToString());
+                this.AnimationStateMachineTree.Travel(nextState.ToString());
 
                 break;
         }
@@ -309,7 +310,7 @@ public partial class Player : CharacterBody2D
 /// <summary>
 /// Estados que puede estar el jugador
 /// </summary>
-public enum PlayerState
+public enum PlayerStatee
 {
     Idle,
     Walk,
