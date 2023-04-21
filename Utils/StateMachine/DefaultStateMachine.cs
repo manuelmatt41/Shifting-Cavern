@@ -1,8 +1,7 @@
-using Godot;
-
-public class DefaultStateMachine<E, S> : StateMachine<E, S> where E : class where S : State<E>
+public class DefaultStateMachine<E, S> : IStateMachine<E, S>
+    where E : class
+    where S : IState<E>
 {
-
     public S CurrentState { get; set; }
     public S PreviousState { get; set; }
 
@@ -10,9 +9,15 @@ public class DefaultStateMachine<E, S> : StateMachine<E, S> where E : class wher
 
     public S GlobalState { get; set; }
 
-    public DefaultStateMachine() : this(default(E), default(S), default(S)) { }
-    public DefaultStateMachine(E owner) : this(owner, default(S), default(S)) { }
-    public DefaultStateMachine(E owner, S initialState) : this(owner, initialState, default(S)) { }
+    public DefaultStateMachine()
+        : this(default(E), default(S), default(S)) { }
+
+    public DefaultStateMachine(E owner)
+        : this(owner, default(S), default(S)) { }
+
+    public DefaultStateMachine(E owner, S initialState)
+        : this(owner, initialState, default(S)) { }
+
     public DefaultStateMachine(E owner, S initialState, S globalState)
     {
         Entity = owner;
