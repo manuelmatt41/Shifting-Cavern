@@ -3,7 +3,7 @@ using Godot;
 public partial class HitBox : Area2D
 {
     /// <summary>
-    /// Daño que va realizar el area
+    /// Danyo que va realizar el area
     /// </summary>
     [Export]
     public double Damage { get; set; } = 1;

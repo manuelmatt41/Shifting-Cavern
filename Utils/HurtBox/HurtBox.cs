@@ -5,7 +5,7 @@ public partial class HurtBox : Area2D
     /// <summary>
     /// Evento que se lanza al colisionar con otra area en grupo Attack
     /// </summary>
-    /// <param name="damage">Valor que representa el daño que ha causado el otro area</param>
+    /// <param name="damage">Valor que representa el danyo que ha causado el otro area</param>
     [Signal]
     public delegate void HurtEventHandler(double damage);
 
