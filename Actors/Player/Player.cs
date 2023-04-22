@@ -9,12 +9,6 @@ public partial class Player : CharacterBody2D
     public float MoveSpeed { get; set; } = 100f;
 
     /// <summary>
-    /// Estado que se encuentra el jugador actualmente
-    /// </summary>
-    [Export]
-    public PlayerState CurrentState { get; set; } = PlayerState.Idle;
-
-    /// <summary>
     /// Vida del jugador
     /// </summary>
     [Export]
@@ -57,20 +51,21 @@ public partial class Player : CharacterBody2D
     private Timer dashCooldownTimer;
 
     public DefaultStateMachine<Player, IState<Player>> DefaultStateMachine { get; set; }
+
     /// <summary>
     /// Valor que si esta <c>true</c> indica que la animacion de Ataque a terminado y si no es <c>false</c>
     /// </summary>
-    private bool isAttackAnimationDone = false;
+    public bool IsAttackAnimationDone = false;
 
     /// <summary>
     /// Valor que si esta <c>true</c> indica que la animacion de Dash a terminado y si no es <c>false</c>
     /// </summary>
-    private bool isDashAnimationDone = false;
+    public bool IsDashAnimationDone = false;
 
     /// <summary>
     /// Comprueba que el personaje quiere cambiar a <c>PlayerState.Walk</c>
     /// </summary>
-    private bool wantToWalk
+    public bool WantToWalk
     {
         get => this.moveDirection != Vector2.Zero;
     }
@@ -78,7 +73,7 @@ public partial class Player : CharacterBody2D
     /// <summary>
     /// Comprueba que el personaje quiere cambiar a <c>PlayerState.Idle</c>
     /// </summary>
-    private bool wantToIdle
+    public bool WantToIdle
     {
         get => this.moveDirection == Vector2.Zero;
     }
@@ -86,7 +81,7 @@ public partial class Player : CharacterBody2D
     /// <summary>
     /// Comprueba que el personaje quiere cambiar a <c>PlayerState.Attack</c>
     /// </summary>
-    private bool wantToAttack
+    public bool WantToAttack
     {
         get => Input.GetActionStrength("Attack") == 1;
     }
@@ -94,7 +89,7 @@ public partial class Player : CharacterBody2D
     /// <summary>
     /// Comprueba que el personaje quiere cambiar a <c>PlayerState.Dash</c>
     /// </summary>
-    private bool wantToDash
+    public bool WantToDash
     {
         get => Input.GetActionStrength("Dash") == 1 && this.dashCooldownTimer.IsStopped();
     }
@@ -112,6 +107,8 @@ public partial class Player : CharacterBody2D
         this.AnimationStateMachineTree = this.animationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
+
+        this.DefaultStateMachine = new DefaultStateMachine<Player, IState<Player>>(this, IdleState.Instance());
     }
 
     /// <summary>
@@ -124,15 +121,15 @@ public partial class Player : CharacterBody2D
         this.UpdateAnimationParameters();
 
         // Comprueba que esta en el  Walk o Dash
-        if (this.CurrentState == PlayerState.Walk || this.CurrentState == PlayerState.Dash)
+        if (this.DefaultStateMachine.CurrentState == WalkState.Instance() || this.DefaultStateMachine.CurrentState == DashState.Instance())
         {
             this.Velocity =
                 moveDirection.Normalized()
-                * (MoveSpeed * (this.CurrentState == PlayerState.Dash ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
+                * (MoveSpeed * (this.DefaultStateMachine.CurrentState == DashState.Instance() ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
             this.MoveAndSlide();
         }
 
-        this.UpdateState();
+        this.DefaultStateMachine.Update();
     }
 
     /// <summary>
@@ -157,111 +154,6 @@ public partial class Player : CharacterBody2D
     }
 
     /// <summary>
-    /// Comprueba el estado actual y valora si quiere cambiar de estado dependiendo del actual
-    /// </summary>
-    public void UpdateState() //TODO Cambiar la state machine por el addons o rehacer parte del addon, pero hay que mejorar esta funcion
-    {
-        switch (this.CurrentState)
-        {
-            case PlayerState.Idle:
-                if (this.wantToWalk)
-                {
-                    this.ChangeState(PlayerState.Walk);
-                    return;
-                }
-                if (this.wantToAttack)
-                {
-                    this.ChangeState(PlayerState.Attack);
-                    return;
-                }
-                break;
-            case PlayerState.Walk:
-                if (this.wantToIdle)
-                {
-                    this.ChangeState(PlayerState.Idle);
-
-                    return;
-                }
-                if (this.wantToAttack)
-                {
-                    this.ChangeState(PlayerState.Attack);
-
-                    return;
-                }
-
-                if (this.wantToDash)
-                {
-                    this.ChangeState(PlayerState.Dash);
-
-                    return;
-                }
-                break;
-            case PlayerState.Attack:
-                if (this.isAttackAnimationDone)
-                {
-                    if (this.wantToWalk)
-                    {
-                        this.ChangeState(PlayerState.Walk);
-
-                        return;
-                    }
-
-                    if (this.wantToIdle)
-                    {
-                        this.ChangeState(PlayerState.Idle);
-
-                        return;
-                    }
-                }
-                break;
-            case PlayerState.Dash:
-                if (this.isDashAnimationDone)
-                {
-                    if (this.wantToWalk)
-                    {
-                        this.ChangeState(PlayerState.Walk);
-
-                        return;
-                    }
-
-                    if (this.wantToIdle)
-                    {
-                        this.ChangeState(PlayerState.Idle);
-
-                        return;
-                    }
-                }
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Cambia el estado actual por el que se le pasa por parametro
-    /// </summary>
-    /// <param name="nextState">Estado al cual se va a cambiar</param>
-    public void ChangeState(PlayerState nextState)
-    {
-        switch (nextState)
-        {
-            case PlayerState.Idle:
-                this.AnimationStateMachineTree.Travel(nextState.ToString());
-                break;
-            case PlayerState.Walk:
-                this.AnimationStateMachineTree.Travel(nextState.ToString());
-                break;
-            case PlayerState.Attack:
-                this.AnimationStateMachineTree.Travel(nextState.ToString());
-                break;
-            case PlayerState.Dash:
-                this.AnimationStateMachineTree.Travel(nextState.ToString());
-
-                break;
-        }
-
-        this.CurrentState = nextState;
-    }
-
-    /// <summary>
     /// Evento que se ejecuta al comenzar una animacion
     /// </summary>
     /// <param name="animName">Nombre de la animacion</param>
@@ -269,11 +161,11 @@ public partial class Player : CharacterBody2D
     {
         switch (animName)
         {
-            case nameof(PlayerState.Attack):
-                this.isAttackAnimationDone = false;
+            case "Attack":
+                this.IsAttackAnimationDone = false;
                 break;
-            case nameof(PlayerState.Dash):
-                this.isDashAnimationDone = false;
+            case "Dash":
+                this.IsDashAnimationDone = false;
                 break;
         }
     }
@@ -286,34 +178,23 @@ public partial class Player : CharacterBody2D
     {
         switch (animName)
         {
-            case nameof(PlayerState.Attack):
-                this.isAttackAnimationDone = true;
+            case "Attack":
+                this.IsAttackAnimationDone = true;
                 break;
-            case nameof(PlayerState.Dash):
-                this.isDashAnimationDone = true;
+            case "Dash":
+                this.IsDashAnimationDone = true;
                 this.dashCooldownTimer.Start();
                 break;
         }
     }
 
     /// <summary>
-    /// Evento que ejecuta al recibir daño
+    /// Evento que ejecuta al recibir danyo
     /// </summary>
-    /// <param name="damage">Daño recibido</param>
+    /// <param name="damage">Danyo recibido</param>
     private void OnHurtBoxHurt(double damage)
     {
         this.Life -= damage;
         GD.Print(this.Life);
     }
-}
-
-/// <summary>
-/// Estados que puede estar el jugador
-/// </summary>
-public enum PlayerStatee
-{
-    Idle,
-    Walk,
-    Attack,
-    Dash
 }

@@ -1,23 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Godot;
 
 public class IdleState : PlayerState
 {
+    private static readonly IdleState idleState = new();
+
+    private IdleState() { }
+
+    public static IdleState Instance() => idleState;
+
     public void Enter(Player entity)
     {
-        entity.
+        entity.AnimationStateMachineTree.Travel("Idle");
     }
 
-    public void Exit(Player entity)
-    {
-        throw new NotImplementedException();
-    }
+    public void Exit(Player entity) { }
 
     public void Update(Player entity)
     {
-        throw new NotImplementedException();
+        if (entity.WantToWalk)
+        {
+            entity.DefaultStateMachine.ChangeState(WalkState.Instance());
+            return;
+        }
+        if (entity.WantToAttack)
+        {
+            entity.DefaultStateMachine.ChangeState(AttackState.Instance());
+            return;
+        }
     }
 }
