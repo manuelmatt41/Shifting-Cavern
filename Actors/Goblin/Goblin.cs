@@ -7,37 +7,45 @@ public partial class Goblin : CharacterBody2D
     /// </summary>
     [Export]
     public float MoveSpeed { get; set; } = 50;
+
     /// <summary>
     /// Estado actual del Goblin
     /// </summary>
     [Export]
     public GoblinState CurrentState { get; set; } = GoblinState.WALK;
+
     /// <summary>
     /// Direccion de movimiento del Goblin
     /// </summary>
     [Export]
     public Vector2 MoveDirection { get; set; } = Vector2.Zero;
+
     /// <summary>
     /// Vida del Goblin
     /// </summary>
     [Export]
     public int Life { get; set; } = 100;
+
     /// <summary>
     /// Jugador que esta en la escena
     /// </summary>
     private Player player;
+
     /// <summary>
     /// Arbol que lleva las animacion del Goblin
     /// </summary>
     private AnimationTree animationTree;
+
     /// <summary>
     /// Imagen que representa al Goblin y sus animaciones
     /// </summary>
     private Sprite2D sprite;
+
     /// <summary>
     /// Maquina de estados para manejar los cambios entre ellos del Goblin
     /// </summary>
     private AnimationNodeStateMachinePlayback stateMachine;
+
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Goblin</c>
     /// </summary>
@@ -53,6 +61,7 @@ public partial class Goblin : CharacterBody2D
 
         this.PickNewState(this.CurrentState);
     }
+
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta 1 / 60 frames para trabajar con mas facilmente con las fisicas del juego, se encarga del movimiento del Goblin y comprobar si quiere un nuevo estado
     /// </summary>
@@ -82,6 +91,7 @@ public partial class Goblin : CharacterBody2D
                 break;
         }
     }
+
     /// <summary>
     /// Cambia la direccion de la animacion
     /// </summary>
@@ -91,7 +101,6 @@ public partial class Goblin : CharacterBody2D
 
         animationTree.Set("parameters/Walk/blend_position", this.MoveDirection);
     }
-
 }
 
 /// <summary>
