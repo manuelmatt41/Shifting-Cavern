@@ -21,7 +21,7 @@ public class DefaultStateMachine<E, S> : IStateMachine<E, S>
     public DefaultStateMachine(E owner, S initialState, S globalState)
     {
         Entity = owner;
-        CurrentState = default(S);
+        CurrentState = initialState ?? default;
         GlobalState = globalState;
     }
 
