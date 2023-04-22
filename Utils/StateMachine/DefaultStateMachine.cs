@@ -25,7 +25,7 @@ public class DefaultStateMachine<E, S> : IStateMachine<E, S>
         GlobalState = globalState;
     }
 
-    public void ChangeState(S state)
+    public void ChangeState(S nextState)
     {
         PreviousState = CurrentState;
 
@@ -34,7 +34,7 @@ public class DefaultStateMachine<E, S> : IStateMachine<E, S>
             CurrentState.Exit(Entity);
         }
 
-        CurrentState = state;
+        CurrentState = nextState;
 
         if (CurrentState != null)
         {
