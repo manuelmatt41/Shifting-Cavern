@@ -9,6 +9,7 @@ texture = ExtResource("2_2w3nd")
 1:1/0 = 0
 1:11/0 = 0
 6:7/0 = 0
+6:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_oqbjp"]
 sources/0 = SubResource("TileSetAtlasSource_1rxw2")
@@ -17,6 +18,8 @@ sources/0 = SubResource("TileSetAtlasSource_1rxw2")
 y_sort_enabled = true
 
 [node name="TerrainGenerator" parent="." instance=ExtResource("5_hx2ky")]
+Width = 500
+Height = 500
 NoiseTypeEnum = 3
 
 [node name="TileMap" parent="TerrainGenerator" index="0"]
@@ -24,5 +27,6 @@ tile_set = SubResource("TileSet_oqbjp")
 
 [node name="Player" parent="." instance=ExtResource("3_kgnd1")]
 position = Vector2(688, 369)
+MoveSpeed = 300.0
 
 [editable path="TerrainGenerator"]

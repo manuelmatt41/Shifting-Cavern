@@ -1,19 +1,9 @@
 using System;
 using Godot;
+using Godot.Collections;
 
 public partial class TerrainGenerator : Node
 {
-    public enum AvailableTiles // TODO  Mejorar la localizacion de Tiles
-    {
-        WATER = 11,
-        DIRT = 1
-    } // TODO Mejorar la documentacion y especificar unidades de medida
-
-    /// <summary>
-    /// Mapa donde se va a generar el mapa y donde tiene los Tiles que se van a colocar
-    /// </summary>
-    public TileMap TileMap { get; set; }
-
     /// <summary>
     /// Anncho del mapa generado
     /// </summary>
@@ -34,7 +24,20 @@ public partial class TerrainGenerator : Node
         FastNoiseLite.NoiseTypeEnum.Simplex;
 
     //Cambiar variable a un Singleton para no instaciar demasiadas veces la misma clase
-    private FastNoiseLite p;
+    public FastNoiseLite Latitude;
+    public FastNoiseLite Temperature;
+
+    /// <summary>
+    /// Mapa donde se va a generar el mapa y donde tiene los Tiles que se van a colocar
+    /// </summary>
+    public TileMap TileMap { get; set; }
+
+    private Dictionary<AvailableTiles, Vector2I> tiles = new Dictionary<AvailableTiles, Vector2I>()
+    {
+        {AvailableTiles.WATER, new(1, 11)},
+        {AvailableTiles.DIRT, new(1, 1)},
+        {AvailableTiles.PATH, new(6, 0) }
+    };
 
     /// <summary>
     /// Crea una semilla al ejecutar la clase y crea un mapa de forma aleatoria
@@ -42,12 +45,16 @@ public partial class TerrainGenerator : Node
     public override void _Ready()
     {
         TileMap = this.GetNode<TileMap>("TileMap");
-        p = new();
-        p.NoiseType = FastNoiseLite.NoiseTypeEnum.Perlin;
-        p.Seed = Guid.NewGuid().GetHashCode();
+        Latitude = new();
+        Temperature = new();
+        Latitude.NoiseType = this.NoiseTypeEnum;
+        Temperature.NoiseType = this.NoiseTypeEnum;
+        var seed = GenerateNewSeed();
+        Latitude.Seed = seed;
+        Temperature.Seed = seed;
 
         ValidateTileMap();
-        GenerateRandomTerrain(p);
+        GenerateRandomTerrain(Latitude);
     }
 
     /// <summary>
@@ -59,8 +66,8 @@ public partial class TerrainGenerator : Node
         if (Input.GetActionStrength("GenerateTerrain") > 0)
         {
             ValidateTileMap();
-            p.Seed = Guid.NewGuid().GetHashCode();
-            GenerateRandomTerrain(p);
+            this.Latitude.Seed = GenerateNewSeed();
+            GenerateRandomTerrain(Latitude);
         }
     }
 
@@ -100,25 +107,25 @@ public partial class TerrainGenerator : Node
                     0,
                     cellCoord,
                     0,
-                    new Vector2I(1, GetTile(noiseGenerator.GetNoise2D(x, y)))
-                );
+                    GetTile(noiseGenerator.GetNoise2D(x, y)
+                ));
             }
         }
 
-        Random r = new(); //TODO Cambiarlo, no debe recorrer el mapa dos veces!!
-        for (int x = 0; x < Width; x++)
-        {
-            for (int y = 0; y < Height; y++)
-            {
-                cellCoord.X = x;
-                cellCoord.Y = y;
+        //Random r = new(); //TODO Cambiarlo, no debe recorrer el mapa dos veces!!
+        //for (int x = 0; x < Width; x++)
+        //{
+        //    for (int y = 0; y < Height; y++)
+        //    {
+        //        cellCoord.X = x;
+        //        cellCoord.Y = y;
 
-                if (r.Next(1, 11) == 2)
-                {
-                    TileMap.SetCell(0, cellCoord, 0, new Vector2I(6, 7));
-                }
-            }
-        }
+        //        if (r.Next(1, 11) == 2)
+        //        {
+        //            TileMap.SetCell(0, cellCoord, 0, new Vector2I(6, 7));
+        //        }
+        //    }
+        //}
     }
 
     /// <summary>
@@ -126,14 +133,16 @@ public partial class TerrainGenerator : Node
     /// </summary>
     /// <param name="noiseLatitude">Latitud de determinada celda del mapa</param>
     /// <returns></returns>
-    private int GetTile(float noiseLatitude)
+    private Vector2I GetTile(float noiseLatitude)
     {
         switch (noiseLatitude)
         {
-            case <= 0.2f:
-                return (int)AvailableTiles.WATER;
+            case <= 0.0f:
+                return this.tiles[AvailableTiles.WATER];
+            case <= 0.5f:
+                return this.tiles[AvailableTiles.DIRT];
             default:
-                return (int)AvailableTiles.DIRT;
+                return this.tiles[AvailableTiles.PATH];
         }
     }
 
@@ -165,4 +174,16 @@ public partial class TerrainGenerator : Node
             }
         }
     }
+
+    private int GenerateNewSeed()
+    {
+        return Guid.NewGuid().GetHashCode();
+    }
 }
+
+public enum AvailableTiles // TODO  Mejorar la localizacion de Tiles
+{
+    WATER,
+    DIRT,
+    PATH
+} // TODO Mejorar la documentacion y especificar unidades de medida
