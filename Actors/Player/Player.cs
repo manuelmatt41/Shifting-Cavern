@@ -38,12 +38,16 @@ public partial class Player : CharacterBody2D
     /// <summary>
     /// Imagen que representa al personaje con sus animaciones
     /// </summary>
-    private Sprite2D sprite;
+    public Sprite2D Sprite { get; set; }
 
     /// <summary>
     /// Maquina de estados para manejar los cambios entre ellos del personaje
     /// </summary>
     public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; set; }
+
+    public HitBox HitBox { get; set; }
+
+    public CollisionShape2D CollisionShape2D { get; set; }
 
     /// <summary>
     /// <c>Timer</c>  para esperar un tiempo determinado para volver ejecutar el movimiento Dash
@@ -100,9 +104,11 @@ public partial class Player : CharacterBody2D
     public override void _Ready()
     {
         this.animationTree = this.GetNode<AnimationTree>("AnimationTree");
-        this.sprite = this.GetNode<Sprite2D>("Sprite2D");
+        this.Sprite = this.GetNode<Sprite2D>("Sprite2D");
         this.Camera = this.GetNode<Camera2D>("Camera2D");
         this.dashCooldownTimer = this.GetNode<Timer>("DashCooldownTimer");
+        this.HitBox = this.GetNode<HitBox>("HitBox");
+        this.CollisionShape2D = this.GetNode<CollisionShape2D>("CollisionShape2D");
 
         this.AnimationStateMachineTree = this.animationTree
             .Get("parameters/playback")
@@ -148,7 +154,7 @@ public partial class Player : CharacterBody2D
     /// </summary>
     private void UpdateAnimationParameters()
     {
-        this.sprite.FlipH = this.moveDirection.X == 1; // TODO Cuando se tenga los sprites adecuados no deberia hacer falta
+        this.Sprite.FlipH = this.moveDirection.X == 1; // TODO Cuando se tenga los sprites adecuados no deberia hacer falta
 
         this.animationTree.Set("parameters/Idle/blend_position", this.moveDirection);
     }

@@ -1,6 +1,4 @@
-﻿using Godot;
-
-public class IdleState : PlayerState
+﻿public class IdleState : PlayerState
 {
     private static readonly IdleState idleState = new();
 
