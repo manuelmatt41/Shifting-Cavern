@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6383ylmp6pgp"]
+[gd_scene load_steps=6 format=3 uid="uid://c6383ylmp6pgp"]
 
 [ext_resource type="Texture2D" uid="uid://b5v8fb8eud3gs" path="res://Levels/Assets/TopDownFantasy-Forest/Tiles/Tileset.png" id="2_2w3nd"]
 [ext_resource type="PackedScene" uid="uid://kqpaqyp620wq" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
-[ext_resource type="PackedScene" uid="uid://uqyvgisnobvp" path="res://Actors/Goblin/goblin.tscn" id="4_jqyiv"]
 [ext_resource type="PackedScene" uid="uid://diulqrjnhc7c" path="res://Utils/TerrainGenerator/terrain_generator.tscn" id="5_hx2ky"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1rxw2"]
@@ -25,11 +24,5 @@ tile_set = SubResource("TileSet_oqbjp")
 
 [node name="Player" parent="." instance=ExtResource("3_kgnd1")]
 position = Vector2(688, 369)
-
-[node name="Goblin" parent="." instance=ExtResource("4_jqyiv")]
-position = Vector2(476, 284)
-
-[node name="Goblin2" parent="." instance=ExtResource("4_jqyiv")]
-position = Vector2(999, 309)
 
 [editable path="TerrainGenerator"]

@@ -1,13 +1,14 @@
 [gd_scene load_steps=2 format=3 uid="uid://beqgcpoupiplq"]
 
-[ext_resource type="Script" path="res://Utils/HitBox/HitBox.cs" id="1_s880c"]
+[ext_resource type="Script" path="res://Utils/HitBox/HitBox.cs" id="1_ck60t"]
 
 [node name="HitBox" type="Area2D" groups=["Attack"]]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("1_s880c")
+script = ExtResource("1_ck60t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+debug_color = Color(0.894118, 0.298039, 0.298039, 0.419608)
 
 [node name="DisableTimer" type="Timer" parent="."]
 wait_time = 0.5

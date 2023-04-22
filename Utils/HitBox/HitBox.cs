@@ -11,7 +11,7 @@ public partial class HitBox : Area2D
     /// <summary>
     /// Forma de la colision que va actuar con el resto de areas
     /// </summary>
-    private CollisionShape2D collisionShape;
+    public CollisionShape2D CollisionShape { get; set; }
 
     /// <summary>
     /// <c>Timer</c> que comprueba el tiempo que se va a desactivar las colisiones
@@ -22,7 +22,7 @@ public partial class HitBox : Area2D
     /// </summary>
     public override void _Ready()
     {
-        this.collisionShape = this.GetNode<CollisionShape2D>("CollisionShape2D");
+        this.CollisionShape = this.GetNode<CollisionShape2D>("CollisionShape2D");
         this.disableTimer = this.GetNode<Timer>("DisableTimer");
     }
 
@@ -31,7 +31,7 @@ public partial class HitBox : Area2D
     /// </summary>
     public void TempDisable()
     {
-        this.collisionShape.SetDeferred("disable", true);
+        this.CollisionShape.SetDeferred("disable", true);
         this.disableTimer.Start();
     }
 
@@ -40,6 +40,6 @@ public partial class HitBox : Area2D
     /// </summary>
     private void OnHitBoxTimerTimeOut()
     {
-        this.collisionShape.SetDeferred("disable", false);
+        this.CollisionShape.SetDeferred("disable", false);
     }
 }
