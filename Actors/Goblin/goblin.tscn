@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://uqyvgisnobvp"]
+[gd_scene load_steps=20 format=3 uid="uid://uqyvgisnobvp"]
 
 [ext_resource type="Script" path="res://Actors/Goblin/Goblin.cs" id="1_8k5pl"]
 [ext_resource type="Texture2D" uid="uid://b58jkhlr38esm" path="res://Actors/Goblin/Assets/Run.png" id="1_062nq"]
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="3_2brno"]
 [ext_resource type="PackedScene" uid="uid://b1gy3wjutwxxt" path="res://Utils/HurtBox/hurt_box.tscn" id="4_n3v4g"]
+[ext_resource type="PackedScene" uid="uid://c7e2s7cin6dvs" path="res://Utils/WardArea/ward_area.tscn" id="5_2epep"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lk4pr"]
 size = Vector2(7.5, 18.5)
@@ -80,6 +81,9 @@ size = Vector2(9.13542, 21)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd5e8"]
 size = Vector2(12, 19.0935)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_mhcuu"]
+radius = 119.017
+
 [node name="Goblin" type="CharacterBody2D"]
 z_index = 3
 texture_filter = 1
@@ -91,6 +95,7 @@ texture = ExtResource("1_062nq")
 hframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 7)
 shape = SubResource("RectangleShape2D_lk4pr")
 
@@ -110,6 +115,7 @@ parameters/Walk/blend_position = Vector2(-0.9936, 0.0538921)
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
+visible = false
 position = Vector2(5.96046e-08, 7.5)
 scale = Vector2(1.09464, 1)
 shape = SubResource("RectangleShape2D_gqxqi")
@@ -118,9 +124,23 @@ shape = SubResource("RectangleShape2D_gqxqi")
 collision_mask = 4
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
+visible = false
 position = Vector2(0, 7.5)
 scale = Vector2(1, 1.2046)
 shape = SubResource("RectangleShape2D_yd5e8")
 
+[node name="WardArea" parent="." instance=ExtResource("5_2epep")]
+
+[node name="CollisionShape2D" parent="WardArea" index="0"]
+position = Vector2(2, 5)
+shape = SubResource("CircleShape2D_mhcuu")
+
+[node name="WardTimer" parent="WardArea" index="1"]
+autostart = true
+
+[connection signal="ChangeDirection" from="WardArea" to="." method="OnWardAreaChangeDirection"]
+[connection signal="DetectPlayer" from="WardArea" to="." method="OnWardAreaDetectPlayer"]
+
 [editable path="HitBox"]
 [editable path="HurtBox"]
+[editable path="WardArea"]

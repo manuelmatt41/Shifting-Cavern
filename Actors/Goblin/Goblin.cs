@@ -9,12 +9,6 @@ public partial class Goblin : CharacterBody2D
     public float MoveSpeed { get; set; } = 50;
 
     /// <summary>
-    /// Estado actual del Goblin
-    /// </summary>
-    [Export]
-    public GoblinState CurrentState { get; set; } = GoblinState.WALK;
-
-    /// <summary>
     /// Direccion de movimiento del Goblin
     /// </summary>
     [Export]
@@ -29,37 +23,39 @@ public partial class Goblin : CharacterBody2D
     /// <summary>
     /// Jugador que esta en la escena
     /// </summary>
-    private Player player;
+    public Player Player { get; set; }
 
     /// <summary>
     /// Arbol que lleva las animacion del Goblin
     /// </summary>
-    private AnimationTree animationTree;
+    public AnimationTree AnimationTree { get; set; }
 
     /// <summary>
     /// Imagen que representa al Goblin y sus animaciones
     /// </summary>
-    private Sprite2D sprite;
+    public Sprite2D Sprite { get; set; }
 
     /// <summary>
     /// Maquina de estados para manejar los cambios entre ellos del Goblin
     /// </summary>
-    private AnimationNodeStateMachinePlayback stateMachine;
+    public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; set; }
+
+    public DefaultStateMachine<Goblin, GoblinState> DefaultStateMachine { get; set; }
 
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Goblin</c>
     /// </summary>
     public override void _Ready()
     {
-        this.animationTree = this.GetNode<AnimationTree>("AnimationTree");
-        this.sprite = this.GetNode<Sprite2D>("Sprite2D");
-        this.player = this.GetTree().GetFirstNodeInGroup("Player") as Player;
+        this.AnimationTree = this.GetNode<AnimationTree>("AnimationTree");
+        this.Sprite = this.GetNode<Sprite2D>("Sprite2D");
+        this.Player = this.GetTree().GetFirstNodeInGroup("Player") as Player;
 
-        this.stateMachine = this.animationTree
+        this.AnimationStateMachineTree = this.AnimationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
 
-        this.PickNewState(this.CurrentState);
+        this.DefaultStateMachine = new DefaultStateMachine<Goblin, GoblinState>(this, GoblinWalkState.Instance());
     }
 
     /// <summary>
@@ -69,9 +65,9 @@ public partial class Goblin : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         //Coge la posicion en la escena del personaje y se posicion en direccion a el
-        this.MoveDirection = this.GlobalPosition.DirectionTo(this.player.GlobalPosition);
+        //this.MoveDirection = this.GlobalPosition.DirectionTo(this.Player.GlobalPosition);
 
-        if (CurrentState == GoblinState.WALK)
+        if (this.DefaultStateMachine.IsInState(GoblinWalkState.Instance()))
         {
             this.Velocity = this.MoveSpeed * this.MoveDirection;
 
@@ -81,32 +77,25 @@ public partial class Goblin : CharacterBody2D
         }
     }
 
-    private void PickNewState(GoblinState nextState) //TODO Rehacer estados del goblin
-    {
-        switch (nextState)
-        {
-            case GoblinState.WALK:
-                this.stateMachine.Travel("Walk");
-                this.CurrentState = GoblinState.WALK;
-                break;
-        }
-    }
-
     /// <summary>
     /// Cambia la direccion de la animacion
     /// </summary>
     private void UpdateAnimationParameters()
     {
-        this.sprite.FlipH = this.MoveDirection.X == 1;
+        this.Sprite.FlipH = this.MoveDirection.X == 1;
 
-        animationTree.Set("parameters/Walk/blend_position", this.MoveDirection);
+        AnimationTree.Set("parameters/Walk/blend_position", this.MoveDirection);
+    }
+
+    private void OnWardAreaChangeDirection(Vector2 newDirection)
+    {
+        this.MoveDirection = this.GlobalPosition.DirectionTo(newDirection);
+    }
+
+    private void OnWardAreaDetectPlayer(Vector2 playerDirection)
+    {
+        this.MoveDirection = this.GlobalPosition.DirectionTo(playerDirection);
+
     }
 }
 
-/// <summary>
-/// Estados que puede estar el Goblin
-/// </summary>
-public enum GoblinState
-{
-    WALK
-}
