@@ -1,12 +1,12 @@
 ﻿using Godot;
 
-public class AttackState : PlayerState
+public class PlayerAttackState : PlayerState
 {
-    private static readonly AttackState attackState = new();
+    private static readonly PlayerAttackState attackState = new();
 
-    private AttackState() { }
+    private PlayerAttackState() { }
 
-    public static AttackState Instance() => attackState;
+    public static PlayerAttackState Instance() => attackState;
 
     public void Enter(Player entity)
     {
@@ -26,7 +26,7 @@ public class AttackState : PlayerState
         {
             if (entity.WantToWalk)
             {
-                entity.DefaultStateMachine.ChangeState(WalkState.Instance());
+                entity.DefaultStateMachine.ChangeState(PlayerWalkState.Instance());
                 entity.HitBox.CollisionShape.Position = new Vector2(0, entity.HitBox.CollisionShape.Position.Y);
                 entity.HitBox.CollisionShape.Disabled = true;
                 return;
@@ -34,7 +34,7 @@ public class AttackState : PlayerState
 
             if (entity.WantToIdle)
             {
-                entity.DefaultStateMachine.ChangeState(IdleState.Instance());
+                entity.DefaultStateMachine.ChangeState(PlayerIdleState.Instance());
                 entity.HitBox.CollisionShape.Position = new Vector2(0, entity.HitBox.CollisionShape.Position.Y);
                 entity.HitBox.CollisionShape.Disabled = true;
 

@@ -54,7 +54,7 @@ public partial class Player : CharacterBody2D
     /// </summary>
     private Timer dashCooldownTimer;
 
-    public DefaultStateMachine<Player, IState<Player>> DefaultStateMachine { get; set; }
+    public DefaultStateMachine<Player, PlayerState> DefaultStateMachine { get; set; }
 
     /// <summary>
     /// Valor que si esta <c>true</c> indica que la animacion de Ataque a terminado y si no es <c>false</c>
@@ -114,7 +114,7 @@ public partial class Player : CharacterBody2D
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
 
-        this.DefaultStateMachine = new DefaultStateMachine<Player, IState<Player>>(this, IdleState.Instance());
+        this.DefaultStateMachine = new DefaultStateMachine<Player, PlayerState>(this, PlayerIdleState.Instance());
     }
 
     /// <summary>
@@ -127,11 +127,11 @@ public partial class Player : CharacterBody2D
         this.UpdateAnimationParameters();
 
         // Comprueba que esta en el  Walk o Dash
-        if (this.DefaultStateMachine.CurrentState == WalkState.Instance() || this.DefaultStateMachine.CurrentState == DashState.Instance())
+        if (this.DefaultStateMachine.CurrentState == PlayerWalkState.Instance() || this.DefaultStateMachine.CurrentState == PlayerDashState.Instance())
         {
             this.Velocity =
                 moveDirection.Normalized()
-                * (MoveSpeed * (this.DefaultStateMachine.CurrentState == DashState.Instance() ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
+                * (MoveSpeed * (this.DefaultStateMachine.CurrentState == PlayerDashState.Instance() ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
             this.MoveAndSlide();
         }
 

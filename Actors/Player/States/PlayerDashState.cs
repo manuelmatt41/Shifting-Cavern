@@ -1,10 +1,10 @@
-﻿public class DashState : PlayerState
+﻿public class PlayerDashState : PlayerState
 {
-    private static readonly DashState dashState = new();
+    private static readonly PlayerDashState dashState = new();
 
-    private DashState() { }
+    private PlayerDashState() { }
 
-    public static DashState Instance() => dashState;
+    public static PlayerDashState Instance() => dashState;
 
     public void Enter(Player entity)
     {
@@ -19,14 +19,14 @@
         {
             if (entity.WantToWalk)
             {
-                entity.DefaultStateMachine.ChangeState(WalkState.Instance());
+                entity.DefaultStateMachine.ChangeState(PlayerWalkState.Instance());
 
                 return;
             }
 
             if (entity.WantToIdle)
             {
-                entity.DefaultStateMachine.ChangeState(IdleState.Instance());
+                entity.DefaultStateMachine.ChangeState(PlayerIdleState.Instance());
 
                 return;
             }
