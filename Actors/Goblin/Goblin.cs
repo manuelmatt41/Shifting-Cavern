@@ -6,7 +6,7 @@ public partial class Goblin : CharacterBody2D
     /// Velocidad de movimiento del Goblin
     /// </summary>
     [Export]
-    public float MoveSpeed { get; set; } = 50;
+    public float MoveSpeed { get; set; } = 100;
 
     /// <summary>
     /// Direccion de movimiento del Goblin
@@ -20,7 +20,7 @@ public partial class Goblin : CharacterBody2D
     /// Vida del Goblin
     /// </summary>
     [Export]
-    public int Life { get; set; } = 100;
+    public double Life { get; set; } = 100;
 
     /// <summary>
     /// Arbol que lleva las animacion del Goblin
@@ -46,6 +46,8 @@ public partial class Goblin : CharacterBody2D
     {
         get => this.GlobalPosition.DistanceSquaredTo(this.FinishPosition) >= 1f;
     }
+
+    public bool IsHitAnimationDone { get; private set; }
 
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Goblin</c>
@@ -96,5 +98,44 @@ public partial class Goblin : CharacterBody2D
     {
         this.MoveDirection = this.GlobalPosition.DirectionTo(newDirection);
         this.FinishPosition = newDirection;
+    }
+
+    /// <summary>
+    /// Evento que se ejecuta al comenzar una animacion
+    /// </summary>
+    /// <param name="animName">Nombre de la animacion</param>
+    private void OnAniamtionPlayerStarted(StringName animName)
+    {
+        switch (animName)
+        {
+            case "Attack":
+                this.IsHitAnimationDone = false;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Evento que se ejecuta al terminar una animacion, no funciona para animaciones LOOP
+    /// </summary>
+    /// <param name="animName"></param>
+    private void OnAnimationPlayerFinished(StringName animName)
+    {
+        switch (animName)
+        {
+            case "Attack":
+                this.IsHitAnimationDone = true;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Evento que ejecuta al recibir danyo
+    /// </summary>
+    /// <param name="damage">Danyo recibido</param>
+    private void OnHurtBoxHurt(double damage)
+    {
+        this.Life -= damage;
+        GD.Print("Danyo al goblin");
+        this.DefaultStateMachine.ChangeState(GoblinHitState.Instance());
     }
 }
