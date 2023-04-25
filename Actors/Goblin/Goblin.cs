@@ -41,6 +41,14 @@ public partial class Goblin : CharacterBody2D
     public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; set; }
 
     public DefaultStateMachine<Goblin, GoblinState> DefaultStateMachine { get; set; }
+    public bool WantToIdle
+    {
+        get => this.GlobalPosition.DistanceSquaredTo(this.FinishPosition) < 1f;
+    }
+    public bool WantToWalk
+    {
+        get => this.GlobalPosition.DistanceSquaredTo(this.FinishPosition) >= 1f;
+    }
 
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Goblin</c>
@@ -55,7 +63,10 @@ public partial class Goblin : CharacterBody2D
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
 
-        this.DefaultStateMachine = new DefaultStateMachine<Goblin, GoblinState>(this, GoblinWalkState.Instance());
+        this.DefaultStateMachine = new DefaultStateMachine<Goblin, GoblinState>(
+            this,
+            GoblinIdleState.Instance()
+        );
     }
 
     /// <summary>
@@ -75,6 +86,8 @@ public partial class Goblin : CharacterBody2D
 
             this.MoveAndSlide();
         }
+
+        this.DefaultStateMachine.Update();
     }
 
     /// <summary>

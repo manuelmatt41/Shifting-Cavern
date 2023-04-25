@@ -2,7 +2,7 @@
 
 public class GoblinWalkState : GoblinState
 {
-    private static readonly GoblinWalkState goblinWalkState = new GoblinWalkState();
+    private static readonly GoblinWalkState goblinWalkState = new();
 
     private GoblinWalkState() { }
 
@@ -13,12 +13,13 @@ public class GoblinWalkState : GoblinState
         entity.AnimationStateMachineTree.Travel("Walk");
     }
 
-    public void Exit(Goblin entity)
-    {
-    }
+    public void Exit(Goblin entity) { }
 
     public void Update(Goblin entity)
     {
-
+        if (entity.WantToIdle)
+        {
+            entity.DefaultStateMachine.ChangeState(GoblinIdleState.Instance());
+        }
     }
 }
