@@ -73,9 +73,9 @@ public partial class Goblin : CharacterBody2D
     {
         if (this.DefaultStateMachine.IsInState(GoblinWalkState.Instance()))
         {
-            this.Velocity = this.MoveSpeed * this.MoveDirection;
+            this.Sprite.FlipH = this.MoveDirection.X < 0;
 
-            this.UpdateAnimationParameters();
+            this.Velocity = this.MoveSpeed * this.MoveDirection;
 
             this.MoveAndSlide();
         }
