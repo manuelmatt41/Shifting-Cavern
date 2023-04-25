@@ -6,7 +6,7 @@ public partial class Player : CharacterBody2D
     /// Velocidad de movimiento del jugador
     /// </summary>
     [Export]
-    public float MoveSpeed { get; set; } = 100f;
+    public float MoveSpeed { get; set; } = 150f;
 
     /// <summary>
     /// Vida del jugador
@@ -105,26 +105,31 @@ public partial class Player : CharacterBody2D
         get => GetViewportRect().Size.X * 0.5f;
     }
 
+    public Vector2 MapSize { get; set; }
+
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Player</c>
     /// </summary>
     public override void _Ready()
     {
-        this.animationTree = this.GetNode<AnimationTree>("AnimationTree");
         this.Sprite = this.GetNode<Sprite2D>("Sprite2D");
         this.Camera = this.GetNode<Camera2D>("Camera2D");
         this.dashCooldownTimer = this.GetNode<Timer>("DashCooldownTimer");
         this.HitBox = this.GetNode<HitBox>("HitBox");
         this.CollisionShape2D = this.GetNode<CollisionShape2D>("CollisionShape2D");
 
+        this.animationTree = this.GetNode<AnimationTree>("AnimationTree");
         this.AnimationStateMachineTree = this.animationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
-
         this.DefaultStateMachine = new DefaultStateMachine<Player, PlayerState>(
             this,
             PlayerIdleState.Instance()
         );
+
+        var terrainGenerator = (this.GetTree().GetFirstNodeInGroup("Map") as TerrainGenerator);
+        this.Camera.LimitRight = terrainGenerator.Width * terrainGenerator.TileMap.CellQuadrantSize;
+        this.Camera.LimitBottom = terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
     }
 
     /// <summary>
@@ -167,7 +172,8 @@ public partial class Player : CharacterBody2D
         {
             if (eventMouse.ButtonIndex == MouseButton.Left)
             {
-                this.AttackDirection = eventMouse.Position.X <= this.ViewportHalfWidth;
+                GD.Print(eventMouse.Position.DirectionTo(this.GlobalPosition).X);
+                this.AttackDirection = eventMouse.Position.DirectionTo(this.GlobalPosition).X >= -1f; //TODO Revisar estos valores
             }
         }
     }
@@ -235,6 +241,5 @@ public partial class Player : CharacterBody2D
     private void OnHurtBoxHurt(double damage)
     {
         this.Life -= damage;
-        GD.Print(this.Life);
     }
 }

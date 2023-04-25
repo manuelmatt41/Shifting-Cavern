@@ -10,7 +10,7 @@ size = Vector2(4, 17)
 
 [sub_resource type="Animation" id="Animation_vifaw"]
 resource_name = "Attack"
-length = 0.6
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -18,7 +18,7 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [57, 58, 59, 60, 61, 62]
@@ -267,6 +267,9 @@ parameters/Idle/blend_position = Vector2(-0.0656, 0.158151)
 parameters/Walk/blend_position = Vector2(-1, 0.0131004)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
 
 [node name="HurtBox" parent="." instance=ExtResource("3_xnb4t")]
 collision_mask = 2
@@ -281,6 +284,7 @@ wait_time = 2.5
 one_shot = true
 
 [node name="HitBox" parent="." instance=ExtResource("4_fik2y")]
+scale = Vector2(1, 1.01686)
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(0, 16)

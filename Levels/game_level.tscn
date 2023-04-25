@@ -18,16 +18,16 @@ sources/0 = SubResource("TileSetAtlasSource_1rxw2")
 [node name="GameLevel" type="Node2D"]
 y_sort_enabled = true
 
-[node name="TerrainGenerator" parent="." instance=ExtResource("5_hx2ky")]
-Width = 500
-Height = 500
+[node name="TerrainGenerator" parent="." groups=["Map"] instance=ExtResource("5_hx2ky")]
+Width = 250
+Height = 250
 NoiseTypeEnum = 3
 
 [node name="TileMap" parent="TerrainGenerator" index="0"]
 tile_set = SubResource("TileSet_oqbjp")
 
 [node name="Player" parent="." instance=ExtResource("3_kgnd1")]
-position = Vector2(968, 450)
+position = Vector2(126, 77)
 
 [node name="Goblin" parent="." instance=ExtResource("4_n86r1")]
 position = Vector2(539, 311)
