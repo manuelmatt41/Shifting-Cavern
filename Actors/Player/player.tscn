@@ -249,7 +249,6 @@ vframes = 11
 frame = 82
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 18)
 shape = SubResource("RectangleShape2D_tqrj3")
 
@@ -274,7 +273,6 @@ parameters/Walk/blend_position = Vector2(-1, 0.0131004)
 collision_mask = 2
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-visible = false
 position = Vector2(-1.19209e-07, 18)
 scale = Vector2(0.73569, -1.14152)
 shape = SubResource("RectangleShape2D_r5a2h")

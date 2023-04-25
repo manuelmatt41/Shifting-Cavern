@@ -27,13 +27,10 @@ NoiseTypeEnum = 3
 tile_set = SubResource("TileSet_oqbjp")
 
 [node name="Player" parent="." instance=ExtResource("3_kgnd1")]
-position = Vector2(688, 369)
+position = Vector2(968, 450)
 MoveSpeed = 300.0
 
 [node name="Goblin" parent="." instance=ExtResource("4_n86r1")]
-position = Vector2(474, 285)
-
-[node name="Goblin2" parent="." instance=ExtResource("4_n86r1")]
-position = Vector2(824, 270)
+position = Vector2(539, 311)
 
 [editable path="TerrainGenerator"]
