@@ -129,6 +129,7 @@ public partial class Player : CharacterBody2D
         // Comprueba que esta en el  Walk o Dash
         if (this.DefaultStateMachine.CurrentState == PlayerWalkState.Instance() || this.DefaultStateMachine.CurrentState == PlayerDashState.Instance())
         {
+            this.Sprite.FlipH = this.moveDirection.X == 1;
             this.Velocity =
                 moveDirection.Normalized()
                 * (MoveSpeed * (this.DefaultStateMachine.CurrentState == PlayerDashState.Instance() ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
@@ -154,7 +155,7 @@ public partial class Player : CharacterBody2D
     /// </summary>
     private void UpdateAnimationParameters()
     {
-        this.Sprite.FlipH = this.moveDirection.X == 1; // TODO Cuando se tenga los sprites adecuados no deberia hacer falta
+        // TODO Cuando se tenga los sprites adecuados no deberia hacer falta
 
         this.animationTree.Set("parameters/Idle/blend_position", this.moveDirection);
     }
