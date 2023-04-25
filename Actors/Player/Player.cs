@@ -98,6 +98,13 @@ public partial class Player : CharacterBody2D
         get => Input.GetActionStrength("Dash") == 1 && this.dashCooldownTimer.IsStopped();
     }
 
+    public bool AttackDirection { get; set; } = false;
+
+    public double ViewportHalfWidth
+    {
+        get => GetViewportRect().Size.X * 0.5f;
+    }
+
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Player</c>
     /// </summary>
@@ -114,7 +121,10 @@ public partial class Player : CharacterBody2D
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
 
-        this.DefaultStateMachine = new DefaultStateMachine<Player, PlayerState>(this, PlayerIdleState.Instance());
+        this.DefaultStateMachine = new DefaultStateMachine<Player, PlayerState>(
+            this,
+            PlayerIdleState.Instance()
+        );
     }
 
     /// <summary>
@@ -123,20 +133,43 @@ public partial class Player : CharacterBody2D
     /// <param name="delta">Valor del tiempo entre frames</param>
     public override void _PhysicsProcess(double delta)
     {
-        this.SelectNewDirection();
-        this.UpdateAnimationParameters();
+        if (!this.DefaultStateMachine.IsInState(PlayerDashState.Instance()))
+        {
+            this.SelectNewDirection();
+        }
 
         // Comprueba que esta en el  Walk o Dash
-        if (this.DefaultStateMachine.CurrentState == PlayerWalkState.Instance() || this.DefaultStateMachine.CurrentState == PlayerDashState.Instance())
+        if (
+            this.DefaultStateMachine.CurrentState == PlayerWalkState.Instance()
+            || this.DefaultStateMachine.CurrentState == PlayerDashState.Instance()
+        )
         {
             this.Sprite.FlipH = this.moveDirection.X == 1;
             this.Velocity =
                 moveDirection.Normalized()
-                * (MoveSpeed * (this.DefaultStateMachine.CurrentState == PlayerDashState.Instance() ? DashSpeed : 1)); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
+                * (
+                    MoveSpeed
+                    * (
+                        this.DefaultStateMachine.CurrentState == PlayerDashState.Instance()
+                            ? DashSpeed
+                            : 1
+                    )
+                ); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
             this.MoveAndSlide();
         }
 
         this.DefaultStateMachine.Update();
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton eventMouse)
+        {
+            if (eventMouse.ButtonIndex == MouseButton.Left)
+            {
+                this.AttackDirection = eventMouse.Position.X <= this.ViewportHalfWidth;
+            }
+        }
     }
 
     /// <summary>

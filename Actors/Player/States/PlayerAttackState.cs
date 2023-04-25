@@ -12,8 +12,9 @@ public class PlayerAttackState : PlayerState
     {
         entity.AnimationStateMachineTree.Travel("Attack");
 
-        var x = 16 * (entity.Sprite.FlipH ? 1 : -1);
+        var x = 16 * (entity.AttackDirection ? -1 : 1);
 
+        entity.Sprite.FlipH = !entity.AttackDirection;
         entity.HitBox.CollisionShape.Position = new Vector2(x, entity.HitBox.CollisionShape.Position.Y);
         entity.HitBox.CollisionShape.Disabled = false;
     }
