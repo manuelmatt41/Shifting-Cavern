@@ -68,8 +68,12 @@ public partial class WardArea : Area2D
     {
         if (body.IsInGroup("Player"))
         {
+            if (this.Player == null)
+            {
+                this.SetDeferred("Player", body as Player);
+            }
+
             this.SetDeferred("IsPlayerInside", true);
-            this.SetDeferred("Player", body as Player);
         }
     }
 

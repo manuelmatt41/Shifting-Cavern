@@ -28,7 +28,6 @@ tile_set = SubResource("TileSet_oqbjp")
 
 [node name="Player" parent="." instance=ExtResource("3_kgnd1")]
 position = Vector2(968, 450)
-MoveSpeed = 300.0
 
 [node name="Goblin" parent="." instance=ExtResource("4_n86r1")]
 position = Vector2(539, 311)
