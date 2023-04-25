@@ -18,7 +18,7 @@ public partial class Player : CharacterBody2D
     /// Velocidad del movimiento Dash
     /// </summary>
     [Export]
-    public float DashSpeed { get; set; } = 2f;
+    public float DashSpeed { get; set; } = 3f;
 
     /// <summary>
     /// Camara principal del juego
