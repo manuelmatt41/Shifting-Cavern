@@ -8,8 +8,5 @@ script = ExtResource("1_rxljv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 debug_color = Color(0.67451, 0.505882, 0.105882, 0.419608)
 
-[node name="WardTimer" type="Timer" parent="."]
-
-[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
-[connection signal="area_exited" from="." to="." method="OnAreaExited"]
-[connection signal="timeout" from="WardTimer" to="." method="OnWardTimerTimeout"]
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="." to="." method="OnBodyExited"]

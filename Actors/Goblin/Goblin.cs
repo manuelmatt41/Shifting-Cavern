@@ -14,16 +14,13 @@ public partial class Goblin : CharacterBody2D
     [Export]
     public Vector2 MoveDirection { get; set; } = Vector2.Zero;
 
+    public Vector2 FinishPosition { get; set; }
+
     /// <summary>
     /// Vida del Goblin
     /// </summary>
     [Export]
     public int Life { get; set; } = 100;
-
-    /// <summary>
-    /// Jugador que esta en la escena
-    /// </summary>
-    public Player Player { get; set; }
 
     /// <summary>
     /// Arbol que lleva las animacion del Goblin
@@ -57,8 +54,7 @@ public partial class Goblin : CharacterBody2D
     {
         this.AnimationTree = this.GetNode<AnimationTree>("AnimationTree");
         this.Sprite = this.GetNode<Sprite2D>("Sprite2D");
-        this.Player = this.GetTree().GetFirstNodeInGroup("Player") as Player;
-
+        this.FinishPosition = this.GlobalPosition;
         this.AnimationStateMachineTree = this.AnimationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
@@ -75,9 +71,6 @@ public partial class Goblin : CharacterBody2D
     /// <param name="delta">Valor del tiempo entre frames</param>
     public override void _PhysicsProcess(double delta)
     {
-        //Coge la posicion en la escena del personaje y se posicion en direccion a el
-        //this.MoveDirection = this.GlobalPosition.DirectionTo(this.Player.GlobalPosition);
-
         if (this.DefaultStateMachine.IsInState(GoblinWalkState.Instance()))
         {
             this.Velocity = this.MoveSpeed * this.MoveDirection;
@@ -103,12 +96,6 @@ public partial class Goblin : CharacterBody2D
     private void OnWardAreaChangeDirection(Vector2 newDirection)
     {
         this.MoveDirection = this.GlobalPosition.DirectionTo(newDirection);
-    }
-
-    private void OnWardAreaDetectPlayer(Vector2 playerDirection)
-    {
-        this.MoveDirection = this.GlobalPosition.DirectionTo(playerDirection);
-
+        this.FinishPosition = newDirection;
     }
 }
-
