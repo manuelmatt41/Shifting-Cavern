@@ -90,7 +90,6 @@ public partial class Goblin : CharacterBody2D
     {
         this.Sprite.FlipH = this.MoveDirection.X == 1;
 
-        AnimationTree.Set("parameters/Walk/blend_position", this.MoveDirection);
     }
 
     private void OnWardAreaChangeDirection(Vector2 newDirection)
