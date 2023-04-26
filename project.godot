@@ -15,6 +15,10 @@ run/main_scene="res://Levels/game_level.tscn"
 config/features=PackedStringArray("4.0", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SoundManager="*res://Utils/Sound/SoundManager/sound_manager.tscn"
+
 [display]
 
 window/size/viewport_width=1920

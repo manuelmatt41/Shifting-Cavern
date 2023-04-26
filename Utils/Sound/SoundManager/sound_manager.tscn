@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://b55a8qxxvjicu"]
+
+[ext_resource type="Script" path="res://Utils/Sound/SoundManager/SoundManager.cs" id="1_rqptc"]
+[ext_resource type="PackedScene" uid="uid://f0racpmt1fat" path="res://Utils/Sound/SoundPool/sound_pool.tscn" id="2_lg4f8"]
+[ext_resource type="PackedScene" uid="uid://jr6jomnkbb21" path="res://Utils/Sound/SoundQueue/sound_queue.tscn" id="3_uyd4b"]
+[ext_resource type="AudioStream" uid="uid://b5qh5nloe6mm2" path="res://Actors/Player/Assets/04_step_grass_1.wav" id="4_r2bnr"]
+[ext_resource type="AudioStream" uid="uid://can0bceyrid8i" path="res://Actors/Player/Assets/04_step_grass_2.wav" id="5_qk5bd"]
+[ext_resource type="AudioStream" uid="uid://imyw58uohms4" path="res://Actors/Goblin/Assets/Hit damage 1.wav" id="6_e6v82"]
+
+[node name="SoundManager" type="Node"]
+script = ExtResource("1_rqptc")
+
+[node name="PlayerWalkSounds" parent="." instance=ExtResource("2_lg4f8")]
+
+[node name="SoundQueue" parent="PlayerWalkSounds" instance=ExtResource("3_uyd4b")]
+
+[node name="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue" index="0"]
+stream = ExtResource("4_r2bnr")
+
+[node name="AudioStreamPlayer110358" type="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue"]
+
+[node name="SoundQueue2" parent="PlayerWalkSounds" instance=ExtResource("3_uyd4b")]
+
+[node name="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue2" index="0"]
+stream = ExtResource("5_qk5bd")
+
+[node name="AudioStreamPlayer110480" type="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue2"]
+
+[node name="SoundQueue3" parent="PlayerWalkSounds" instance=ExtResource("3_uyd4b")]
+
+[node name="AudioStreamPlayer110646" type="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue3"]
+
+[node name="GoblinHitSound" parent="." instance=ExtResource("3_uyd4b")]
+
+[node name="AudioStreamPlayer" parent="GoblinHitSound" index="0"]
+stream = ExtResource("6_e6v82")
+
+[editable path="PlayerWalkSounds/SoundQueue"]
+[editable path="PlayerWalkSounds/SoundQueue2"]
+[editable path="PlayerWalkSounds/SoundQueue3"]
+[editable path="GoblinHitSound"]
