@@ -54,6 +54,9 @@ public partial class Player : CharacterBody2D
 
     public DefaultStateMachine<Player, PlayerState> DefaultStateMachine { get; set; }
 
+    public AnimationPlayer AnimationPlayer { get; set; }
+    public AnimationTree AnimationTree { get; set; }
+
     public PlayerState NextState { get; set; }
 
     /// <summary>
@@ -100,6 +103,8 @@ public partial class Player : CharacterBody2D
 
     public Vector2 MapSize { get; set; }
 
+    public IWeapon Weapon { get; set; } //TODO Ver si me compensa usar dynamic
+
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Player</c>
     /// </summary>
@@ -110,9 +115,9 @@ public partial class Player : CharacterBody2D
         this.dashCooldownTimer = this.GetNode<Timer>("DashCooldownTimer");
         this.HitBox = this.GetNode<HitBox>("HitBox");
         this.CollisionShape2D = this.GetNode<CollisionShape2D>("CollisionShape2D");
-
-        var animationTree = this.GetNode<AnimationTree>("AnimationTree");
-        this.AnimationStateMachineTree = animationTree
+        this.AnimationPlayer = this.GetNode<AnimationPlayer>("AnimationPlayer");
+        this.AnimationTree = this.GetNode<AnimationTree>("AnimationTree");
+        this.AnimationStateMachineTree = this.AnimationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
         this.DefaultStateMachine = new DefaultStateMachine<Player, PlayerState>(
@@ -130,6 +135,11 @@ public partial class Player : CharacterBody2D
             this.Camera.LimitBottom =
                 terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
         }
+
+        this.Weapon = this.GetTree().GetFirstNodeInGroup(nameof(this.Weapon)) as IWeapon;  //TODO Anyadir area propia a las armas para transformar la hitbox del personaje
+        var rect = this.HitBox.CollisionShape.Shape as RectangleShape2D;
+        rect.Size = this.Weapon.Range;
+        this.HitBox.Damage = this.Weapon.Damage;
     }
 
     /// <summary>
