@@ -10,13 +10,13 @@ public class DefaultStateMachine<E, S> : IStateMachine<E, S>
     public S GlobalState { get; set; }
 
     public DefaultStateMachine()
-        : this(default(E), default(S), default(S)) { }
+        : this(default, default, default) { }
 
     public DefaultStateMachine(E owner)
-        : this(owner, default(S), default(S)) { }
+        : this(owner, default, default) { }
 
     public DefaultStateMachine(E owner, S initialState)
-        : this(owner, initialState, default(S)) { }
+        : this(owner, initialState, default) { }
 
     public DefaultStateMachine(E owner, S initialState, S globalState)
     {
