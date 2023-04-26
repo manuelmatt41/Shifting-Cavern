@@ -1,5 +1,6 @@
 using Godot;
 
+[Tool]
 public partial class HitBox : Area2D
 {
     /// <summary>

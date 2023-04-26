@@ -12,4 +12,5 @@ debug_color = Color(0, 0.6, 0.160784, 0.419608)
 
 [node name="CooldownTimer" type="Timer" parent="."]
 
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="timeout" from="CooldownTimer" to="." method="OnCooldownTimeout"]

@@ -1,6 +1,7 @@
 using Godot;
 
-public partial class HurtBox : Area2D
+[Tool]
+public partial class HurtBox : Area2D //TODO Ver la opcion [Tool] de godot
 {
     /// <summary>
     /// Evento que se lanza al colisionar con otra area en grupo Attack
@@ -18,20 +19,20 @@ public partial class HurtBox : Area2D
     /// <summary>
     /// Forma de la colision que va actuar con el resto de areas
     /// </summary>
-    private CollisionShape2D collisionShape2D;
+    public CollisionShape2D CollisionShape2D { get; set; }
 
     /// <summary>
     /// <c>Timer</c> que comprueba el tiempo entre detecciones de areas
     /// </summary>
-    private Timer cooldownTimer;
+    public Timer CooldownTimer { get; set; }
 
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>HurtBox</c>
     /// </summary>
     public override void _Ready()
     {
-        this.collisionShape2D = this.GetNode<CollisionShape2D>("CollisionShape2D");
-        this.cooldownTimer = this.GetNode<Timer>("CooldownTimer");
+        this.CollisionShape2D = this.GetNode<CollisionShape2D>("CollisionShape2D");
+        this.CooldownTimer = this.GetNode<Timer>("CooldownTimer");
     }
 
     /// <summary>
@@ -49,8 +50,8 @@ public partial class HurtBox : Area2D
                 switch (this.HurtBoxType)
                 {
                     case HurtBoxType.Cooldown:
-                        this.collisionShape2D.CallDeferred("set_disabled", true);
-                        this.cooldownTimer.Start();
+                        this.CollisionShape2D.CallDeferred("set_disabled", true);
+                        this.CooldownTimer.Start();
                         break;
                     case HurtBoxType.DisableHitBox:
                         if (area.HasMethod("TempDisable")) { }
@@ -67,7 +68,7 @@ public partial class HurtBox : Area2D
     /// </summary>
     private void OnCooldownTimeout()
     {
-        this.collisionShape2D.CallDeferred("set_disabled", false);
+        this.CollisionShape2D.CallDeferred("set_disabled", false);
     }
 }
 

@@ -27,9 +27,21 @@ NoiseTypeEnum = 3
 tile_set = SubResource("TileSet_oqbjp")
 
 [node name="Player" parent="." instance=ExtResource("3_kgnd1")]
-position = Vector2(126, 77)
+position = Vector2(95, 89)
 
 [node name="Goblin" parent="." instance=ExtResource("4_n86r1")]
-position = Vector2(539, 311)
+position = Vector2(40, 21)
+
+[node name="Goblin2" parent="." instance=ExtResource("4_n86r1")]
+position = Vector2(101, 192)
+
+[node name="Goblin3" parent="." instance=ExtResource("4_n86r1")]
+position = Vector2(235, 111)
+
+[node name="Goblin4" parent="." instance=ExtResource("4_n86r1")]
+position = Vector2(232, 222)
+
+[node name="Goblin5" parent="." instance=ExtResource("4_n86r1")]
+position = Vector2(321, 51)
 
 [editable path="TerrainGenerator"]
