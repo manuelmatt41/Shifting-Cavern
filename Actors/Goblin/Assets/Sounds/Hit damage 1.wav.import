@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://imyw58uohms4"
-path="res://.godot/imported/Hit damage 1.wav-c58b436fc8b97ae2e68d284e8ab20675.sample"
+path="res://.godot/imported/Hit damage 1.wav-3c3cddfdcca57ce2a2c560849f4c4ebd.sample"
 
 [deps]
 
-source_file="res://Actors/Goblin/Assets/Hit damage 1.wav"
-dest_files=["res://.godot/imported/Hit damage 1.wav-c58b436fc8b97ae2e68d284e8ab20675.sample"]
+source_file="res://Actors/Goblin/Assets/Sounds/Hit damage 1.wav"
+dest_files=["res://.godot/imported/Hit damage 1.wav-3c3cddfdcca57ce2a2c560849f4c4ebd.sample"]
 
 [params]
 
