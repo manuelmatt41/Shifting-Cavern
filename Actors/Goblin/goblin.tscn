@@ -9,6 +9,22 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lk4pr"]
 size = Vector2(7.5, 18.5)
 
+[sub_resource type="Animation" id="Animation_5s7ul"]
+resource_name = "Hit"
+length = 0.55
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.025, 0.125, 0.225, 0.325, 0.425, 0.525),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_ahdye"]
 resource_name = "Idle"
 length = 0.7
@@ -68,34 +84,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [4, 5, 6, 7, 8, 9, 10, 11]
-}
-
-[sub_resource type="Animation" id="Animation_5s7ul"]
-resource_name = "Hit"
-length = 0.35
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.025, 0.125, 0.225),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r5qjm"]
@@ -181,35 +169,35 @@ advance_mode = 0
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uuyi7"]
 advance_mode = 0
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_duw6a"]
-advance_mode = 0
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cttm1"]
-advance_mode = 0
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_eta8m"]
 advance_mode = 0
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_il7ye"]
 advance_mode = 0
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_duw6a"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cttm1"]
+advance_mode = 0
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_qfg6a"]
 states/Hit/node = SubResource("AnimationNodeBlendSpace2D_w1nkn")
-states/Hit/position = Vector2(383, 228)
+states/Hit/position = Vector2(383, 227)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_nevqs")
 states/Idle/position = Vector2(311, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_4hwkm")
 states/Walk/position = Vector2(462, 100)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_2h48y"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_6urj8"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_uuyi7"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_duw6a"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_cttm1"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_eta8m"), "Hit", "Walk", SubResource("AnimationNodeStateMachineTransition_il7ye")]
-graph_offset = Vector2(-183, 75)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_2h48y"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_6urj8"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_uuyi7"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_eta8m"), "Hit", "Walk", SubResource("AnimationNodeStateMachineTransition_il7ye"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_duw6a"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_cttm1")]
+graph_offset = Vector2(-74, 68)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_quhwu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gqxqi"]
 size = Vector2(9.13542, 21)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yd5e8"]
-size = Vector2(12, 19.0935)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mtwuv"]
+size = Vector2(21, 27.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mhcuu"]
 radius = 204.061
@@ -219,6 +207,8 @@ z_index = 3
 texture_filter = 1
 motion_mode = 1
 script = ExtResource("1_8k5pl")
+MoveSpeed = 50.0
+Life = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_bov4i")
@@ -243,6 +233,7 @@ parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(-0.9936, 0.0538921)
 
 [node name="HitBox" parent="." instance=ExtResource("3_2brno")]
+visible = false
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
@@ -254,9 +245,11 @@ shape = SubResource("RectangleShape2D_gqxqi")
 collision_mask = 4
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-position = Vector2(0, 7.5)
-scale = Vector2(1, 1.2046)
-shape = SubResource("RectangleShape2D_yd5e8")
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_mtwuv")
+
+[node name="CooldownTimer" parent="HurtBox" index="1"]
+wait_time = 0.5
 
 [node name="WardArea" parent="." instance=ExtResource("5_2epep")]
 visible = false
@@ -267,7 +260,7 @@ scale = Vector2(0.993434, 1.04146)
 shape = SubResource("CircleShape2D_mhcuu")
 
 [connection signal="animation_finished" from="AnimationTree" to="." method="OnAnimationPlayerFinished"]
-[connection signal="animation_started" from="AnimationTree" to="." method="OnAnimationPlayerFinished"]
+[connection signal="animation_started" from="AnimationTree" to="." method="OnAniamtionPlayerStarted"]
 [connection signal="Hurt" from="HurtBox" to="." method="OnHurtBoxHurt"]
 [connection signal="ChangeDirection" from="WardArea" to="." method="OnWardAreaChangeDirection"]
 

@@ -32,12 +32,16 @@ public partial class Goblin : CharacterBody2D
     /// </summary>
     public Sprite2D Sprite { get; set; }
 
+    public HurtBox HurtBox { get; set; }
+
     /// <summary>
     /// Maquina de estados para manejar los cambios entre ellos del Goblin
     /// </summary>
     public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; set; }
 
     public DefaultStateMachine<Goblin, GoblinState> DefaultStateMachine { get; set; }
+
+    public GoblinState NextState { get; set; }
     public bool WantToIdle
     {
         get => this.GlobalPosition.DistanceSquaredTo(this.FinishPosition) < 1f;
@@ -45,6 +49,11 @@ public partial class Goblin : CharacterBody2D
     public bool WantToWalk
     {
         get => this.GlobalPosition.DistanceSquaredTo(this.FinishPosition) >= 1f;
+    }
+
+    public bool WantToHit
+    {
+        get => this.HurtBox.CollisionShape2D.Disabled;
     }
 
     public bool IsHitAnimationDone { get; private set; }
@@ -60,6 +69,7 @@ public partial class Goblin : CharacterBody2D
         this.AnimationStateMachineTree = this.AnimationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
+        this.HurtBox = this.GetNode<HurtBox>("HurtBox");
 
         this.DefaultStateMachine = new DefaultStateMachine<Goblin, GoblinState>(
             this,
@@ -83,16 +93,21 @@ public partial class Goblin : CharacterBody2D
         }
 
         this.DefaultStateMachine.Update();
+
+        if (this.NextState != null && !this.DefaultStateMachine.IsInState(this.NextState))
+        {
+            this.DefaultStateMachine.ChangeState(this.NextState);
+        }
     }
 
     /// <summary>
     /// Cambia la direccion de la animacion
     /// </summary>
-    private void UpdateAnimationParameters()
-    {
-        this.Sprite.FlipH = this.MoveDirection.X == 1;
+    //private void UpdateAnimationParameters()
+    //{
+    //    //this.Sprite.FlipH = this.MoveDirection.X == 1;
 
-    }
+    //}
 
     private void OnWardAreaChangeDirection(Vector2 newDirection)
     {
@@ -108,7 +123,7 @@ public partial class Goblin : CharacterBody2D
     {
         switch (animName)
         {
-            case "Attack":
+            case "Hit":
                 this.IsHitAnimationDone = false;
                 break;
         }
@@ -122,7 +137,7 @@ public partial class Goblin : CharacterBody2D
     {
         switch (animName)
         {
-            case "Attack":
+            case "Hit":
                 this.IsHitAnimationDone = true;
                 break;
         }
@@ -135,7 +150,11 @@ public partial class Goblin : CharacterBody2D
     private void OnHurtBoxHurt(double damage)
     {
         this.Life -= damage;
-        GD.Print("Danyo al goblin");
-        this.DefaultStateMachine.ChangeState(GoblinHitState.Instance());
+
+        GD.Print(this.Life);
+        if (this.Life <= 0)
+        {
+            this.QueueFree();
+        }
     }
 }

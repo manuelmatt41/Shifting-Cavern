@@ -12,10 +12,16 @@ public class PlayerAttackState : PlayerState
     {
         entity.AnimationStateMachineTree.Travel("Attack");
 
-        var x = 16 * (entity.AttackDirection ? -1 : 1);
+        // Comprueba la posicion del raton en relacion de la posicion global, -1 (izquierda de la pantalla) y 1 (derecha)
+        var attackDirection = entity.GlobalPosition.X > entity.GetGlobalMousePosition().X ? -1 : 1;
+        // Calcula la posicion de la hitbox al golpear con la mitad del ancho de la textura en posicion negativa (izquierda) o positiva (derecha)
+        var x = (int)(16 * attackDirection); //TODO Cambiar el 16 por un valor Range vinculado al tipo de arma que se este utilizando
 
-        entity.Sprite.FlipH = !entity.AttackDirection;
-        entity.HitBox.CollisionShape.Position = new Vector2(x, entity.HitBox.CollisionShape.Position.Y);
+        entity.Sprite.FlipH = attackDirection != -1;
+        entity.HitBox.CollisionShape.Position = new Vector2(
+            x,
+            entity.HitBox.CollisionShape.Position.Y
+        );
         entity.HitBox.CollisionShape.Disabled = false;
     }
 
@@ -27,20 +33,27 @@ public class PlayerAttackState : PlayerState
         {
             if (entity.WantToWalk)
             {
-                entity.DefaultStateMachine.ChangeState(PlayerWalkState.Instance());
-                entity.HitBox.CollisionShape.Position = new Vector2(0, entity.HitBox.CollisionShape.Position.Y);
-                entity.HitBox.CollisionShape.Disabled = true;
+                entity.NextState = PlayerWalkState.Instance();
+                this.ResetParameter(entity);
                 return;
             }
 
             if (entity.WantToIdle)
             {
-                entity.DefaultStateMachine.ChangeState(PlayerIdleState.Instance());
-                entity.HitBox.CollisionShape.Position = new Vector2(0, entity.HitBox.CollisionShape.Position.Y);
-                entity.HitBox.CollisionShape.Disabled = true;
-
+                entity.NextState = PlayerIdleState.Instance();
+                this.ResetParameter(entity);
                 return;
             }
         }
+    }
+
+    private void ResetParameter(Player entity) //TODO Revisar estas acciones
+    {
+        entity.DefaultStateMachine.ChangeState(PlayerWalkState.Instance());
+        entity.HitBox.CollisionShape.Position = new Vector2(
+            0,
+            entity.HitBox.CollisionShape.Position.Y
+        );
+        entity.HitBox.CollisionShape.Disabled = true;
     }
 }

@@ -56,6 +56,8 @@ public partial class Player : CharacterBody2D
 
     public DefaultStateMachine<Player, PlayerState> DefaultStateMachine { get; set; }
 
+    public PlayerState NextState { get; set; }
+
     /// <summary>
     /// Valor que si esta <c>true</c> indica que la animacion de Ataque a terminado y si no es <c>false</c>
     /// </summary>
@@ -87,7 +89,7 @@ public partial class Player : CharacterBody2D
     /// </summary>
     public bool WantToAttack
     {
-        get => Input.GetActionStrength("Attack") == 1;
+        get => Input.IsActionJustPressed("Attack");
     }
 
     /// <summary>
@@ -98,14 +100,8 @@ public partial class Player : CharacterBody2D
         get => Input.GetActionStrength("Dash") == 1 && this.dashCooldownTimer.IsStopped();
     }
 
-    public bool AttackDirection { get; set; } = false;
-
-    public double ViewportHalfWidth
-    {
-        get => GetViewportRect().Size.X * 0.5f;
-    }
-
     public Vector2 MapSize { get; set; }
+
 
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Player</c>
@@ -129,7 +125,8 @@ public partial class Player : CharacterBody2D
 
         var terrainGenerator = (this.GetTree().GetFirstNodeInGroup("Map") as TerrainGenerator);
         this.Camera.LimitRight = terrainGenerator.Width * terrainGenerator.TileMap.CellQuadrantSize;
-        this.Camera.LimitBottom = terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
+        this.Camera.LimitBottom =
+            terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
     }
 
     /// <summary>
@@ -150,31 +147,19 @@ public partial class Player : CharacterBody2D
         )
         {
             this.Sprite.FlipH = this.moveDirection.X == 1;
+            //La velocidad se calcula con la direccion de movimiento normalizada por la velocidad aplicando un fuerza a mayores si se ha ejecutado el dash
             this.Velocity =
                 moveDirection.Normalized()
-                * (
-                    MoveSpeed
-                    * (
-                        this.DefaultStateMachine.CurrentState == PlayerDashState.Instance()
-                            ? DashSpeed
-                            : 1
-                    )
-                ); //TODO Cambiar los algoritmos de cada State a UpdateState antes de comprobar si se puede cambiar
+                * this.MoveSpeed
+                * (this.DefaultStateMachine.IsInState(PlayerDashState.Instance()) ? DashSpeed : 1);
             this.MoveAndSlide();
         }
 
         this.DefaultStateMachine.Update();
-    }
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventMouseButton eventMouse)
+        if (this.NextState != null && !this.DefaultStateMachine.IsInState(this.NextState))
         {
-            if (eventMouse.ButtonIndex == MouseButton.Left)
-            {
-                GD.Print(eventMouse.Position.DirectionTo(this.GlobalPosition).X);
-                this.AttackDirection = eventMouse.Position.DirectionTo(this.GlobalPosition).X >= -1f; //TODO Revisar estos valores
-            }
+            this.DefaultStateMachine.ChangeState(this.NextState);
         }
     }
 

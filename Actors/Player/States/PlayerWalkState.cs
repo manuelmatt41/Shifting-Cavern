@@ -15,22 +15,24 @@
 
     public void Update(Player entity)
     {
-        if (entity.WantToIdle)
+        SoundManager.Instance.PlayRandomPlayerWalkSound();
+        if (entity.WantToAttack)
         {
-            entity.DefaultStateMachine.ChangeState(PlayerIdleState.Instance());
+            entity.NextState = PlayerAttackState.Instance();
 
             return;
         }
-        if (entity.WantToAttack)
+
+        if (entity.WantToIdle)
         {
-            entity.DefaultStateMachine.ChangeState(PlayerAttackState.Instance());
+            entity.NextState = PlayerIdleState.Instance();
 
             return;
         }
 
         if (entity.WantToDash)
         {
-            entity.DefaultStateMachine.ChangeState(PlayerDashState.Instance());
+            entity.NextState = PlayerDashState.Instance();
 
             return;
         }

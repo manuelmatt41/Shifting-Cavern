@@ -19,15 +19,13 @@
         {
             if (entity.WantToWalk)
             {
-                entity.DefaultStateMachine.ChangeState(PlayerWalkState.Instance());
-
+                entity.NextState = PlayerWalkState.Instance();
                 return;
             }
 
             if (entity.WantToIdle)
             {
-                entity.DefaultStateMachine.ChangeState(PlayerIdleState.Instance());
-
+                entity.NextState = PlayerIdleState.Instance();
                 return;
             }
         }

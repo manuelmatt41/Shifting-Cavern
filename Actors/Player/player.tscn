@@ -190,8 +190,10 @@ blend_point_3/pos = Vector2(0, -0.9)
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_s80h1"]
+advance_mode = 0
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_v2q06"]
+advance_mode = 0
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q135k"]
 advance_mode = 0
@@ -285,6 +287,8 @@ one_shot = true
 
 [node name="HitBox" parent="." instance=ExtResource("4_fik2y")]
 scale = Vector2(1, 1.01686)
+collision_layer = 4
+Damage = 10.0
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(0, 16)

@@ -15,14 +15,15 @@
 
     public void Update(Player entity)
     {
-        if (entity.WantToWalk)
-        {
-            entity.DefaultStateMachine.ChangeState(PlayerWalkState.Instance());
-            return;
-        }
         if (entity.WantToAttack)
         {
-            entity.DefaultStateMachine.ChangeState(PlayerAttackState.Instance());
+            entity.NextState = PlayerAttackState.Instance();
+            return;
+        }
+
+        if (entity.WantToWalk)
+        {
+            entity.NextState = PlayerWalkState.Instance();
             return;
         }
     }
