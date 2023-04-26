@@ -248,9 +248,6 @@ collision_mask = 4
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_mtwuv")
 
-[node name="CooldownTimer" parent="HurtBox" index="1"]
-wait_time = 0.5
-
 [node name="WardArea" parent="." instance=ExtResource("5_2epep")]
 visible = false
 

@@ -17,12 +17,6 @@ public class GoblinWalkState : GoblinState
 
     public void Update(Goblin entity)
     {
-        if (entity.WantToHit)
-        {
-            entity.NextState = GoblinHitState.Instance();
-            return;
-        }
-
         if (entity.WantToIdle)
         {
             entity.NextState = GoblinIdleState.Instance();

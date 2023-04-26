@@ -51,11 +51,6 @@ public partial class Goblin : CharacterBody2D
         get => this.GlobalPosition.DistanceSquaredTo(this.FinishPosition) >= 1f;
     }
 
-    public bool WantToHit
-    {
-        get => this.HurtBox.CollisionShape2D.Disabled;
-    }
-
     public bool IsHitAnimationDone { get; private set; }
 
     /// <summary>
@@ -150,7 +145,7 @@ public partial class Goblin : CharacterBody2D
     private void OnHurtBoxHurt(double damage)
     {
         this.Life -= damage;
-
+        this.NextState = GoblinHitState.Instance();
         if (this.Life <= 0)
         {
             SoundManager.Instance.PlayGoblinDeadSound();
