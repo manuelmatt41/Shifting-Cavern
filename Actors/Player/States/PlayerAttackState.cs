@@ -11,7 +11,6 @@ public class PlayerAttackState : PlayerState
     public void Enter(Player entity)
     {
         entity.AnimationStateMachineTree.Travel("Attack");
-
         // Comprueba la posicion del raton en relacion de la posicion global, -1 (izquierda de la pantalla) y 1 (derecha)
         var attackDirection = entity.GlobalPosition.X > entity.GetGlobalMousePosition().X ? -1 : 1;
         // Calcula la posicion de la hitbox al golpear con la mitad del ancho de la textura en posicion negativa (izquierda) o positiva (derecha)
@@ -25,7 +24,14 @@ public class PlayerAttackState : PlayerState
         entity.HitBox.CollisionShape.Disabled = false;
     }
 
-    public void Exit(Player entity) { }
+    public void Exit(Player entity)
+    {
+        entity.HitBox.CollisionShape.Disabled = true;
+        entity.HitBox.CollisionShape.Position = new Vector2(
+            0,
+            entity.HitBox.CollisionShape.Position.Y
+        );
+    }
 
     public void Update(Player entity)
     {
@@ -34,26 +40,14 @@ public class PlayerAttackState : PlayerState
             if (entity.WantToWalk)
             {
                 entity.NextState = PlayerWalkState.Instance();
-                this.ResetParameter(entity);
                 return;
             }
 
             if (entity.WantToIdle)
             {
                 entity.NextState = PlayerIdleState.Instance();
-                this.ResetParameter(entity);
                 return;
             }
         }
-    }
-
-    private void ResetParameter(Player entity) //TODO Revisar estas acciones
-    {
-        entity.DefaultStateMachine.ChangeState(PlayerWalkState.Instance());
-        entity.HitBox.CollisionShape.Position = new Vector2(
-            0,
-            entity.HitBox.CollisionShape.Position.Y
-        );
-        entity.HitBox.CollisionShape.Disabled = true;
     }
 }
