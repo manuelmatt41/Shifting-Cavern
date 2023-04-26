@@ -1,7 +1,7 @@
-[gd_scene load_steps=39 format=3 uid="uid://uqyvgisnobvp"]
+[gd_scene load_steps=39 format=3 uid="uid://bsisx04idcaub"]
 
 [ext_resource type="Script" path="res://Actors/Goblin/Goblin.cs" id="1_8k5pl"]
-[ext_resource type="Texture2D" uid="uid://dx26k65li1gen" path="res://Actors/Goblin/Assets/goblin.png" id="2_bov4i"]
+[ext_resource type="Texture2D" uid="uid://dx26k65li1gen" path="res://Actors/Goblin/Assets/AnimationSprite/goblin.png" id="2_w8n0p"]
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="3_2brno"]
 [ext_resource type="PackedScene" uid="uid://b1gy3wjutwxxt" path="res://Utils/HurtBox/hurt_box.tscn" id="4_n3v4g"]
 [ext_resource type="PackedScene" uid="uid://c7e2s7cin6dvs" path="res://Utils/WardArea/ward_area.tscn" id="5_2epep"]
@@ -211,7 +211,7 @@ MoveSpeed = 50.0
 Life = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_bov4i")
+texture = ExtResource("2_w8n0p")
 hframes = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -151,9 +151,9 @@ public partial class Goblin : CharacterBody2D
     {
         this.Life -= damage;
 
-        GD.Print(this.Life);
         if (this.Life <= 0)
         {
+            SoundManager.Instance.PlayGoblinDeadSound();
             this.QueueFree();
         }
     }

@@ -1,7 +1,7 @@
-[gd_scene load_steps=46 format=3 uid="uid://kqpaqyp620wq"]
+[gd_scene load_steps=46 format=3 uid="uid://cf5jfciawdrjp"]
 
 [ext_resource type="Script" path="res://Actors/Player/Player.cs" id="1_vfry5"]
-[ext_resource type="Texture2D" uid="uid://dhdwuuvq5hcgy" path="res://Actors/Player/Assets/red hood itch free Copy-Sheet.png" id="2_l3ns2"]
+[ext_resource type="Texture2D" uid="uid://dhdwuuvq5hcgy" path="res://Actors/Player/Assets/AnimationSprite/red hood itch free Copy-Sheet.png" id="2_cwwph"]
 [ext_resource type="PackedScene" uid="uid://b1gy3wjutwxxt" path="res://Utils/HurtBox/hurt_box.tscn" id="3_xnb4t"]
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="4_fik2y"]
 
@@ -244,7 +244,7 @@ script = ExtResource("1_vfry5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_l3ns2")
+texture = ExtResource("2_cwwph")
 hframes = 12
 vframes = 11
 frame = 82
