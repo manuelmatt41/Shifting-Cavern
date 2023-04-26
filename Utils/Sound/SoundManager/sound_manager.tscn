@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://b55a8qxxvjicu"]
+[gd_scene load_steps=8 format=3 uid="uid://cowgqbti5xq0c"]
 
 [ext_resource type="Script" path="res://Utils/Sound/SoundManager/SoundManager.cs" id="1_rqptc"]
 [ext_resource type="PackedScene" uid="uid://f0racpmt1fat" path="res://Utils/Sound/SoundPool/sound_pool.tscn" id="2_lg4f8"]
 [ext_resource type="PackedScene" uid="uid://jr6jomnkbb21" path="res://Utils/Sound/SoundQueue/sound_queue.tscn" id="3_uyd4b"]
-[ext_resource type="AudioStream" uid="uid://b5qh5nloe6mm2" path="res://Actors/Player/Assets/04_step_grass_1.wav" id="4_r2bnr"]
-[ext_resource type="AudioStream" uid="uid://can0bceyrid8i" path="res://Actors/Player/Assets/04_step_grass_2.wav" id="5_qk5bd"]
-[ext_resource type="AudioStream" uid="uid://imyw58uohms4" path="res://Actors/Goblin/Assets/Hit damage 1.wav" id="6_e6v82"]
+[ext_resource type="AudioStream" uid="uid://b5qh5nloe6mm2" path="res://Actors/Player/Assets/Sounds/04_step_grass_1.wav" id="4_gk08l"]
+[ext_resource type="AudioStream" uid="uid://can0bceyrid8i" path="res://Actors/Player/Assets/Sounds/04_step_grass_2.wav" id="5_e6w3j"]
+[ext_resource type="AudioStream" uid="uid://imyw58uohms4" path="res://Actors/Goblin/Assets/Sounds/Hit damage 1.wav" id="6_1se78"]
+[ext_resource type="AudioStream" uid="uid://cp5kyr7uumdxc" path="res://Actors/Goblin/Assets/Sounds/Goblin_01.wav" id="7_35vk3"]
 
 [node name="SoundManager" type="Node"]
 script = ExtResource("1_rqptc")
@@ -15,14 +16,14 @@ script = ExtResource("1_rqptc")
 [node name="SoundQueue" parent="PlayerWalkSounds" instance=ExtResource("3_uyd4b")]
 
 [node name="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue" index="0"]
-stream = ExtResource("4_r2bnr")
+stream = ExtResource("4_gk08l")
 
 [node name="AudioStreamPlayer110358" type="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue"]
 
 [node name="SoundQueue2" parent="PlayerWalkSounds" instance=ExtResource("3_uyd4b")]
 
 [node name="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue2" index="0"]
-stream = ExtResource("5_qk5bd")
+stream = ExtResource("5_e6w3j")
 
 [node name="AudioStreamPlayer110480" type="AudioStreamPlayer" parent="PlayerWalkSounds/SoundQueue2"]
 
@@ -33,9 +34,15 @@ stream = ExtResource("5_qk5bd")
 [node name="GoblinHitSound" parent="." instance=ExtResource("3_uyd4b")]
 
 [node name="AudioStreamPlayer" parent="GoblinHitSound" index="0"]
-stream = ExtResource("6_e6v82")
+stream = ExtResource("6_1se78")
+
+[node name="GoblinDeadSound" parent="." instance=ExtResource("3_uyd4b")]
+
+[node name="AudioStreamPlayer" parent="GoblinDeadSound" index="0"]
+stream = ExtResource("7_35vk3")
 
 [editable path="PlayerWalkSounds/SoundQueue"]
 [editable path="PlayerWalkSounds/SoundQueue2"]
 [editable path="PlayerWalkSounds/SoundQueue3"]
 [editable path="GoblinHitSound"]
+[editable path="GoblinDeadSound"]

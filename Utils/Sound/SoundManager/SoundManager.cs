@@ -1,6 +1,6 @@
 using Godot;
-using Godot.Collections;
 using System;
+using System.Collections.Generic;
 
 public partial class SoundManager : Node
 {
@@ -13,17 +13,15 @@ public partial class SoundManager : Node
     {
         Instance = this;
 
-        #region Player sound nodes
-        this._soundPools[SoundPoolType.PlayerWalkSounds] = this.GetNode<SoundPool>(
-            nameof(SoundPoolType.PlayerWalkSounds)
+        Array.ForEach(
+            Enum.GetValues<SoundQueueType>(),
+            soundQueue =>
+                this._soundQueues[soundQueue] = this.GetNode<SoundQueue>(soundQueue.ToString())
         );
-        #endregion
-
-        #region Goblin sound nodes
-        this._soundQueues[SoundQueueType.GoblinHitSound] = this.GetNode<SoundQueue>(
-            nameof(SoundQueueType.GoblinHitSound)
+        Array.ForEach(
+            Enum.GetValues<SoundPoolType>(),
+            soundPool => this._soundPools[soundPool] = this.GetNode<SoundPool>(soundPool.ToString())
         );
-        #endregion
     }
 
     #region Player sounds
@@ -39,12 +37,17 @@ public partial class SoundManager : Node
         this._soundQueues[SoundQueueType.GoblinHitSound].PlaySound();
     }
 
+    public void PlayGoblinDeadSound()
+    {
+        this._soundQueues[SoundQueueType.GoblinDeadSound].PlaySound();
+    }
     #endregion
 }
 
 public enum SoundQueueType
 {
     GoblinHitSound,
+    GoblinDeadSound,
 }
 
 public enum SoundPoolType
