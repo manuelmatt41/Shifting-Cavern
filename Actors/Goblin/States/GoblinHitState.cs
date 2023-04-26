@@ -1,4 +1,6 @@
-﻿public class GoblinHitState : GoblinState
+﻿using Godot;
+
+public class GoblinHitState : GoblinState
 {
     private static readonly GoblinHitState goblinHitState = new();
 
@@ -9,6 +11,7 @@
     public void Enter(Goblin entity)
     {
         entity.AnimationStateMachineTree.Travel("Hit");
+        SoundManager.Instance.PlayGoblinHitSound();
     }
 
     public void Exit(Goblin entity) { }
@@ -19,12 +22,14 @@
         {
             if (entity.WantToWalk)
             {
-                entity.DefaultStateMachine.ChangeState(GoblinWalkState.Instance());
+                entity.NextState = GoblinWalkState.Instance();
+                return;
             }
 
             if (entity.WantToIdle)
             {
-                entity.DefaultStateMachine.ChangeState(GoblinIdleState.Instance());
+                entity.NextState = GoblinIdleState.Instance();
+                return;
             }
         }
     }
