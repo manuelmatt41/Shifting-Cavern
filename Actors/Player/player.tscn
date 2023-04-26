@@ -270,8 +270,6 @@ parameters/Walk/blend_position = Vector2(-1, 0.0131004)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
-limit_left = 0
-limit_top = 0
 
 [node name="HurtBox" parent="." instance=ExtResource("3_xnb4t")]
 collision_mask = 2

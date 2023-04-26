@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://c6383ylmp6pgp"]
 
 [ext_resource type="Texture2D" uid="uid://b5v8fb8eud3gs" path="res://Levels/Assets/TopDownFantasy-Forest/Tiles/Tileset.png" id="2_2w3nd"]
-[ext_resource type="PackedScene" uid="uid://kqpaqyp620wq" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
-[ext_resource type="PackedScene" uid="uid://uqyvgisnobvp" path="res://Actors/Goblin/goblin.tscn" id="4_n86r1"]
+[ext_resource type="PackedScene" uid="uid://cf5jfciawdrjp" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
+[ext_resource type="PackedScene" uid="uid://bsisx04idcaub" path="res://Actors/Goblin/goblin.tscn" id="4_n86r1"]
 [ext_resource type="PackedScene" uid="uid://diulqrjnhc7c" path="res://Utils/TerrainGenerator/terrain_generator.tscn" id="5_hx2ky"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1rxw2"]

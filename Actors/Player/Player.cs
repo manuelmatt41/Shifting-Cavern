@@ -2,6 +2,9 @@ using Godot;
 
 public partial class Player : CharacterBody2D
 {
+    private const string AnimationAttackName = "Attack";
+    private const string AnimationDashName = "Dash";
+
     /// <summary>
     /// Velocidad de movimiento del jugador
     /// </summary>
@@ -23,17 +26,12 @@ public partial class Player : CharacterBody2D
     /// <summary>
     /// Camara principal del juego
     /// </summary>
-    private Camera2D Camera;
+    public Camera2D Camera { get; set; }
 
     /// <summary>
     /// Direccion del movimiento del jugador
     /// </summary>
-    private Vector2 moveDirection = new(0, 1);
-
-    /// <summary>
-    /// Arbol que lleva las animaciones del personaje
-    /// </summary>
-    private AnimationTree animationTree;
+    public Vector2 MoveDirection { get; set; } = new(0, 1);
 
     /// <summary>
     /// Imagen que representa al personaje con sus animaciones
@@ -73,7 +71,7 @@ public partial class Player : CharacterBody2D
     /// </summary>
     public bool WantToWalk
     {
-        get => this.moveDirection != Vector2.Zero;
+        get => this.MoveDirection != Vector2.Zero;
     }
 
     /// <summary>
@@ -81,7 +79,7 @@ public partial class Player : CharacterBody2D
     /// </summary>
     public bool WantToIdle
     {
-        get => this.moveDirection == Vector2.Zero;
+        get => this.MoveDirection == Vector2.Zero;
     }
 
     /// <summary>
@@ -102,7 +100,6 @@ public partial class Player : CharacterBody2D
 
     public Vector2 MapSize { get; set; }
 
-
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Player</c>
     /// </summary>
@@ -114,8 +111,8 @@ public partial class Player : CharacterBody2D
         this.HitBox = this.GetNode<HitBox>("HitBox");
         this.CollisionShape2D = this.GetNode<CollisionShape2D>("CollisionShape2D");
 
-        this.animationTree = this.GetNode<AnimationTree>("AnimationTree");
-        this.AnimationStateMachineTree = this.animationTree
+        var animationTree = this.GetNode<AnimationTree>("AnimationTree");
+        this.AnimationStateMachineTree = animationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
         this.DefaultStateMachine = new DefaultStateMachine<Player, PlayerState>(
@@ -123,10 +120,16 @@ public partial class Player : CharacterBody2D
             PlayerIdleState.Instance()
         );
 
-        var terrainGenerator = (this.GetTree().GetFirstNodeInGroup("Map") as TerrainGenerator);
-        this.Camera.LimitRight = terrainGenerator.Width * terrainGenerator.TileMap.CellQuadrantSize;
-        this.Camera.LimitBottom =
-            terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
+        var terrainGenerator = (this.GetTree().GetFirstNodeInGroup("Map") as TerrainGenerator); //TODO Mejorar este codigo
+        if (terrainGenerator != null)
+        {
+            this.Camera.LimitLeft = 0;
+            this.Camera.LimitTop = 0;
+            this.Camera.LimitRight =
+                terrainGenerator.Width * terrainGenerator.TileMap.CellQuadrantSize;
+            this.Camera.LimitBottom =
+                terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
+        }
     }
 
     /// <summary>
@@ -146,10 +149,10 @@ public partial class Player : CharacterBody2D
             || this.DefaultStateMachine.CurrentState == PlayerDashState.Instance()
         )
         {
-            this.Sprite.FlipH = this.moveDirection.X == 1;
+            this.Sprite.FlipH = this.MoveDirection.X == 1;
             //La velocidad se calcula con la direccion de movimiento normalizada por la velocidad aplicando un fuerza a mayores si se ha ejecutado el dash
             this.Velocity =
-                moveDirection.Normalized()
+                MoveDirection.Normalized()
                 * this.MoveSpeed
                 * (this.DefaultStateMachine.IsInState(PlayerDashState.Instance()) ? DashSpeed : 1);
             this.MoveAndSlide();
@@ -171,17 +174,15 @@ public partial class Player : CharacterBody2D
         var movX = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
         var movY = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
 
-        this.moveDirection = new Vector2(movX, movY);
+        this.MoveDirection = new Vector2(movX, movY);
     }
 
     /// <summary>
     /// Cambia la direccion de la animacion
     /// </summary>
-    private void UpdateAnimationParameters()
+    private void UpdateAnimationParameters() //Revisar si me compensa hacer animaciones para todas las direcciones
     {
-        // TODO Cuando se tenga los sprites adecuados no deberia hacer falta
-
-        this.animationTree.Set("parameters/Idle/blend_position", this.moveDirection);
+        //this.animationTree.Set("parameters/Idle/blend_position", this.MoveDirection);
     }
 
     /// <summary>
@@ -192,10 +193,10 @@ public partial class Player : CharacterBody2D
     {
         switch (animName)
         {
-            case "Attack":
+            case AnimationAttackName:
                 this.IsAttackAnimationDone = false;
                 break;
-            case "Dash":
+            case AnimationDashName:
                 this.IsDashAnimationDone = false;
                 break;
         }
@@ -209,10 +210,10 @@ public partial class Player : CharacterBody2D
     {
         switch (animName)
         {
-            case "Attack":
+            case AnimationAttackName:
                 this.IsAttackAnimationDone = true;
                 break;
-            case "Dash":
+            case AnimationDashName:
                 this.IsDashAnimationDone = true;
                 this.dashCooldownTimer.Start();
                 break;
