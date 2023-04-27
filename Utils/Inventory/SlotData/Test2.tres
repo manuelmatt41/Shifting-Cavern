@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b7mp6yvi4d7o"]
+
+[ext_resource type="Script" path="res://Utils/Inventory/SlotData/SlotData.cs" id="1_bhp7w"]
+[ext_resource type="Resource" uid="uid://7qbbbl1gahwk" path="res://Items/Coin/Coin.tres" id="1_dc324"]
+
+[resource]
+script = ExtResource("1_bhp7w")
+ItemData = ExtResource("1_dc324")
+Quantity = 50

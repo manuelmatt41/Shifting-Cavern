@@ -1,6 +1,7 @@
 using Godot;
-using System;
+using MonoCustomResourceRegistry;
 
+[RegisteredType(nameof(SlotData), "", nameof(Resource))]
 public partial class SlotData : Resource
 {
     public const int MAX_STACK_SIZE = 99;
@@ -8,14 +9,12 @@ public partial class SlotData : Resource
     [Export]
     public ItemData ItemData { get; set; }
 
-    [Export(PropertyHint.Range, $"1, 99")]
-    public int Quantity { get; set; } = 1;
+    [Export(PropertyHint.Range, "1, 99")]
+    public int Quantity { get; set; }
 
-    public SlotData() : this(null, 1) { }
-
-    public SlotData(ItemData itemData, int quantity)
+    public SlotData()
     {
-        this.ItemData = itemData;
-        this.Quantity = quantity;
+        this.ItemData = null;
+        this.Quantity = 1;
     }
 }
