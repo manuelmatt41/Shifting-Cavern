@@ -22,17 +22,7 @@ public class PlayerAttackState : PlayerState
     public void Enter(Player entity)
     {
         entity.AnimationStateMachineTree.Travel(Player.ATTACK_ANIMATION_NAME);
-
-        // Comprueba la posicion del raton en relacion de la posicion global, -1 (izquierda de la pantalla) y 1 (derecha)
-        var attackDirection = entity.GlobalPosition.X > entity.GetGlobalMousePosition().X ? -1 : 1;
-
-        // Calcula la posicion de la HitBox al golpear
-        var x = 16 * attackDirection; //TODO Cambiar el 16 por un valor Range vinculado al tipo de arma que se este utilizando
-        var newHitBoxPosition = new Vector2(x, entity.HitBox.CollisionShape.Position.Y);
-
-        entity.Sprite.FlipH = attackDirection != -1;
-        entity.HitBox.CollisionShape.Position = newHitBoxPosition;
-        entity.HitBox.CollisionShape.Disabled = false;
+        entity.DoAttack();
     }
 
     /// <summary>
@@ -41,10 +31,7 @@ public class PlayerAttackState : PlayerState
     /// <param name="entity">Entidad <c>Player</c></param>
     public void Exit(Player entity)
     {
-        var resetHitBoxPosition = new Vector2(0, entity.HitBox.CollisionShape.Position.Y);
-
-        entity.HitBox.CollisionShape.Disabled = true;
-        entity.HitBox.CollisionShape.Position = resetHitBoxPosition;
+        entity.ResetAttack();
     }
 
     /// <summary>

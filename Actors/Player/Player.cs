@@ -180,7 +180,7 @@ public partial class Player : CharacterBody2D
         }
 
         this.Weapon = this.GetTree().GetFirstNodeInGroup(nameof(this.Weapon)) as IWeapon; //TODO Anyadir area propia a las armas para transformar la hitbox del personaje
-        var rect = this.HitBox.CollisionShape.Shape as RectangleShape2D;
+        var rect = this.HitBox.CollisionShape2D.Shape as RectangleShape2D;
         rect.Size = this.Weapon.Range;
         this.HitBox.Damage = this.Weapon.Damage;
     }
@@ -225,6 +225,34 @@ public partial class Player : CharacterBody2D
         //La velocidad se calcula con la direccion de movimiento normalizada por la velocidad aplicando un fuerza a mayores si se ha ejecutado el dash
         this.Velocity = this.MoveDirection.Normalized() * this.MoveSpeed * this.DashSpeed;
         this.MoveAndSlide();
+    }
+
+    /// <summary>
+    /// Realiza el ataque del jugador
+    /// </summary>
+    public void DoAttack()
+    {
+        // Comprueba la posicion del raton en relacion de la posicion global, -1 (izquierda de la pantalla) y 1 (derecha)
+        var attackDirection = this.GlobalPosition.X > this.GetGlobalMousePosition().X ? -1 : 1;
+
+        // Calcula la posicion de la HitBox al golpear
+        var x = 16 * attackDirection; //TODO Cambiar el 16 por un valor Range vinculado al tipo de arma que se este utilizando
+        var newHitBoxPosition = new Vector2(x, this.HitBox.CollisionShape2D.Position.Y);
+
+        this.Sprite.FlipH = attackDirection != -1;
+        this.HitBox.CollisionShape2D.Position = newHitBoxPosition;
+        this.HitBox.CollisionShape2D.Disabled = false;
+    }
+
+    /// <summary>
+    /// Resetea los paremtros de ataque
+    /// </summary>
+    public void ResetAttack()
+    {
+        var resetHitBoxPosition = new Vector2(0, this.HitBox.CollisionShape2D.Position.Y);
+
+        this.HitBox.CollisionShape2D.Disabled = true;
+        this.HitBox.CollisionShape2D.Position = resetHitBoxPosition;
     }
 
     /// <summary>
