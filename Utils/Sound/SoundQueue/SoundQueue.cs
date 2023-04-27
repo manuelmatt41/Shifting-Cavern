@@ -24,7 +24,7 @@ public partial class SoundQueue : Node
     private List<AudioStreamPlayer> _audioStreamPlayers = new();
 
     /// <summary>
-    /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se crean las instancias del sonido y se añaden a <c>SoundQueue</c> y a <c>_audioStreamPlayers</c>
+    /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se crean las instancias del sonido y se anyaden a <c>SoundQueue</c> y a <c>_audioStreamPlayers</c>
     /// </summary>
     public override void _Ready()
     {

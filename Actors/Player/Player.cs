@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 /// <summary>
@@ -140,7 +141,7 @@ public partial class Player : CharacterBody2D
         get => Input.GetActionStrength("Dash") == 1 && this.DashCooldownTimer.IsStopped();
     }
 
-    public IWeapon Weapon { get; set; } //TODO Ver si me compensa usar dynamic
+    //public IWeapon Weapon { get; set; } //TODO Ver si me compensa usar dynamic
 
     /// <summary>
     /// Maquina de estados de <c>Player</c>
@@ -179,10 +180,10 @@ public partial class Player : CharacterBody2D
                 terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
         }
 
-        this.Weapon = this.GetTree().GetFirstNodeInGroup(nameof(this.Weapon)) as IWeapon; //TODO Anyadir area propia a las armas para transformar la hitbox del personaje
-        var rect = this.HitBox.CollisionShape2D.Shape as RectangleShape2D;
-        rect.Size = this.Weapon.Range;
-        this.HitBox.Damage = this.Weapon.Damage;
+        //this.Weapon = this.GetTree().GetFirstNodeInGroup(nameof(this.Weapon)) as IWeapon; //TODO Anyadir area propia a las armas para transformar la hitbox del personaje
+        //var rect = this.HitBox.CollisionShape2D.Shape as RectangleShape2D;
+        //rect.Size = this.Weapon.Range;
+        //this.HitBox.Damage = this.Weapon.Damage;
     }
 
     /// <summary>

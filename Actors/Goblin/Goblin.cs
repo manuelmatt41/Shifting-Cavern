@@ -206,6 +206,7 @@ public partial class Goblin : CharacterBody2D
     {
         this.Life -= damage;
         this.NextState = GoblinHitState.Instance();
+
         if (this.Life <= 0)
         {
             SoundManager.Instance.PlayGoblinDeadSound();
