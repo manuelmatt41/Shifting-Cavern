@@ -1,100 +1,144 @@
 using Godot;
 
+/// <summary>
+/// Clase que representa a un Goblin en el juego
+/// </summary>
 public partial class Goblin : CharacterBody2D
 {
     /// <summary>
-    /// Velocidad de movimiento del Goblin
+    /// Nombre de la animacion 'Hit' de <c>Goblin</c>
     /// </summary>
+    public const string HIT_ANIMATION_NAME = "Hit";
+
+    /// <summary>
+    /// Nombre de la animacion 'Walk' de <c>Goblin</c>
+    /// </summary>
+    public const string WALK_ANIMATION_NAME = "Walk";
+
+    /// <summary>
+    /// Nombre de la animacion 'Idle' de <c>Goblin</c>
+    /// </summary>
+    public const string IDLE_ANIMATION_NAME = "Idle";
+
+    /// <summary>
+    /// Velocidad de movimiento de <c>Goblin</c>
+    /// </summary>
+    /// <value>Por defecto: 100</value>
     [Export]
     public float MoveSpeed { get; set; } = 100;
 
     /// <summary>
-    /// Direccion de movimiento del Goblin
+    /// Direccion de movimiento de <c>Goblin</c>
     /// </summary>
+    /// <value>Por defecto: (0,0)</value>
     [Export]
     public Vector2 MoveDirection { get; set; } = Vector2.Zero;
 
-    public Vector2 FinishPosition { get; set; }
-
     /// <summary>
-    /// Vida del Goblin
+    /// Vida de <c>Goblin</c>
     /// </summary>
+    /// <value>Por defecto: 100</value>
     [Export]
     public double Life { get; set; } = 100;
 
     /// <summary>
-    /// Arbol que lleva las animacion del Goblin
+    /// Arbol de animaciones de <c>Goblin</c>
     /// </summary>
-    public AnimationTree AnimationTree { get; set; }
+    public AnimationTree AnimationTree { get; private set; }
 
     /// <summary>
-    /// Imagen que representa al Goblin y sus animaciones
+    /// Imagen que representa a <c>Goblin</c>
     /// </summary>
-    public Sprite2D Sprite { get; set; }
-
-    public HurtBox HurtBox { get; set; }
+    public Sprite2D Sprite { get; private set; }
 
     /// <summary>
-    /// Maquina de estados para manejar los cambios entre ellos del Goblin
+    /// Caja de colisiones para detectar danyo de otra entidad
     /// </summary>
-    public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; set; }
+    public HurtBox HurtBox { get; private set; }
 
-    public DefaultStateMachine<Goblin, GoblinState> DefaultStateMachine { get; set; }
+    /// <summary>
+    /// Maquina de estados de las animaciones de <c>Goblin</c>
+    /// </summary>
+    public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; private set; }
 
-    public GoblinState NextState { get; set; }
+    /// <summary>
+    /// Estado que al que se va cambiar en la maquina de estados
+    /// </summary>
+    /// <value>Intancia de <c>GoblinIdleState</c></value>
+    public GoblinState NextState { get; set; } = GoblinIdleState.Instance();
+
+    /// <summary>
+    /// Comprueba que se quiere cambiar el estado a <c>GoblinIdleState</c>
+    /// </summary>
+    /// <value><c>True</c> si <c>Goblin</c> ha llegado a <c>_finishPosition</c>, <c>false</c> si no ha llegado</value>
     public bool WantToIdle
     {
-        get => this.GlobalPosition.DistanceSquaredTo(this.FinishPosition) < 1f;
-    }
-    public bool WantToWalk
-    {
-        get => this.GlobalPosition.DistanceSquaredTo(this.FinishPosition) >= 1f;
+        get => this.GlobalPosition.DistanceSquaredTo(this._finishPosition) < 1f;
     }
 
+    /// <summary>
+    /// Comprueba que se quiere cambiar el estado a <c>GoblinWalkState</c>
+    /// </summary>
+    /// <value><c>True</c> si <c>Goblin</c> no ha llegado a <c>_finishPosition</c>, <c>false</c> si  ha llegado</value>
+    public bool WantToWalk
+    {
+        get => this.GlobalPosition.DistanceSquaredTo(this._finishPosition) >= 1f;
+    }
+
+    /// <summary>
+    /// Valor que de si la animacion 'Hit' ha acabado
+    /// </summary>
+    /// <value><c>True</c> si la animacion acabo, sino <c>false</c></value>
     public bool IsHitAnimationDone { get; private set; }
 
     /// <summary>
-    /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>Goblin</c>
+    /// Maquina de estados de <c>Goblin</c>
+    /// </summary>
+    private DefaultStateMachine<Goblin, GoblinState> _defaultStateMachine;
+
+    /// <summary>
+    /// Posicion a la que se movera el Goblin
+    /// </summary>
+    private Vector2 _finishPosition;
+
+    /// <summary>
+    /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de <c>Goblin</c>
     /// </summary>
     public override void _Ready()
     {
         this.AnimationTree = this.GetNode<AnimationTree>("AnimationTree");
+
         this.Sprite = this.GetNode<Sprite2D>("Sprite2D");
-        this.FinishPosition = this.GlobalPosition;
+
+        this._finishPosition = this.GlobalPosition;
+
         this.AnimationStateMachineTree = this.AnimationTree
             .Get("parameters/playback")
             .As<AnimationNodeStateMachinePlayback>();
+
         this.HurtBox = this.GetNode<HurtBox>("HurtBox");
 
-        this.DefaultStateMachine = new DefaultStateMachine<Goblin, GoblinState>(
+        this._defaultStateMachine = new DefaultStateMachine<Goblin, GoblinState>(
             this,
-            GoblinIdleState.Instance()
+            this.NextState
         );
     }
 
     /// <summary>
-    /// Funcion integrada de Godot que se ejecuta 1 / 60 frames para trabajar con mas facilmente con las fisicas del juego, se encarga del movimiento del Goblin y comprobar si quiere un nuevo estado
+    /// Funcion integrada de Godot que se ejecuta 1 / 60 frames para trabajar con mas facilmente con las fisicas del juego, comprobueba si quiere un nuevo estado y lo cambia si <c>NextState</c> es diferente al actual en la <c>DefaultStateMAchine</c>
     /// </summary>
-    /// <param name="delta">Valor del tiempo entre frames</param>
+    /// <param name="delta">Valor del tiempo entre frames de fisicas</param>
     public override void _PhysicsProcess(double delta)
     {
-        if (this.DefaultStateMachine.IsInState(GoblinWalkState.Instance()))
+        this._defaultStateMachine.Update();
+
+        if (!this._defaultStateMachine.IsInState(this.NextState))
         {
-            this.Sprite.FlipH = this.MoveDirection.X < 0;
-
-            this.Velocity = this.MoveSpeed * this.MoveDirection;
-
-            this.MoveAndSlide();
-        }
-
-        this.DefaultStateMachine.Update();
-
-        if (this.NextState != null && !this.DefaultStateMachine.IsInState(this.NextState))
-        {
-            this.DefaultStateMachine.ChangeState(this.NextState);
+            this._defaultStateMachine.ChangeState(this.NextState);
         }
     }
 
+    // TODO Revisar si me compensa los BlendPosition para mi proyecto
     /// <summary>
     /// Cambia la direccion de la animacion
     /// </summary>
@@ -104,10 +148,14 @@ public partial class Goblin : CharacterBody2D
 
     //}
 
+    /// <summary>
+    /// Evento que se ejecuta al detectar una posicion aleatoria dentro de <c>WardArea</c> o la entrada de un <c>Player</c> dentro del area, y se cambia <c>MoveDirection</c> y <c>_finishPosition</c> a la nueva posicion
+    /// </summary>
+    /// <param name="newDirection">Direccion obtenida del evento</param>
     private void OnWardAreaChangeDirection(Vector2 newDirection)
     {
         this.MoveDirection = this.GlobalPosition.DirectionTo(newDirection);
-        this.FinishPosition = newDirection;
+        this._finishPosition = newDirection;
     }
 
     /// <summary>
@@ -118,7 +166,7 @@ public partial class Goblin : CharacterBody2D
     {
         switch (animName)
         {
-            case "Hit":
+            case HIT_ANIMATION_NAME:
                 this.IsHitAnimationDone = false;
                 break;
         }
@@ -127,19 +175,19 @@ public partial class Goblin : CharacterBody2D
     /// <summary>
     /// Evento que se ejecuta al terminar una animacion, no funciona para animaciones LOOP
     /// </summary>
-    /// <param name="animName"></param>
+    /// <param name="animName">Nombre de la animacion</param>
     private void OnAnimationPlayerFinished(StringName animName)
     {
         switch (animName)
         {
-            case "Hit":
+            case HIT_ANIMATION_NAME:
                 this.IsHitAnimationDone = true;
                 break;
         }
     }
 
     /// <summary>
-    /// Evento que ejecuta al recibir danyo
+    /// Evento que ejecuta al recibir danyo, reduciendo la vida de <c>Goblin</c> y cambiando a <c>GoblinHitState</c>, luego comprueba si no le queda vida a <c>Goblin</c> y emite el sonido <c>PlayGoblinDeadSound</c> y elimina el nodo
     /// </summary>
     /// <param name="damage">Danyo recibido</param>
     private void OnHurtBoxHurt(double damage)
