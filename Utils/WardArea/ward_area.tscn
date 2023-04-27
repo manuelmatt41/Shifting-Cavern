@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://c7e2s7cin6dvs"]
 
-[ext_resource type="Script" path="res://Utils/WardArea/WardArea.cs" id="1_rxljv"]
+[ext_resource type="Script" path="res://Utils/WardArea/WardArea.cs" id="1_wm6r4"]
 
 [node name="WardArea" type="Area2D"]
-script = ExtResource("1_rxljv")
+script = ExtResource("1_wm6r4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 debug_color = Color(0.67451, 0.505882, 0.105882, 0.419608)

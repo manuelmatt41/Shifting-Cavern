@@ -24,7 +24,7 @@ public partial class WardArea : Area2D
     public CollisionShape2D CollisionShape2D { get; private set; }
 
     /// <summary>
-    /// Tamaño del area de <c>CollisionShape2D</c>
+    /// Tamanyo del area de <c>CollisionShape2D</c>
     /// </summary>
     public Vector2 AreaSize
     {
@@ -121,7 +121,7 @@ public partial class WardArea : Area2D
                 this.SetDeferred("Player", body as Player);
             }
 
-            this.SetDeferred("IsPlayerInside", true);
+            this.SetDeferred("_isPlayerInside", true);
         }
     }
 
@@ -133,7 +133,7 @@ public partial class WardArea : Area2D
     {
         if (body.IsInGroup("Player"))
         {
-            this.SetDeferred("IsPlayerInside", false);
+            this.SetDeferred("_isPlayerInside", false);
         }
     }
 }
