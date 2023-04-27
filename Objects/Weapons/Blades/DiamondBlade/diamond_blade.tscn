@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cg3r4qmwtjg5x"]
-
-[ext_resource type="Script" path="res://Objects/Weapons/Blades/DiamondBlade/DiamonBlade.cs" id="1_saicp"]
-
-[node name="DiamondBlade" type="Node2D" groups=["Weapon"]]
-script = ExtResource("1_saicp")
