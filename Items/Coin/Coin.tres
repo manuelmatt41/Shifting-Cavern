@@ -1,10 +1,10 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://7qbbbl1gahwk"]
 
-[ext_resource type="Script" path="res://Utils/Inventory/ItemData/Item.cs" id="1_7enpk"]
 [ext_resource type="Texture2D" uid="uid://cuq1midlfpym7" path="res://Items/Coin/CoinTexture.tres" id="1_i2u41"]
+[ext_resource type="Script" path="res://Utils/Inventory/ItemData/ItemData.cs" id="1_vt34b"]
 
 [resource]
-script = ExtResource("1_7enpk")
+script = ExtResource("1_vt34b")
 Name = "Coin"
-Description = "Moneda increiblementemente perfecta"
+Description = "Gold coin"
 Texture = ExtResource("1_i2u41")

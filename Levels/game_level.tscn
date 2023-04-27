@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgii86hvs5n5t"]
+[gd_scene load_steps=3 format=3 uid="uid://bgii86hvs5n5t"]
 
+[ext_resource type="PackedScene" uid="uid://cfenn0ta2hs0u" path="res://Utils/Inventory/InventoryUI/inventory_ui.tscn" id="2_ubkp3"]
 [ext_resource type="PackedScene" uid="uid://cf5jfciawdrjp" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
 
 [node name="GameLevel" type="Node2D"]
@@ -18,3 +19,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="InventoryUi" parent="UI/InventoryInterface" instance=ExtResource("2_ubkp3")]
+layout_mode = 0

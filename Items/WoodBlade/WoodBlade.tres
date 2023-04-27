@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c2mwqtpb135gy"]
+
+[ext_resource type="Texture2D" uid="uid://cgixll5yr6h20" path="res://Items/WoodBlade/WoodBladeTexture.tres" id="1_72kl5"]
+[ext_resource type="Script" path="res://Utils/Inventory/ItemData/ItemData.cs" id="1_chfxt"]
+
+[resource]
+script = ExtResource("1_chfxt")
+Name = "Wood Blade"
+Description = "A weak wapon"
+Texture = ExtResource("1_72kl5")
