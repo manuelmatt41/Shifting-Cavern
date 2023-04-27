@@ -1,7 +1,7 @@
 using Godot;
 
 [Tool]
-public partial class HurtBox : Area2D //TODO Ver la opcion [Tool] de godot
+public partial class HurtBox : Area2D
 {
     /// <summary>
     /// Evento que se lanza al colisionar con otra area en grupo Attack
@@ -13,8 +13,9 @@ public partial class HurtBox : Area2D //TODO Ver la opcion [Tool] de godot
     /// <summary>
     /// Tipo de HurtBox
     /// </summary>
+    /// <value>Por defecto: Cooldown</value>
     [Export]
-    public HurtBoxType HurtBoxType { get; set; }
+    public HurtBoxType HurtBoxType { get; set; } = HurtBoxType.Cooldown;
 
     /// <summary>
     /// Forma de la colision que va actuar con el resto de areas
@@ -54,7 +55,10 @@ public partial class HurtBox : Area2D //TODO Ver la opcion [Tool] de godot
                         this.CooldownTimer.Start();
                         break;
                     case HurtBoxType.DisableHitBox:
-                        if (area.HasMethod("TempDisable")) { }
+                        if (area.HasMethod("DisableHitBoxCollision"))
+                        {
+                            area.Call("DisableHitBoxCollision");
+                        }
                         break;
                 }
 
@@ -64,7 +68,7 @@ public partial class HurtBox : Area2D //TODO Ver la opcion [Tool] de godot
     }
 
     /// <summary>
-    /// Evento que se ejecuta al terminar el temporizador (<c>cooldownTimer</c>) para reactivar las colisiones
+    /// Evento que se ejecuta al terminar <c>cooldownTimer</c) para reactivar las colisiones
     /// </summary>
     private void OnCooldownTimeout()
     {
@@ -77,7 +81,13 @@ public partial class HurtBox : Area2D //TODO Ver la opcion [Tool] de godot
 /// </summary>
 public enum HurtBoxType
 {
+    /// <summary>
+    /// Al ser golpeado se desactiva la colision de <c>HurtBox</c>
+    /// </summary>
     Cooldown,
     HitOnce,
+    /// <summary>
+    /// Al ser golpeado se desactiva la colision de <c>HitBox</c>
+    /// </summary>
     DisableHitBox
 }

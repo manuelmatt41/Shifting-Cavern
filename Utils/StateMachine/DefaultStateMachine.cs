@@ -1,12 +1,29 @@
+/// <summary>
+/// Maquina de estados basica
+/// </summary>
+/// <typeparam name="E">Tipo de entidad</typeparam>
+/// <typeparam name="S">Tipo de estado</typeparam>
 public class DefaultStateMachine<E, S> : IStateMachine<E, S>
     where E : class
     where S : IState<E>
 {
+    /// <summary>
+    /// Estado actual de <c>DefaultStateMachine</c>
+    /// </summary>
     public S CurrentState { get; set; }
+    /// <summary>
+    /// Estado anterior de <c>DefaultStateMachine</c>
+    /// </summary>
     public S PreviousState { get; set; }
 
+    /// <summary>
+    /// Entidad que tiene la <c>DefaultStateMachine</c>
+    /// </summary>
     public E Entity { get; set; }
 
+    /// <summary>
+    /// Estado global de <c>DefaultStateMachine</c>
+    /// </summary>
     public S GlobalState { get; set; }
 
     public DefaultStateMachine()
@@ -20,25 +37,29 @@ public class DefaultStateMachine<E, S> : IStateMachine<E, S>
 
     public DefaultStateMachine(E owner, S initialState, S globalState)
     {
-        Entity = owner;
-        CurrentState = initialState ?? default;
-        GlobalState = globalState;
+        this.Entity = owner;
+        this.CurrentState = initialState ?? default;
+        this.GlobalState = globalState;
     }
 
+    /// <summary>
+    /// Cambia el esatdo actual por el <c>nextState</c> realizando las funciones Exit y Enter respectivamente
+    /// </summary>
+    /// <param name="nextState">Esatdo que se va a cambiar por el actual</param>
     public void ChangeState(S nextState)
     {
-        PreviousState = CurrentState;
+        this.PreviousState = this.CurrentState;
 
-        if (CurrentState != null)
+        if (this.CurrentState != null)
         {
-            CurrentState.Exit(Entity);
+            this.CurrentState.Exit(Entity);
         }
 
-        CurrentState = nextState;
+        this.CurrentState = nextState;
 
-        if (CurrentState != null)
+        if (this.CurrentState != null)
         {
-            CurrentState.Enter(Entity);
+            this.CurrentState.Enter(this.Entity);
         }
     }
 
@@ -49,20 +70,25 @@ public class DefaultStateMachine<E, S> : IStateMachine<E, S>
 
     public bool RevertToPreviousState()
     {
-        if (PreviousState == null)
+        if (this.PreviousState == null)
         {
             return false;
         }
 
-        ChangeState(PreviousState);
+        ChangeState(this.PreviousState);
         return true;
     }
 
     public void Update()
     {
-        if (CurrentState != null)
+        if (this.CurrentState != null)
         {
-            CurrentState.Update(Entity);
+            this.CurrentState.Update(Entity);
+        }
+
+        if (this.GlobalState != null)
+        {
+            this.GlobalState.Update(Entity);
         }
     }
 }
