@@ -1,6 +1,16 @@
 using Godot;
-using System;
+using MonoCustomResourceRegistry;
+
+[RegisteredType(nameof(InventoryData), "", nameof(Resource))]
 
 public partial class InventoryData : Resource
 {
+    [Export]
+    public SlotData[] SlotDatas;
+
+
+    public InventoryData()
+    {
+        this.SlotDatas = null;
+    }
 }
