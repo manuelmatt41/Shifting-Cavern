@@ -1,4 +1,8 @@
 using Godot;
+using MonoCustomResourceRegistry;
+
+
+[RegisteredType(nameof(ItemData), "", nameof(Resource))]
 
 public partial class ItemData : Resource
 {
@@ -11,12 +15,10 @@ public partial class ItemData : Resource
     [Export]
     public AtlasTexture Texture { get; set; }
 
-    public ItemData() : this("", "", null) { }
-    public ItemData(string name, string description, AtlasTexture texture)
+    public ItemData()
     {
-        this.Name = name;
-        this.Description = description;
-        this.Texture = texture;
+        this.Name = "";
+        this.Description = "";
+        this.Texture = null;
     }
-
 }
