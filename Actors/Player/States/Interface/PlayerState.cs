@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿/// <summary>
+/// Interfaz que hereda de IState y añade a la clase <c>Player</c> como entidad
+/// </summary>
 public interface PlayerState : IState<Player> { }
