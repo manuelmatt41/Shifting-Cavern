@@ -1,25 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6383ylmp6pgp"]
+[gd_scene load_steps=2 format=3 uid="uid://bgii86hvs5n5t"]
 
 [ext_resource type="PackedScene" uid="uid://cf5jfciawdrjp" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
-[ext_resource type="PackedScene" uid="uid://bsisx04idcaub" path="res://Actors/Goblin/goblin.tscn" id="4_n86r1"]
 
 [node name="GameLevel" type="Node2D"]
 y_sort_enabled = true
+scale = Vector2(1.01645, 0.999798)
 
 [node name="Player" parent="." instance=ExtResource("3_kgnd1")]
 position = Vector2(95, 89)
 
-[node name="Goblin" parent="." instance=ExtResource("4_n86r1")]
-position = Vector2(40, 21)
+[node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Goblin2" parent="." instance=ExtResource("4_n86r1")]
-position = Vector2(101, 192)
-
-[node name="Goblin3" parent="." instance=ExtResource("4_n86r1")]
-position = Vector2(235, 111)
-
-[node name="Goblin4" parent="." instance=ExtResource("4_n86r1")]
-position = Vector2(232, 222)
-
-[node name="Goblin5" parent="." instance=ExtResource("4_n86r1")]
-position = Vector2(321, 51)
+[node name="InventoryInterface" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

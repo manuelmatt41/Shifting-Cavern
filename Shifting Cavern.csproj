@@ -5,6 +5,10 @@
     <RootNamespace>ShiftingCavern</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Objects\**" />
+    <EmbeddedResource Remove="Objects\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Update="Godot.SourceGenerators" Version="4.0.2" />
   </ItemGroup>
   <ItemGroup>

@@ -23,6 +23,7 @@ SoundManager="*res://Utils/Sound/SoundManager/sound_manager.tscn"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [dotnet]
