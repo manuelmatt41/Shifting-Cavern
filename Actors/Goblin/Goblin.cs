@@ -138,6 +138,18 @@ public partial class Goblin : CharacterBody2D
         }
     }
 
+    /// <summary>
+    /// Realzia el movimiento de <c>Goblin</c>
+    /// </summary>
+    public void DoWalk()
+    {
+        this.Sprite.FlipH = this.MoveDirection.X < 0;
+
+        this.Velocity = this.MoveSpeed * this.MoveDirection;
+
+        this.MoveAndSlide();
+    }
+
     // TODO Revisar si me compensa los BlendPosition para mi proyecto
     /// <summary>
     /// Cambia la direccion de la animacion

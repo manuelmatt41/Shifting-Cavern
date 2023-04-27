@@ -30,16 +30,12 @@ public class GoblinWalkState : GoblinState
     /// <param name="entity">Entidad <c>Goblin</c></param>
     public void Update(Goblin entity)
     {
+        entity.DoWalk();
+
         if (entity.WantToIdle)
         {
             entity.NextState = GoblinIdleState.Instance();
             return;
         }
-
-        entity.Sprite.FlipH = entity.MoveDirection.X < 0;
-
-        entity.Velocity = entity.MoveSpeed * entity.MoveDirection;
-
-        entity.MoveAndSlide();
     }
 }
