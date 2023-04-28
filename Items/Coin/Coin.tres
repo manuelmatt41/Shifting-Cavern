@@ -8,3 +8,4 @@ script = ExtResource("1_vt34b")
 Name = "Coin"
 Description = "Gold coin"
 Texture = ExtResource("1_i2u41")
+IsStackable = true
