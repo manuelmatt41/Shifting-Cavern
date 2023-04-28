@@ -1,7 +1,8 @@
-[gd_scene load_steps=45 format=3 uid="uid://cf5jfciawdrjp"]
+[gd_scene load_steps=46 format=3 uid="uid://cf5jfciawdrjp"]
 
 [ext_resource type="Script" path="res://Actors/Player/Player.cs" id="1_vfry5"]
 [ext_resource type="Texture2D" uid="uid://dhdwuuvq5hcgy" path="res://Actors/Player/Assets/AnimationSprite/red hood itch free Copy-Sheet.png" id="2_cwwph"]
+[ext_resource type="Resource" uid="uid://vwe3b637hqcy" path="res://Utils/Inventory/InventoryData/testInv.tres" id="2_h6b8u"]
 [ext_resource type="PackedScene" uid="uid://b1gy3wjutwxxt" path="res://Utils/HurtBox/hurt_box.tscn" id="3_xnb4t"]
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="4_fik2y"]
 
@@ -234,8 +235,10 @@ size = Vector2(8.15561, 17.5205)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 3
+collision_layer = 9
 motion_mode = 1
 script = ExtResource("1_vfry5")
+InventoryData = ExtResource("2_h6b8u")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -246,7 +249,6 @@ vframes = 11
 frame = 82
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 20)
 rotation = 3.13999
 scale = Vector2(0.494553, -0.842653)

@@ -26,6 +26,9 @@ public partial class Player : CharacterBody2D
     /// </summary>
     public const string IDLE_ANIMATION_NAME = "Idle";
 
+    [Signal]
+    public delegate void ToogleInventoryControlEventHandler();
+
     /// <summary>
     /// Velocidad de movimiento de <c>Player</c> en px/s
     /// </summary>
@@ -46,6 +49,9 @@ public partial class Player : CharacterBody2D
     /// <value>Por defecto: 3</value>
     [Export]
     public float DashSpeed { get; set; } = 3f;
+
+    [Export]
+    public InventoryData InventoryData { get; set; }
 
     /// <summary>
     /// Camara principal del juego que sigue a <c>Player</c>
@@ -129,7 +135,7 @@ public partial class Player : CharacterBody2D
     /// <value><c>True</c> si ha pulsado el click izquierdo del raton sino <c>false</c></value>
     public bool WantToAttack
     {
-        get => Input.IsActionJustPressed("Attack");
+        get => Input.IsActionJustPressed("Attack") && !this.IsInventoryVisible;
     }
 
     /// <summary>
@@ -141,7 +147,7 @@ public partial class Player : CharacterBody2D
         get => Input.GetActionStrength("Dash") == 1 && this.DashCooldownTimer.IsStopped();
     }
 
-    //public IWeapon Weapon { get; set; } //TODO Ver si me compensa usar dynamic
+    public bool IsInventoryVisible { get; set; } //TODO Rehacer codigo
 
     /// <summary>
     /// Maquina de estados de <c>Player</c>
@@ -197,6 +203,14 @@ public partial class Player : CharacterBody2D
         if (!this._defaultStateMachine.IsInState(this.NextState))
         {
             this._defaultStateMachine.ChangeState(this.NextState);
+        }
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (Input.IsActionJustPressed("ToogleInventory"))
+        {
+            this.EmitSignal(SignalName.ToogleInventoryControl);
         }
     }
 
