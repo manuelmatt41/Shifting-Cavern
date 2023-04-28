@@ -20,6 +20,9 @@ public partial class Goblin : CharacterBody2D
     /// </summary>
     public const string IDLE_ANIMATION_NAME = "Idle";
 
+    [Signal]
+    public delegate void DropLootEventHandler(SlotData[] loot, Vector2 position);
+
     /// <summary>
     /// Velocidad de movimiento de <c>Goblin</c>
     /// </summary>
@@ -100,6 +103,9 @@ public partial class Goblin : CharacterBody2D
     /// Posicion a la que se movera el Goblin
     /// </summary>
     private Vector2 _finishPosition;
+
+    [Export]
+    public InventoryData LootTable { get; set; }
 
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de <c>Goblin</c>
@@ -210,6 +216,7 @@ public partial class Goblin : CharacterBody2D
         if (this.Life <= 0)
         {
             SoundManager.Instance.PlayGoblinDeadSound();
+            this.EmitSignal(SignalName.DropLoot, this.LootTable.SlotDatas, this.GlobalPosition);
             this.QueueFree();
         }
     }
