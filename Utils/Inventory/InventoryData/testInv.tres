@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://vwe3b637hqcy"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://vwe3b637hqcy"]
 
-[ext_resource type="Resource" uid="uid://bemf040w2muw" path="res://Utils/Inventory/SlotData/Test1.tres" id="1_3dmtc"]
+[ext_resource type="Resource" uid="uid://bocl2d1rbajes" path="res://Utils/Inventory/SlotData/Test1.tres" id="1_3dmtc"]
 [ext_resource type="Script" path="res://Utils/Inventory/InventoryData/InventoryData.cs" id="1_pj2nn"]
 [ext_resource type="Resource" uid="uid://b7mp6yvi4d7o" path="res://Utils/Inventory/SlotData/Test2.tres" id="2_7jwel"]
+[ext_resource type="Resource" uid="uid://10oegwygu2pq" path="res://Utils/Inventory/SlotData/Test3.tres" id="3_cleb0"]
 
 [resource]
 script = ExtResource("1_pj2nn")
-SlotDatas = Array[Resource]([ExtResource("1_3dmtc"), null, null, null, null, null, ExtResource("2_7jwel"), null, null, null])
+SlotDatas = Array[Resource]([ExtResource("1_3dmtc"), null, null, ExtResource("2_7jwel"), null, null, ExtResource("3_cleb0"), null, null])
