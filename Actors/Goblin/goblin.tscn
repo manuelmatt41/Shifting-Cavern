@@ -256,6 +256,12 @@ position = Vector2(2, 5)
 scale = Vector2(0.993434, 1.04146)
 shape = SubResource("CircleShape2D_mhcuu")
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 9)
+scale = Vector2(1.07402, -1.1302)
+target_position = Vector2(27.0013, 0)
+collision_mask = 2
+
 [connection signal="animation_finished" from="AnimationTree" to="." method="OnAnimationPlayerFinished"]
 [connection signal="animation_started" from="AnimationTree" to="." method="OnAniamtionPlayerStarted"]
 [connection signal="Hurt" from="HurtBox" to="." method="OnHurtBoxHurt"]
