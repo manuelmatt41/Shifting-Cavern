@@ -1,24 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgii86hvs5n5t"]
+[gd_scene load_steps=5 format=3 uid="uid://lgy1fh5dda2l"]
 
-[ext_resource type="PackedScene" uid="uid://cfenn0ta2hs0u" path="res://Utils/Inventory/InventoryUI/inventory_ui.tscn" id="2_ubkp3"]
+[ext_resource type="Script" path="res://Levels/GameLevel.cs" id="1_ycst7"]
 [ext_resource type="PackedScene" uid="uid://cf5jfciawdrjp" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
+[ext_resource type="PackedScene" uid="uid://bknsj4ktkx4x1" path="res://UI/Inventory/InventoryControl/inventory_control.tscn" id="3_vwxxo"]
+[ext_resource type="PackedScene" uid="uid://bsisx04idcaub" path="res://Actors/Goblin/goblin.tscn" id="4_0etjl"]
 
 [node name="GameLevel" type="Node2D"]
 y_sort_enabled = true
 scale = Vector2(1.01645, 0.999798)
+script = ExtResource("1_ycst7")
 
 [node name="Player" parent="." instance=ExtResource("3_kgnd1")]
 position = Vector2(95, 89)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="InventoryInterface" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="InventoryControl" parent="UI" instance=ExtResource("3_vwxxo")]
+visible = false
 
-[node name="InventoryUi" parent="UI/InventoryInterface" instance=ExtResource("2_ubkp3")]
-layout_mode = 0
+[node name="Goblin2" parent="." instance=ExtResource("4_0etjl")]
+position = Vector2(552.905, 73.0147)
+scale = Vector2(1, 1)
+
+[node name="Goblin" parent="." instance=ExtResource("4_0etjl")]
+
+[connection signal="DropSlotData" from="UI/InventoryControl" to="." method="OnInventoryControlDropSlotData"]
+
+[editable path="UI/InventoryControl"]
