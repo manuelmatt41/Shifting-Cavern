@@ -119,7 +119,7 @@ public partial class InventoryData : Resource
     }
 
     /// <summary>
-    /// Coge un <c>SlotData</c> y lo anyade en la posicion donde tenga el mismo item y pueda juntarlo o sino en la primera posicion vacia sino no lo añade al inventario
+    /// Coge un <c>SlotData</c> y lo anyade en la posicion donde tenga el mismo item y pueda juntarlo o sino en la primera posicion vacia sino no lo anyade al inventario
     /// </summary>
     /// <param name="slotData"><c>SlotData</c> que se va anyadir al inventario</param>
     /// <returns><c>true</c> si lo anyadio al inventario sino <c>false</c></returns>
