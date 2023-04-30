@@ -3,9 +3,13 @@ using Godot;
 public partial class GameLevel : Node2D
 {
     public Player Player { get; set; }
+
     //public Goblin Goblin { get; set; }
     //public Goblin Goblin2 { get; set; }
     public InventoryControl InventoryControl { get; set; }
+
+    public Chest Chest { get; set; }
+    public Chest Chest2 { get; set; }
 
     public readonly PackedScene PickUpItem = GD.Load<PackedScene>(
         "res://Utils/PickUpItem/pick_up_item.tscn"
@@ -16,6 +20,8 @@ public partial class GameLevel : Node2D
         this.Player = this.GetNode<Player>("Player");
         //this.Goblin = this.GetNode<Goblin>("Goblin");
         //this.Goblin2 = this.GetNode<Goblin>("Goblin2");
+        this.Chest = this.GetNode<Chest>("Chest");
+        this.Chest2 = this.GetNode<Chest>("Chest2");
         this.InventoryControl = this.GetNode<CanvasLayer>("UI")
             .GetNode<InventoryControl>("InventoryControl");
 
@@ -24,11 +30,14 @@ public partial class GameLevel : Node2D
         //this.Goblin2.DropLoot += this.OnDropLoot;
 
         this.InventoryControl.SetPlayerInventoryData(this.Player.InventoryData);
+        this.Chest.OpenChestInventory += this.OnOpenChestInventory;
+        this.Chest2.OpenChestInventory += this.OnOpenChestInventory;
     }
 
     private void OnToogleInventoryInterface()
     {
         this.InventoryControl.Visible = !this.InventoryControl.Visible;
+        this.InventoryControl.ExternalInvetoryUI.Visible = false;
         this.Player.IsInventoryVisible = this.InventoryControl.Visible;
         //Input.MouseMode = this.InventoryControl.Visible
         //    ? Input.MouseModeEnum.Visible
@@ -58,5 +67,19 @@ public partial class GameLevel : Node2D
 
             this.CallDeferred("add_child", itemPickUp);
         }
+    }
+
+    private void OnOpenChestInventory(InventoryData inventoryData)
+    {
+        GD.Print("Open chest");
+        if (!this.InventoryControl.Visible)
+        {
+            this.InventoryControl.Visible = true;
+        }
+
+        this.InventoryControl.ExternalInvetoryUI.Visible = false;
+        this.InventoryControl.SetExternalInventoryData(inventoryData);
+        this.InventoryControl.ExternalInvetoryUI.Visible = true;
+        this.Player.IsInventoryVisible = this.InventoryControl.Visible;
     }
 }

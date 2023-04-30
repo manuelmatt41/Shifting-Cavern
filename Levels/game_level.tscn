@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://lgy1fh5dda2l"]
+[gd_scene load_steps=7 format=3 uid="uid://lgy1fh5dda2l"]
 
 [ext_resource type="Script" path="res://Levels/GameLevel.cs" id="1_ycst7"]
 [ext_resource type="PackedScene" uid="uid://cf5jfciawdrjp" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
 [ext_resource type="PackedScene" uid="uid://bknsj4ktkx4x1" path="res://UI/Inventory/InventoryControl/inventory_control.tscn" id="3_vwxxo"]
+[ext_resource type="Resource" uid="uid://d4f1q4rbmyxh4" path="res://InteractiveObjects/Chest/ChestInvetoryTest.tres" id="5_8087s"]
 [ext_resource type="PackedScene" uid="uid://ddh7wus86aybl" path="res://InteractiveObjects/Chest/chest.tscn" id="5_fk77m"]
+[ext_resource type="Resource" uid="uid://pn172cg0lc51" path="res://InteractiveObjects/Chest/ChestInvetoryTest2.tres" id="5_o8jnx"]
 
 [node name="GameLevel" type="Node2D"]
 y_sort_enabled = true
@@ -18,8 +20,14 @@ position = Vector2(95, 89)
 [node name="InventoryControl" parent="UI" instance=ExtResource("3_vwxxo")]
 visible = false
 
+[node name="Chest2" parent="." instance=ExtResource("5_fk77m")]
+position = Vector2(125.928, 209.042)
+scale = Vector2(1, 1)
+InventoryData = ExtResource("5_o8jnx")
+
 [node name="Chest" parent="." instance=ExtResource("5_fk77m")]
 position = Vector2(253.825, 145.029)
+InventoryData = ExtResource("5_8087s")
 
 [connection signal="DropSlotData" from="UI/InventoryControl" to="." method="OnInventoryControlDropSlotData"]
 

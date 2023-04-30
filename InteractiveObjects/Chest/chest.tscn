@@ -20,5 +20,4 @@ region_rect = Rect2(352, 352, 32, 32)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_go60t")
 
-[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
-[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="input_event" from="." to="." method="OnInputEvent"]

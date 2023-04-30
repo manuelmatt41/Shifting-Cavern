@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c32b4l1qc2foy"]
+
+[ext_resource type="Resource" uid="uid://7qbbbl1gahwk" path="res://Items/Coin/Coin.tres" id="1_6ange"]
+[ext_resource type="Script" path="res://Utils/Inventory/SlotData/SlotData.cs" id="2_xofml"]
+
+[resource]
+script = ExtResource("2_xofml")
+ItemData = ExtResource("1_6ange")
+Quantity = 2
+DropRate = 100

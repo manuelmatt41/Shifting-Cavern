@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://pn172cg0lc51"]
+
+[ext_resource type="Resource" uid="uid://ltt2huxd8u3k" path="res://InteractiveObjects/Chest/ChestLoot2.tres" id="1_krfdd"]
+[ext_resource type="Script" path="res://Utils/Inventory/InventoryData/InventoryData.cs" id="2_4nmmn"]
+
+[resource]
+script = ExtResource("2_4nmmn")
+SlotDatas = Array[Resource]([null, ExtResource("1_krfdd"), null])

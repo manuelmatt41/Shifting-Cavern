@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ltt2huxd8u3k"]
+
+[ext_resource type="Resource" uid="uid://7qbbbl1gahwk" path="res://Items/Coin/Coin.tres" id="1_ikf1s"]
+[ext_resource type="Script" path="res://Utils/Inventory/SlotData/SlotData.cs" id="2_imo6f"]
+
+[resource]
+script = ExtResource("2_imo6f")
+ItemData = ExtResource("1_ikf1s")
+Quantity = 2
+DropRate = 100

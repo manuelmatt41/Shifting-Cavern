@@ -16,12 +16,14 @@ public partial class InventoryControl : Control
     /// <summary>
     /// Interfaz que repsenta el inventario del juagador
     /// </summary>
-    public InventoryUI InventoryUI { get; set; }
+    public InventoryUI PlayerInventory { get; set; }
 
     /// <summary>
     /// <c>SlotUI</c> que se cogio con el raton
     /// </summary>
     public SlotUI GrabbedSlotUI { get; set; }
+
+    public InventoryUI ExternalInvetoryUI { get; set; }
 
     /// <summary>
     /// <c>SlotData</c> que se cogio con el raton
@@ -33,8 +35,9 @@ public partial class InventoryControl : Control
     /// </summary>
     public override void _Ready()
     {
-        this.InventoryUI = this.GetNode<InventoryUI>("InventoryUI");
+        this.PlayerInventory = this.GetNode<InventoryUI>("PlayerInventory");
         this.GrabbedSlotUI = this.GetNode<SlotUI>("GrabbedSlot");
+        this.ExternalInvetoryUI = this.GetNode<InventoryUI>("ExternalInventoryUI");
     }
 
     /// <summary>
@@ -55,7 +58,18 @@ public partial class InventoryControl : Control
     public void SetPlayerInventoryData(InventoryData inventoryData)
     {
         inventoryData.InventoryInteract += this.OnInventoryInteract;
-        this.InventoryUI.SetInventoryData(inventoryData);
+        this.PlayerInventory.SetInventoryData(inventoryData);
+    }
+
+    /// <summary>
+    /// Coloca la informacion del inventario de una fuenta externa en el <c>ExternalInventoryUI</c>
+    /// </summary>
+    /// <param name="inventoryData">Informacion del inventario de <c>Player</c></param>
+    public void SetExternalInventoryData(InventoryData inventoryData)
+    {
+        inventoryData.InventoryInteract -= this.OnInventoryInteract;
+        inventoryData.InventoryInteract += this.OnInventoryInteract;
+        this.ExternalInvetoryUI.SetInventoryData(inventoryData);
     }
 
     /// <summary>

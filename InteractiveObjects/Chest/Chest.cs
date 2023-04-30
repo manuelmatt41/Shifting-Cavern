@@ -3,13 +3,21 @@ using System;
 
 public partial class Chest : RigidBody2D
 {
-    private void OnMouseEntered()
-    {
-        this.Hide();
-    }
+    [Signal]
+    public delegate void OpenChestInventoryEventHandler(InventoryData chestInventory);
 
-    private void OnMouseExited()
+    [Export]
+    public InventoryData InventoryData { get; set; }
+
+    private void OnInputEvent(Node viewport, InputEvent @event, int shapeIdx)
     {
-        this.Show();
+        if (
+            @event is InputEventMouseButton mouseEvent
+            && mouseEvent.ButtonIndex == MouseButton.Right
+            && mouseEvent.IsPressed()
+        )
+        {
+            this.EmitSignal(SignalName.OpenChestInventory, this.InventoryData);
+        }
     }
 }
