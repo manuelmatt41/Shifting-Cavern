@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bpmyewuer4lkl"]
+
+[ext_resource type="Texture2D" uid="uid://dkuivlawutsnk" path="res://Items/RottenFish/RottenFishTexture.tres" id="1_dp1nb"]
+[ext_resource type="Script" path="res://Utils/Inventory/ItemData/ItemData.cs" id="1_wuouv"]
+
+[resource]
+script = ExtResource("1_wuouv")
+Name = "Rotten fish"
+Description = "Ewww."
+Texture = ExtResource("1_dp1nb")
+IsStackable = true

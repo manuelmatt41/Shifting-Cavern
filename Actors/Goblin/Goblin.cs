@@ -205,7 +205,7 @@ public partial class Goblin : CharacterBody2D
     }
 
     /// <summary>
-    /// Evento que ejecuta al recibir danyo, reduciendo la vida de <c>Goblin</c> y cambiando a <c>GoblinHitState</c>, luego comprueba si no le queda vida a <c>Goblin</c> y emite el sonido <c>PlayGoblinDeadSound</c> y elimina el nodo
+    /// Evento que ejecuta al recibir danyo, reduciendo la vida de <c>Goblin</c> y cambiando a <c>GoblinHitState</c>, luego comprueba si no le queda vida a <c>Goblin</c> y emite el sonido <c>PlayGoblinDeadSound</c> y lo elimina soltando los items de su inventario de forma aleatoria.
     /// </summary>
     /// <param name="damage">Danyo recibido</param>
     private void OnHurtBoxHurt(double damage)
@@ -216,7 +216,7 @@ public partial class Goblin : CharacterBody2D
         if (this.Life <= 0)
         {
             SoundManager.Instance.PlayGoblinDeadSound();
-            this.EmitSignal(SignalName.DropLoot, this.LootTable.SlotDatas, this.GlobalPosition);
+            this.EmitSignal(SignalName.DropLoot, this.LootTable.DropRandomSlotDatas(), this.GlobalPosition);
             this.QueueFree();
         }
     }

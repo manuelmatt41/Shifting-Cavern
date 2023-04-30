@@ -1,50 +1,86 @@
-using Godot;
 using System;
-using System.Reflection.Metadata.Ecma335;
+using Godot;
 
+/// <summary>
+/// Clase que representa al control de inventarios del juego
+/// </summary>
 public partial class InventoryControl : Control
 {
+    /// <summary>
+    /// Evento que se lanza al soltar un <c>SlotData</c> fuera del inventario
+    /// </summary>
+    /// <param name="slotData"><c>SlotData</c> que se ha lanzado</param>
     [Signal]
     public delegate void DropSlotDataEventHandler(SlotData slotData);
+
+    /// <summary>
+    /// Interfaz que repsenta el inventario del juagador
+    /// </summary>
     public InventoryUI InventoryUI { get; set; }
 
-    public SlotUI GrabbedSlot { get; set; }
+    /// <summary>
+    /// <c>SlotUI</c> que se cogio con el raton
+    /// </summary>
+    public SlotUI GrabbedSlotUI { get; set; }
 
+    /// <summary>
+    /// <c>SlotData</c> que se cogio con el raton
+    /// </summary>
     public SlotData GrabbedSlotData { get; set; }
 
+    /// <summary>
+    /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>InventoryControl</c>
+    /// </summary>
     public override void _Ready()
     {
         this.InventoryUI = this.GetNode<InventoryUI>("InventoryUI");
-        this.GrabbedSlot = this.GetNode<SlotUI>("GrabbedSlot");
+        this.GrabbedSlotUI = this.GetNode<SlotUI>("GrabbedSlot");
     }
 
+    /// <summary>
+    /// Funcion integrada de Godot que se ejecuta entre frames de fisicas, para que el <c>SlotUI</c> que se cogio siga al raton
+    /// </summary>
     public override void _PhysicsProcess(double delta)
     {
-        if (this.GrabbedSlot.Visible)
+        if (this.GrabbedSlotUI.Visible)
         {
-            this.GrabbedSlot.GlobalPosition = this.GetGlobalMousePosition() + new Vector2(5, 5);
+            this.GrabbedSlotUI.GlobalPosition = this.GetGlobalMousePosition() + new Vector2(5, 5);
         }
     }
 
+    /// <summary>
+    /// Coloca la informacion del inventario de <c>Player</c> en el <c>InventoryUI</c>
+    /// </summary>
+    /// <param name="inventoryData">Informacion del inventario de <c>Player</c></param>
     public void SetPlayerInventoryData(InventoryData inventoryData)
     {
         inventoryData.InventoryInteract += this.OnInventoryInteract;
         this.InventoryUI.SetInventoryData(inventoryData);
     }
 
+    /// <summary>
+    /// Actualiza el <c>SlotUI</c> y se cogio con el raton si se coge nueva <c>SlotData</c>
+    /// </summary>
     public void UpdateGrabbedSlot()
     {
         if (this.GrabbedSlotData != null)
         {
-            this.GrabbedSlot.Show();
-            this.GrabbedSlot.SetSlotData(this.GrabbedSlotData);
+            this.GrabbedSlotUI.Show();
+            this.GrabbedSlotUI.SetSlotData(this.GrabbedSlotData);
         }
         else
         {
-            this.GrabbedSlot.Hide();
+            this.GrabbedSlotUI.Hide();
         }
     }
 
+    /// <summary>
+    /// Funcion que se ejecuta al interactuar con el <c>InventoryUI</c> para comprobar que tipo de <c>SlotUI</c> se ha pulsado y la inforamcion que contenia
+    /// </summary>
+    /// <param name="inventoryData">Informacion del inventario que se ha pulsado</param>
+    /// <param name="index">Indice del <c>SlotUI</c> se ha interactuado</param>
+    /// <param name="mouseButtonIndex">Boton del raton que se ha pulsado al interactuar</param>
+    /// <exception cref="ArgumentException"></exception>
     private void OnInventoryInteract(InventoryData inventoryData, int index, int mouseButtonIndex)
     {
         this.GrabbedSlotData = new
@@ -71,6 +107,10 @@ public partial class InventoryControl : Control
         this.UpdateGrabbedSlot();
     }
 
+    /// <summary>
+    /// Funcion que se ejcuta al interactuar  con <c>InvetoryControl</c> comprueba que suelta el <c>SlotData</c> que tiene el raton a donde se este pulsando ya sea fuera o dentro del inventario
+    /// </summary>
+    /// <param name="event">Tipo de evento que se lanzo al interactuar</param>
     private void OnGuiInput(InputEvent @event)
     {
         if (
@@ -103,6 +143,9 @@ public partial class InventoryControl : Control
         }
     }
 
+    /// <summary>
+    /// Funcion que se ejecuta al cambiar la visibilidad de <c>InventoryControl</c> haciendo que el objeto que se tenga en el raton se suelte de forma automatica
+    /// </summary>
     private void OnInventoryControlVisibilityChanged()
     {
         if (!this.Visible && this.GrabbedSlotData != null)

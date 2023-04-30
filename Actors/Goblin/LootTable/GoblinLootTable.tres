@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dhcl1mtcn8a6t"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://3lna3yj2vm1h"]
 
 [ext_resource type="Script" path="res://Utils/Inventory/InventoryData/InventoryData.cs" id="1_3sn3p"]
-[ext_resource type="Resource" uid="uid://c16a53giecomc" path="res://Actors/Goblin/LootTable/Coin.tres" id="1_vgfcy"]
+[ext_resource type="Resource" uid="uid://c16a53giecomc" path="res://Actors/Goblin/LootTable/GoblinLootCoin.tres" id="1_i2lfm"]
+[ext_resource type="Resource" uid="uid://bh6fcioggkukn" path="res://Actors/Goblin/LootTable/GoblinLootRottenFish.tres" id="2_0ssin"]
 
 [resource]
 script = ExtResource("1_3sn3p")
-SlotDatas = Array[Resource]([ExtResource("1_vgfcy")])
+SlotDatas = Array[Resource]([ExtResource("1_i2lfm"), ExtResource("2_0ssin")])

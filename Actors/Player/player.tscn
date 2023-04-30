@@ -242,6 +242,7 @@ InventoryData = ExtResource("2_h6b8u")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_cwwph")
 flip_h = true
 hframes = 12

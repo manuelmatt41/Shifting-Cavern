@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="3_2brno"]
 [ext_resource type="PackedScene" uid="uid://b1gy3wjutwxxt" path="res://Utils/HurtBox/hurt_box.tscn" id="4_n3v4g"]
 [ext_resource type="PackedScene" uid="uid://c7e2s7cin6dvs" path="res://Utils/WardArea/ward_area.tscn" id="5_2epep"]
-[ext_resource type="Resource" uid="uid://dhcl1mtcn8a6t" path="res://Actors/Goblin/LootTable/GoblinLootTable.tres" id="7_txfih"]
+[ext_resource type="Resource" uid="uid://3lna3yj2vm1h" path="res://Actors/Goblin/LootTable/GoblinLootTable.tres" id="7_txfih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lk4pr"]
 size = Vector2(7.5, 18.5)

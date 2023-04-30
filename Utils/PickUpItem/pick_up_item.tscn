@@ -11,7 +11,6 @@ script = ExtResource("1_psq6o")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(0.35, 0.35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_e7p87")

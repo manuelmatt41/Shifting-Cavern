@@ -219,7 +219,7 @@ public partial class Player : CharacterBody2D
     /// </summary>
     public void DoWalk()
     {
-        SoundManager.Instance.PlayRandomPlayerWalkSound();
+        //SoundManager.Instance.PlayRandomPlayerWalkSound();
 
         this.SelectNewDirection();
 

@@ -1,4 +1,5 @@
 using Godot;
+
 /// <summary>
 /// Clase que representa una caja de colisiones para danyar a otras entidades
 /// </summary>
@@ -21,6 +22,7 @@ public partial class HitBox : Area2D
     /// <c>Timer</c> que comprueba el tiempo que se va a desactivar las colisiones
     /// </summary>
     public Timer DisableTimer { get; private set; }
+
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>HurtBox</c>
     /// </summary>

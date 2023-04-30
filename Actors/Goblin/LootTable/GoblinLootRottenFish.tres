@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bh6fcioggkukn"]
+
+[ext_resource type="Script" path="res://Utils/Inventory/SlotData/SlotData.cs" id="1_7f4jp"]
+[ext_resource type="Resource" uid="uid://bpmyewuer4lkl" path="res://Items/RottenFish/RottenFish.tres" id="1_eol67"]
+
+[resource]
+script = ExtResource("1_7f4jp")
+ItemData = ExtResource("1_eol67")
+Quantity = 0
+DropRate = 75

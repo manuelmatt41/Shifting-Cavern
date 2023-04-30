@@ -3,8 +3,8 @@ using Godot;
 public partial class GameLevel : Node2D
 {
     public Player Player { get; set; }
-    public Goblin Goblin { get; set; }
-    public Goblin Goblin2 { get; set; }
+    //public Goblin Goblin { get; set; }
+    //public Goblin Goblin2 { get; set; }
     public InventoryControl InventoryControl { get; set; }
 
     public readonly PackedScene PickUpItem = GD.Load<PackedScene>(
@@ -14,14 +14,14 @@ public partial class GameLevel : Node2D
     public override void _Ready()
     {
         this.Player = this.GetNode<Player>("Player");
-        this.Goblin = this.GetNode<Goblin>("Goblin");
-        this.Goblin2 = this.GetNode<Goblin>("Goblin2");
+        //this.Goblin = this.GetNode<Goblin>("Goblin");
+        //this.Goblin2 = this.GetNode<Goblin>("Goblin2");
         this.InventoryControl = this.GetNode<CanvasLayer>("UI")
             .GetNode<InventoryControl>("InventoryControl");
 
         this.Player.ToogleInventoryControl += this.OnToogleInventoryInterface;
-        this.Goblin.DropLoot += this.OnDropLoot;
-        this.Goblin2.DropLoot += this.OnDropLoot;
+        //this.Goblin.DropLoot += this.OnDropLoot;
+        //this.Goblin2.DropLoot += this.OnDropLoot;
 
         this.InventoryControl.SetPlayerInventoryData(this.Player.InventoryData);
     }

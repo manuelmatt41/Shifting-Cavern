@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Levels/GameLevel.cs" id="1_ycst7"]
 [ext_resource type="PackedScene" uid="uid://cf5jfciawdrjp" path="res://Actors/Player/player.tscn" id="3_kgnd1"]
 [ext_resource type="PackedScene" uid="uid://bknsj4ktkx4x1" path="res://UI/Inventory/InventoryControl/inventory_control.tscn" id="3_vwxxo"]
-[ext_resource type="PackedScene" uid="uid://bsisx04idcaub" path="res://Actors/Goblin/goblin.tscn" id="4_0etjl"]
+[ext_resource type="PackedScene" uid="uid://ddh7wus86aybl" path="res://InteractiveObjects/Chest/chest.tscn" id="5_fk77m"]
 
 [node name="GameLevel" type="Node2D"]
 y_sort_enabled = true
@@ -18,11 +18,8 @@ position = Vector2(95, 89)
 [node name="InventoryControl" parent="UI" instance=ExtResource("3_vwxxo")]
 visible = false
 
-[node name="Goblin2" parent="." instance=ExtResource("4_0etjl")]
-position = Vector2(552.905, 73.0147)
-scale = Vector2(1, 1)
-
-[node name="Goblin" parent="." instance=ExtResource("4_0etjl")]
+[node name="Chest" parent="." instance=ExtResource("5_fk77m")]
+position = Vector2(253.825, 145.029)
 
 [connection signal="DropSlotData" from="UI/InventoryControl" to="." method="OnInventoryControlDropSlotData"]
 
