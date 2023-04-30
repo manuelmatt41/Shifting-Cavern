@@ -38,10 +38,8 @@ public partial class GameLevel : Node2D
     {
         this.InventoryControl.Visible = !this.InventoryControl.Visible;
         this.InventoryControl.ExternalInvetoryUI.Visible = false;
+        this.InventoryControl.PlayerInventory.AnchorsPreset = 8;
         this.Player.IsInventoryVisible = this.InventoryControl.Visible;
-        //Input.MouseMode = this.InventoryControl.Visible
-        //    ? Input.MouseModeEnum.Visible
-        //    : Input.MouseModeEnum.Hidden;
     }
 
     private void OnInventoryControlDropSlotData(SlotData slotData)
@@ -77,9 +75,21 @@ public partial class GameLevel : Node2D
             this.InventoryControl.Visible = true;
         }
 
-        this.InventoryControl.ExternalInvetoryUI.Visible = false;
         this.InventoryControl.SetExternalInventoryData(inventoryData);
         this.InventoryControl.ExternalInvetoryUI.Visible = true;
+
+        this.InventoryControl.PlayerInventory.AnchorsPreset = 4;
+        this.InventoryControl.PlayerInventory.Position = new(
+            75,
+            this.InventoryControl.PlayerInventory.Position.Y
+        );
+
+        this.InventoryControl.ExternalInvetoryUI.AnchorsPreset = 6;
+        this.InventoryControl.ExternalInvetoryUI.Position = new(
+            this.InventoryControl.ExternalInvetoryUI.Position.X - 75,
+            this.InventoryControl.ExternalInvetoryUI.Position.Y
+        );
+
         this.Player.IsInventoryVisible = this.InventoryControl.Visible;
     }
 }

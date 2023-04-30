@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bknsj4ktkx4x1"]
+[gd_scene load_steps=5 format=3 uid="uid://bknsj4ktkx4x1"]
 
 [ext_resource type="Script" path="res://UI/Inventory/InventoryControl/InventoryControl.cs" id="1_8tler"]
 [ext_resource type="PackedScene" uid="uid://b35ry7x4w2vyp" path="res://UI/Inventory/InventoryUI/inventory_ui.tscn" id="2_j7lgl"]
 [ext_resource type="PackedScene" uid="uid://dqqew1wcakh6c" path="res://UI/Inventory/SlotUi/slot_ui.tscn" id="3_hngyn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_176kc"]
 
 [node name="InventoryControl" type="Control"]
 layout_mode = 3
@@ -15,19 +17,17 @@ script = ExtResource("1_8tler")
 
 [node name="PlayerInventory" parent="." instance=ExtResource("2_j7lgl")]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
+anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -8.0
 offset_top = -8.0
-offset_right = 16.0
+offset_right = 8.0
 offset_bottom = 8.0
+grow_horizontal = 2
 grow_vertical = 2
-
-[node name="GrabbedSlot" parent="." instance=ExtResource("3_hngyn")]
-visible = false
-layout_mode = 0
-offset_right = 64.0
-offset_bottom = 64.0
 
 [node name="ExternalInventoryUI" parent="." instance=ExtResource("2_j7lgl")]
 visible = false
@@ -43,6 +43,13 @@ offset_right = 0.0
 offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="GrabbedSlot" parent="." instance=ExtResource("3_hngyn")]
+visible = false
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_176kc")
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="OnInventoryControlVisibilityChanged"]
