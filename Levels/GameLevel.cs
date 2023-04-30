@@ -4,7 +4,7 @@ public partial class GameLevel : Node2D
 {
     public Player Player { get; set; }
 
-    //public Goblin Goblin { get; set; }
+    public Goblin Goblin { get; set; }
     //public Goblin Goblin2 { get; set; }
     public InventoryControl InventoryControl { get; set; }
 
@@ -18,7 +18,7 @@ public partial class GameLevel : Node2D
     public override void _Ready()
     {
         this.Player = this.GetNode<Player>("Player");
-        //this.Goblin = this.GetNode<Goblin>("Goblin");
+        this.Goblin = this.GetNode<Goblin>("Goblin");
         //this.Goblin2 = this.GetNode<Goblin>("Goblin2");
         this.Chest = this.GetNode<Chest>("Chest");
         this.Chest2 = this.GetNode<Chest>("Chest2");
@@ -26,7 +26,7 @@ public partial class GameLevel : Node2D
             .GetNode<InventoryControl>("InventoryControl");
 
         this.Player.ToogleInventoryControl += this.OnToogleInventoryInterface;
-        //this.Goblin.DropLoot += this.OnDropLoot;
+        this.Goblin.DropLoot += this.OnDropLoot;
         //this.Goblin2.DropLoot += this.OnDropLoot;
 
         this.InventoryControl.SetPlayerInventoryData(this.Player.InventoryData);
