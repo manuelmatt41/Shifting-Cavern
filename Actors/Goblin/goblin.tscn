@@ -265,7 +265,7 @@ collision_mask = 2
 [connection signal="animation_finished" from="AnimationTree" to="." method="OnAnimationPlayerFinished"]
 [connection signal="animation_started" from="AnimationTree" to="." method="OnAniamtionPlayerStarted"]
 [connection signal="Hurt" from="HurtBox" to="." method="OnHurtBoxHurt"]
-[connection signal="ChangeDirection" from="WardArea" to="." method="OnWardAreaChangeDirection"]
+[connection signal="DetectPlayer" from="WardArea" to="." method="OnDetectPlayer"]
 
 [editable path="HitBox"]
 [editable path="HurtBox"]

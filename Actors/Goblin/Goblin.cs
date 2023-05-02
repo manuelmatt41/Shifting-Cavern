@@ -45,6 +45,12 @@ public partial class Goblin : CharacterBody2D
     public double Life { get; set; } = 100;
 
     /// <summary>
+    /// Tiempo que tarda en mandar una nueva direccion
+    /// </summary>
+    [Export]
+    public double ChangeDirectionTime { get; private set; } = 5;
+
+    /// <summary>
     /// Arbol de animaciones de <c>Goblin</c>
     /// </summary>
     public AnimationTree AnimationTree { get; private set; }
@@ -63,6 +69,8 @@ public partial class Goblin : CharacterBody2D
     /// Maquina de estados de las animaciones de <c>Goblin</c>
     /// </summary>
     public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; private set; }
+
+    public WardArea WardArea { get; private set; }
 
     /// <summary>
     /// Estado que al que se va cambiar en la maquina de estados
@@ -85,7 +93,9 @@ public partial class Goblin : CharacterBody2D
     /// <value><c>True</c> si <c>Goblin</c> no ha llegado a <c>_finishPosition</c>, <c>false</c> si  ha llegado</value>
     public bool WantToWalk
     {
-        get => this.GlobalPosition.DistanceSquaredTo(this._finishPosition) >= 1f;
+        get =>
+            this.WardArea.IsPlayerInside
+            || this.GlobalPosition.DistanceSquaredTo(this._finishPosition) >= 1f;
     }
 
     /// <summary>
@@ -104,6 +114,16 @@ public partial class Goblin : CharacterBody2D
     /// </summary>
     private Vector2 _finishPosition;
 
+    /// <summary>
+    /// Genera numeros aleatorios
+    /// </summary>
+    private RandomNumberGenerator _randomNumberGenerator = new();
+
+    /// <summary>
+    /// Contador del tiempo para volver a mandar una direccion
+    /// </summary>
+    private double _changeDirectionTimeCount = 0;
+
     [Export]
     public InventoryData LootTable { get; set; }
 
@@ -115,6 +135,8 @@ public partial class Goblin : CharacterBody2D
         this.AnimationTree = this.GetNode<AnimationTree>("AnimationTree");
 
         this.Sprite = this.GetNode<Sprite2D>("Sprite2D");
+
+        this.WardArea = this.GetNode<WardArea>("WardArea");
 
         this._finishPosition = this.GlobalPosition;
 
@@ -136,6 +158,20 @@ public partial class Goblin : CharacterBody2D
     /// <param name="delta">Valor del tiempo entre frames de fisicas</param>
     public override void _PhysicsProcess(double delta)
     {
+        if (
+            this._defaultStateMachine.IsInState(GoblinIdleState.Instance())
+            && !this.WardArea.IsPlayerInside
+        )
+        {
+            this._changeDirectionTimeCount += delta;
+
+            if (this._changeDirectionTimeCount >= this.ChangeDirectionTime)
+            {
+                this.PickNewDirection();
+                this._changeDirectionTimeCount = 0;
+            }
+        }
+
         this._defaultStateMachine.Update();
 
         if (!this._defaultStateMachine.IsInState(this.NextState))
@@ -156,6 +192,25 @@ public partial class Goblin : CharacterBody2D
         this.MoveAndSlide();
     }
 
+    private void PickNewDirection()
+    {
+        var halfWidth = (this.WardArea.AreaSize.X / 2);
+        var halfHeight = (this.WardArea.AreaSize.Y / 2);
+
+        var minX = (int)(this.WardArea.GlobalPosition.X - halfWidth);
+        var minY = (int)(this.WardArea.GlobalPosition.Y - halfHeight);
+        var maxX = (int)(this.WardArea.GlobalPosition.X + halfWidth);
+        var maxY = (int)(this.WardArea.GlobalPosition.Y + halfHeight);
+
+        var newDirection = new Vector2(
+            this._randomNumberGenerator.RandiRange(minX, maxX),
+            this._randomNumberGenerator.RandiRange(minY, maxY)
+        );
+
+        this.MoveDirection = this.GlobalPosition.DirectionTo(newDirection);
+        this._finishPosition = newDirection;
+    }
+
     // TODO Revisar si me compensa los BlendPosition para mi proyecto
     /// <summary>
     /// Cambia la direccion de la animacion
@@ -169,11 +224,11 @@ public partial class Goblin : CharacterBody2D
     /// <summary>
     /// Evento que se ejecuta al detectar una posicion aleatoria dentro de <c>WardArea</c> o la entrada de un <c>Player</c> dentro del area, y se cambia <c>MoveDirection</c> y <c>_finishPosition</c> a la nueva posicion
     /// </summary>
-    /// <param name="newDirection">Direccion obtenida del evento</param>
-    private void OnWardAreaChangeDirection(Vector2 newDirection)
+    /// <param name="playerDirection">Direccion obtenida del evento</param>
+    private void OnDetectPlayer(Vector2 playerDirection)
     {
-        this.MoveDirection = this.GlobalPosition.DirectionTo(newDirection);
-        this._finishPosition = newDirection;
+        this.MoveDirection = this.GlobalPosition.DirectionTo(playerDirection);
+        this._finishPosition = playerDirection;
     }
 
     /// <summary>
@@ -210,13 +265,18 @@ public partial class Goblin : CharacterBody2D
     /// <param name="damage">Danyo recibido</param>
     private void OnHurtBoxHurt(double damage)
     {
+        GD.Print(damage);
         this.Life -= damage;
         this.NextState = GoblinHitState.Instance();
 
         if (this.Life <= 0)
         {
             SoundManager.Instance.PlayGoblinDeadSound();
-            this.EmitSignal(SignalName.DropLoot, this.LootTable.DropRandomSlotDatas(), this.GlobalPosition);
+            this.EmitSignal(
+                SignalName.DropLoot,
+                this.LootTable.DropRandomSlotDatas(),
+                this.GlobalPosition
+            );
             this.QueueFree();
         }
     }
