@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://5qla5nscrnl8"]
+
+[ext_resource type="Script" path="res://Utils/Inventory/ItemData/WeaponItemData/WeaponItemData.cs" id="1_mx7fk"]
+
+[resource]
+script = ExtResource("1_mx7fk")
+Damage = 0.0
+Name = ""
+Description = ""
+IsStackable = false
