@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://djs67bw06xsjr" path="res://Shikashi's Fantasy Icons Pack v2/#1 - Transparent Icons.png" id="1_ckl2e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_go60t"]
-size = Vector2(28, 26)
+size = Vector2(14, 12)
 
 [node name="Chest" type="RigidBody2D"]
 input_pickable = true
@@ -13,6 +13,7 @@ script = ExtResource("1_508p0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_ckl2e")
 region_enabled = true
 region_rect = Rect2(352, 352, 32, 32)

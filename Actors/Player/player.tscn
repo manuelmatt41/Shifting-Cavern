@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="4_fik2y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cmcw8"]
-size = Vector2(46.5066, 21.3237)
+size = Vector2(22.2423, 11.2674)
 
 [sub_resource type="Animation" id="Animation_vifaw"]
 resource_name = "Attack"
@@ -230,7 +230,7 @@ graph_offset = Vector2(58, 1)
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_fr4ay"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r5a2h"]
-size = Vector2(8.15561, 17.5205)
+size = Vector2(7.47598, 14.2354)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bubye"]
 
@@ -244,7 +244,7 @@ EquipmentInventoryData = ExtResource("3_d2u4p")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(1.5, 1.5)
+scale = Vector2(0.85, 0.85)
 texture = ExtResource("2_cwwph")
 flip_h = true
 hframes = 12
@@ -252,7 +252,7 @@ vframes = 11
 frame = 82
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.49843, 34.9818)
+position = Vector2(-1.50041, 21.7465)
 rotation = 3.13999
 scale = Vector2(0.494553, -0.842653)
 shape = SubResource("RectangleShape2D_cmcw8")
@@ -273,13 +273,14 @@ parameters/Idle/blend_position = Vector2(-0.0656, 0.158151)
 parameters/Walk/blend_position = Vector2(-1, 0.0131004)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(4, 4)
 
 [node name="HurtBox" parent="." instance=ExtResource("3_xnb4t")]
+position = Vector2(0, 9)
 collision_mask = 10
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-position = Vector2(-1.19209e-07, 18)
+position = Vector2(-1.19209e-07, 5)
 scale = Vector2(0.73569, -1.14152)
 shape = SubResource("RectangleShape2D_r5a2h")
 
@@ -292,8 +293,7 @@ scale = Vector2(1, 1.01686)
 collision_layer = 4
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-visible = false
-position = Vector2(5.7742e-08, 18.685)
+position = Vector2(-1.00137, 13.768)
 rotation = 3.13348
 scale = Vector2(0.494553, -0.842653)
 shape = SubResource("RectangleShape2D_bubye")

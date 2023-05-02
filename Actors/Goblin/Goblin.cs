@@ -227,6 +227,7 @@ public partial class Goblin : CharacterBody2D
     /// <param name="playerDirection">Direccion obtenida del evento</param>
     private void OnDetectPlayer(Vector2 playerDirection)
     {
+        GD.Print(playerDirection);
         this.MoveDirection = this.GlobalPosition.DirectionTo(playerDirection);
         this._finishPosition = playerDirection;
     }

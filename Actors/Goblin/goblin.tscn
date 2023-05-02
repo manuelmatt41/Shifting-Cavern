@@ -212,6 +212,7 @@ Life = 50.0
 LootTable = ExtResource("7_txfih")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("2_w8n0p")
 hframes = 12
 
@@ -234,7 +235,6 @@ parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(-0.9936, 0.0538921)
 
 [node name="HitBox" parent="." instance=ExtResource("3_2brno")]
-visible = false
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]

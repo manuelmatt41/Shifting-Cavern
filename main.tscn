@@ -15,22 +15,22 @@ scale = Vector2(1.01645, 0.999798)
 script = ExtResource("1_dvp8n")
 
 [node name="TestMap" parent="." instance=ExtResource("2_o3n71")]
-scale = Vector2(1, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_4ar6s")]
 position = Vector2(95, 89)
 
 [node name="UI" type="CanvasLayer" parent="."]
+follow_viewport_scale = 0.25
 
 [node name="InventoryControl" parent="UI" instance=ExtResource("3_u3x5j")]
 visible = false
 
 [node name="Chest2" parent="." instance=ExtResource("4_xtjni")]
-position = Vector2(125.928, 209.042)
+position = Vector2(243.986, 168.034)
 InventoryData = ExtResource("5_dujv3")
 
 [node name="Chest" parent="." instance=ExtResource("4_xtjni")]
-position = Vector2(253.825, 145.029)
+position = Vector2(133.799, 216.044)
 InventoryData = ExtResource("6_5e1y5")
 
 [node name="Goblin" parent="." instance=ExtResource("7_m2obc")]
