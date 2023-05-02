@@ -30,6 +30,7 @@ public partial class GameLevel : Node2D
         //this.Goblin2.DropLoot += this.OnDropLoot;
 
         this.InventoryControl.SetPlayerInventoryData(this.Player.InventoryData);
+        this.InventoryControl.SetPlayerEquipmentInventoryData(this.Player.EquipmentInventoryData);
         this.Chest.OpenChestInventory += this.OnOpenChestInventory;
         this.Chest2.OpenChestInventory += this.OnOpenChestInventory;
     }
@@ -69,7 +70,6 @@ public partial class GameLevel : Node2D
 
     private void OnOpenChestInventory(InventoryData inventoryData)
     {
-        GD.Print("Open chest");
         if (!this.InventoryControl.Visible)
         {
             this.InventoryControl.Visible = true;

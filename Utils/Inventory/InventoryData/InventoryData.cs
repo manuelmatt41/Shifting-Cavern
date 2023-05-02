@@ -68,7 +68,7 @@ public partial class InventoryData : Resource
     /// <param name="grabbedSlotData"><c>SlotData</c> que se va a soltar</param>
     /// <param name="index">Posicion del <c>SlotData</c> donde se quiere soltar</param>
     /// <returns><c>SlotData</c> que se ha cogido al soltar el otro o <c>null</c> si no se ha cambiado por ninguno</returns>
-    public SlotData DropSlotData(SlotData grabbedSlotData, int index)
+    public virtual SlotData DropSlotData(SlotData grabbedSlotData, int index)
     {
         var slotData = this.SlotDatas[index];
 
@@ -95,7 +95,7 @@ public partial class InventoryData : Resource
     /// <param name="grabbedSlotData"><c>SlotData</c> que se va a soltar el item</param>
     /// <param name="index">Posicion del <c>SlotData</c> donde se quiere soltar</param>
     /// <returns><c>SlotData</c> que se ha soltado el item o <c>null</c> si se ha soltado el ultimo item del <c>SlotData</c></returns>
-    public SlotData DropSingleSlotData(SlotData grabbedSlotData, int index)
+    public virtual SlotData DropSingleSlotData(SlotData grabbedSlotData, int index)
     {
         var slotData = this.SlotDatas[index];
 

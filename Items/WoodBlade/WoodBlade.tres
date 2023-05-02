@@ -1,10 +1,12 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c2mwqtpb135gy"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dgjods4sk81iq"]
 
 [ext_resource type="Texture2D" uid="uid://cgixll5yr6h20" path="res://Items/WoodBlade/WoodBladeTexture.tres" id="1_72kl5"]
-[ext_resource type="Script" path="res://Utils/Inventory/ItemData/ItemData.cs" id="1_chfxt"]
+[ext_resource type="Script" path="res://Utils/Inventory/ItemData/WeaponItemData/WeaponItemData.cs" id="1_iw3bu"]
 
 [resource]
-script = ExtResource("1_chfxt")
-Name = "Wood Blade"
-Description = "A weak wapon"
+script = ExtResource("1_iw3bu")
+Damage = 15.0
+Name = "WoodBlade"
+Description = "Locura"
 Texture = ExtResource("1_72kl5")
+IsStackable = false

@@ -23,7 +23,6 @@ visible = false
 
 [node name="Chest2" parent="." instance=ExtResource("5_fk77m")]
 position = Vector2(125.928, 209.042)
-scale = Vector2(1, 1)
 InventoryData = ExtResource("5_o8jnx")
 
 [node name="Chest" parent="." instance=ExtResource("5_fk77m")]
@@ -35,3 +34,4 @@ InventoryData = ExtResource("5_8087s")
 [connection signal="DropSlotData" from="UI/InventoryControl" to="." method="OnInventoryControlDropSlotData"]
 
 [editable path="UI/InventoryControl"]
+[editable path="UI/InventoryControl/EquipmentInventory"]

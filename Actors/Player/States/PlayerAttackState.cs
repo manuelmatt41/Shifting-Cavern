@@ -48,11 +48,8 @@ public class PlayerAttackState : PlayerState
                 return;
             }
 
-            if (entity.WantToIdle)
-            {
-                entity.NextState = PlayerIdleState.Instance();
-                return;
-            }
+            entity.NextState = PlayerIdleState.Instance();
+            return;
         }
     }
 }

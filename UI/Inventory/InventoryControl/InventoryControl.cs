@@ -17,6 +17,7 @@ public partial class InventoryControl : Control
     /// Interfaz que repsenta el inventario del juagador
     /// </summary>
     public InventoryUI PlayerInventory { get; set; }
+    public InventoryUI PlayerEquipmentInventory { get; set; }
 
     /// <summary>
     /// <c>SlotUI</c> que se cogio con el raton
@@ -36,6 +37,7 @@ public partial class InventoryControl : Control
     public override void _Ready()
     {
         this.PlayerInventory = this.GetNode<InventoryUI>("PlayerInventory");
+        this.PlayerEquipmentInventory = this.GetNode<InventoryUI>("EquipmentInventory");
         this.GrabbedSlotUI = this.GetNode<SlotUI>("GrabbedSlot");
         this.ExternalInvetoryUI = this.GetNode<InventoryUI>("ExternalInventoryUI");
     }
@@ -59,6 +61,16 @@ public partial class InventoryControl : Control
     {
         inventoryData.InventoryInteract += this.OnInventoryInteract;
         this.PlayerInventory.SetInventoryData(inventoryData);
+    }
+
+    /// <summary>
+    /// Coloca la informacion del inventario de <c>Player</c> en el <c>InventoryUI</c>
+    /// </summary>
+    /// <param name="inventoryData">Informacion del inventario de <c>Player</c></param>
+    public void SetPlayerEquipmentInventoryData(InventoryData inventoryData)
+    {
+        inventoryData.InventoryInteract += this.OnInventoryInteract;
+        this.PlayerEquipmentInventory.SetInventoryData(inventoryData);
     }
 
     /// <summary>

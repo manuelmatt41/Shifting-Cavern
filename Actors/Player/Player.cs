@@ -53,6 +53,9 @@ public partial class Player : CharacterBody2D
     [Export]
     public InventoryData InventoryData { get; set; }
 
+    [Export]
+    public EquipmentInventoryData EquipmentInventoryData { get; set; }
+
     /// <summary>
     /// Camara principal del juego que sigue a <c>Player</c>
     /// </summary>
@@ -186,10 +189,7 @@ public partial class Player : CharacterBody2D
                 terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
         }
 
-        //this.Weapon = this.GetTree().GetFirstNodeInGroup(nameof(this.Weapon)) as IWeapon; //TODO Anyadir area propia a las armas para transformar la hitbox del personaje
-        //var rect = this.HitBox.CollisionShape2D.Shape as RectangleShape2D;
-        //rect.Size = this.Weapon.Range;
-        //this.HitBox.Damage = this.Weapon.Damage;
+        this.HitBox.Damage = (this.EquipmentInventoryData.SlotDatas[0].ItemData as WeaponItemData).Damage;
     }
 
     /// <summary>

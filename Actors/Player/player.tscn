@@ -1,8 +1,9 @@
-[gd_scene load_steps=46 format=3 uid="uid://cf5jfciawdrjp"]
+[gd_scene load_steps=47 format=3 uid="uid://cf5jfciawdrjp"]
 
 [ext_resource type="Script" path="res://Actors/Player/Player.cs" id="1_vfry5"]
 [ext_resource type="Texture2D" uid="uid://dhdwuuvq5hcgy" path="res://Actors/Player/Assets/AnimationSprite/red hood itch free Copy-Sheet.png" id="2_cwwph"]
 [ext_resource type="Resource" uid="uid://vwe3b637hqcy" path="res://Utils/Inventory/InventoryData/testInv.tres" id="2_h6b8u"]
+[ext_resource type="Resource" uid="uid://d2y5sjwm2vxto" path="res://Actors/Player/EquipmentInventoryTest.tres" id="3_d2u4p"]
 [ext_resource type="PackedScene" uid="uid://b1gy3wjutwxxt" path="res://Utils/HurtBox/hurt_box.tscn" id="3_xnb4t"]
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="4_fik2y"]
 
@@ -239,6 +240,7 @@ collision_layer = 9
 motion_mode = 1
 script = ExtResource("1_vfry5")
 InventoryData = ExtResource("2_h6b8u")
+EquipmentInventoryData = ExtResource("3_d2u4p")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -288,7 +290,6 @@ one_shot = true
 [node name="HitBox" parent="." instance=ExtResource("4_fik2y")]
 scale = Vector2(1, 1.01686)
 collision_layer = 4
-Damage = 10.0
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 visible = false

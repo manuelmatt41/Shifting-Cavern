@@ -22,12 +22,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = -188.0
+offset_top = -176.0
+offset_right = -124.0
+offset_bottom = -112.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="EquipmentInventory" parent="." instance=ExtResource("2_j7lgl")]
+layout_mode = 0
 
 [node name="ExternalInventoryUI" parent="." instance=ExtResource("2_j7lgl")]
 visible = false
@@ -39,8 +42,8 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -40.0
 offset_top = -20.0
-offset_right = 0.0
-offset_bottom = 20.0
+offset_right = 24.0
+offset_bottom = 44.0
 grow_horizontal = 0
 grow_vertical = 2
 

@@ -7,3 +7,4 @@
 script = ExtResource("1_bhp7w")
 ItemData = ExtResource("1_dc324")
 Quantity = 50
+DropRate = 0
