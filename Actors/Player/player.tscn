@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="4_fik2y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cmcw8"]
-size = Vector2(32.3492, 23.6559)
+size = Vector2(46.5066, 21.3237)
 
 [sub_resource type="Animation" id="Animation_vifaw"]
 resource_name = "Attack"
@@ -252,7 +252,7 @@ vframes = 11
 frame = 82
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 20)
+position = Vector2(-2.49843, 34.9818)
 rotation = 3.13999
 scale = Vector2(0.494553, -0.842653)
 shape = SubResource("RectangleShape2D_cmcw8")

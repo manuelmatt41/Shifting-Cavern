@@ -200,8 +200,8 @@ size = Vector2(9.13542, 21)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtwuv"]
 size = Vector2(21, 27.5)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mhcuu"]
-radius = 125.826
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h68wh"]
+size = Vector2(149.952, 132.705)
 
 [node name="Goblin" type="CharacterBody2D"]
 z_index = 3
@@ -252,15 +252,9 @@ shape = SubResource("RectangleShape2D_mtwuv")
 [node name="WardArea" parent="." instance=ExtResource("5_2epep")]
 
 [node name="CollisionShape2D" parent="WardArea" index="0"]
-position = Vector2(2, 5)
+position = Vector2(9.53674e-07, 8)
 scale = Vector2(0.993434, 1.04146)
-shape = SubResource("CircleShape2D_mhcuu")
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(0, 9)
-scale = Vector2(1.07402, -1.1302)
-target_position = Vector2(27.0013, 0)
-collision_mask = 2
+shape = SubResource("RectangleShape2D_h68wh")
 
 [connection signal="animation_finished" from="AnimationTree" to="." method="OnAnimationPlayerFinished"]
 [connection signal="animation_started" from="AnimationTree" to="." method="OnAniamtionPlayerStarted"]
