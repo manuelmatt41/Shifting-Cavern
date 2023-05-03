@@ -32,7 +32,7 @@ public partial class Main : Node2D
         {
             this.Player.PlayerResource = gameLoad.PlayerResource;
             this.Player.GlobalPosition = gameLoad.PlayerGlobalPosition;
-            this.Player.Initali();
+            this.Player.Initialize();
 
             this.Chest.ChestResource = gameLoad.ChestResources[Chest.Name];
             this.Chest2.ChestResource = gameLoad.ChestResources[Chest2.Name];
@@ -41,7 +41,7 @@ public partial class Main : Node2D
         {
             this.Player.PlayerResource = new();
             this.Player.GlobalPosition = Vector2.Zero;
-            this.Player.Initali();
+            this.Player.Initialize();
 
             this.Chest.ChestResource = new();
             this.Chest2.ChestResource = new();

@@ -145,10 +145,10 @@ public partial class Player : CharacterBody2D
     /// Comprueba que se quiere cambiar el estado a <c>PlayerDashState</c>
     /// </summary>
     /// <value><c>True</c> si ha pulsado el espacio y que se haya parado <c>DashCooldownTimer</c> sino <c>false</c></value>
-    public bool WantToDash
-    {
-        get => Input.GetActionStrength("Dash") == 1 && this.DashCooldownTimer.IsStopped();
-    }
+    //public bool WantToDash
+    //{
+    //    get => Input.GetActionStrength("Dash") == 1 && this.DashCooldownTimer.IsStopped();
+    //}
 
     public bool IsInventoryVisible { get; set; } //TODO Rehacer codigo
 
@@ -180,17 +180,13 @@ public partial class Player : CharacterBody2D
 
     }
 
-    public void Initali()
+    public void Initialize()
     {
         if (this.PlayerResource.EquipmentInventory.SlotDatas[0] != null)
         {
             this.HitBox.Damage = (
                 this.PlayerResource.EquipmentInventory.SlotDatas[0].ItemData as WeaponItemData
             ).Damage;
-        }
-        else
-        {
-            this.HitBox.Damage = 100; ///TODO SOlo para pruebas
         }
     }
 

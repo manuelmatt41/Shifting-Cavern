@@ -44,11 +44,11 @@ public class PlayerWalkState : PlayerState
             return;
         }
 
-        if (entity.WantToDash)
-        {
-            entity.NextState = PlayerDashState.Instance();
-            return;
-        }
+        //if (entity.WantToDash)
+        //{
+        //    entity.NextState = PlayerDashState.Instance();
+        //    return;
+        //}
 
     }
 }
