@@ -1,0 +1,50 @@
+[gd_resource type="Resource" load_steps=15 format=3]
+
+[ext_resource type="Resource" path="res://Actors/Goblin/LootTable/GoblinLootCoin.tres" id="1_5ild6"]
+[ext_resource type="Resource" path="res://Actors/Goblin/LootTable/GoblinLootRottenFish.tres" id="2_nv8pi"]
+[ext_resource type="Script" path="res://Utils/Inventory/InventoryData/InventoryData.cs" id="3_8yxwa"]
+[ext_resource type="Script" path="res://InteractiveObjects/Chest/Resource/ChestResource.cs" id="4_7kioo"]
+[ext_resource type="Script" path="res://Utils/Inventory/InventoryData/EquipmentInventoryData/EquipmentInventoryData.cs" id="5_gpedc"]
+[ext_resource type="Script" path="res://Actors/Player/Resource/PlayerResource.cs" id="6_t0g2f"]
+[ext_resource type="Script" path="res://Utils/Save/SaveGame.cs" id="7_roy3w"]
+
+[sub_resource type="Resource" id="Resource_mgqob"]
+script = ExtResource("3_8yxwa")
+SlotDatas = [null, null, null, null, ExtResource("2_nv8pi"), ExtResource("1_5ild6"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+
+[sub_resource type="Resource" id="Resource_g2w1o"]
+script = ExtResource("4_7kioo")
+InventoryData = SubResource("Resource_mgqob")
+
+[sub_resource type="Resource" id="Resource_xfvsq"]
+script = ExtResource("3_8yxwa")
+SlotDatas = [ExtResource("1_5ild6"), ExtResource("2_nv8pi"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+
+[sub_resource type="Resource" id="Resource_yhqu3"]
+script = ExtResource("4_7kioo")
+InventoryData = SubResource("Resource_xfvsq")
+
+[sub_resource type="Resource" id="Resource_ptage"]
+script = ExtResource("5_gpedc")
+SlotDatas = [null]
+
+[sub_resource type="Resource" id="Resource_623ub"]
+script = ExtResource("3_8yxwa")
+SlotDatas = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+
+[sub_resource type="Resource" id="Resource_8a6hr"]
+script = ExtResource("6_t0g2f")
+Life = 100.0
+MoveSpeed = 100.0
+DashSpeed = 3.0
+PlayerInventory = SubResource("Resource_623ub")
+EquipmentInventory = SubResource("Resource_ptage")
+
+[resource]
+script = ExtResource("7_roy3w")
+PlayerResource = SubResource("Resource_8a6hr")
+PlayerGlobalPosition = Vector2(236.736, 140.298)
+ChestResources = {
+"Chest": SubResource("Resource_g2w1o"),
+"Chest2": SubResource("Resource_yhqu3")
+}

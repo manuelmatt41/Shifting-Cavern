@@ -44,7 +44,7 @@ public partial class PickUpItem : Area2D
         {
             var player = body as Player;
 
-            if (player.InventoryData.PickUpSlotData(this.SlotData))
+            if (player.PlayerResource.PlayerInventory.PickUpSlotData(this.SlotData))
             {
                 this.QueueFree();
             }

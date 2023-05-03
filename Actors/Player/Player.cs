@@ -26,35 +26,35 @@ public partial class Player : CharacterBody2D
     /// </summary>
     public const string IDLE_ANIMATION_NAME = "Idle";
 
-    [Signal]
-    public delegate void ToogleInventoryControlEventHandler();
-
-    /// <summary>
-    /// Velocidad de movimiento de <c>Player</c> en px/s
-    /// </summary>
-    /// <value>Por defecto: 150</value>
     [Export]
-    public float MoveSpeed { get; set; } = 150f;
+    public PlayerResource PlayerResource { get; set; }
 
-    /// <summary>
-    /// Vida de <c>Player</c>
-    /// </summary>
-    /// <value>Por defecto: 100</value>
-    [Export]
-    public double Life { get; set; } = 100;
+    ///// <summary>
+    ///// Velocidad de movimiento de <c>Player</c> en px/s
+    ///// </summary>
+    ///// <value>Por defecto: 150</value>
+    //[Export]
+    //public float MoveSpeed { get; set; } = 150f;
 
-    /// <summary>
-    /// Fuerza aplicado al movimiento al hacer un Dash
-    /// </summary>
-    /// <value>Por defecto: 3</value>
-    [Export]
-    public float DashSpeed { get; set; } = 3f;
+    ///// <summary>
+    ///// Vida de <c>Player</c>
+    ///// </summary>
+    ///// <value>Por defecto: 100</value>
+    //[Export]
+    //public double Life { get; set; } = 100;
 
-    [Export]
-    public InventoryData InventoryData { get; set; }
+    ///// <summary>
+    ///// Fuerza aplicado al movimiento al hacer un Dash
+    ///// </summary>
+    ///// <value>Por defecto: 3</value>
+    //[Export]
+    //public float DashSpeed { get; set; } = 3f;
 
-    [Export]
-    public EquipmentInventoryData EquipmentInventoryData { get; set; }
+    //[Export]
+    //public InventoryData InventoryData { get; set; }
+
+    //[Export]
+    //public EquipmentInventoryData EquipmentInventoryData { get; set; }
 
     /// <summary>
     /// Camara principal del juego que sigue a <c>Player</c>
@@ -178,18 +178,20 @@ public partial class Player : CharacterBody2D
 
         this._defaultStateMachine = new(this, this.NextState);
 
-        var terrainGenerator = (this.GetTree().GetFirstNodeInGroup("Map") as TerrainGenerator); //TODO Mejorar este codigo
-        if (terrainGenerator != null)
-        {
-            this.Camera.LimitLeft = 0;
-            this.Camera.LimitTop = 0;
-            this.Camera.LimitRight =
-                terrainGenerator.Width * terrainGenerator.TileMap.CellQuadrantSize;
-            this.Camera.LimitBottom =
-                terrainGenerator.Height * terrainGenerator.TileMap.CellQuadrantSize;
-        }
+    }
 
-        this.HitBox.Damage = (this.EquipmentInventoryData.SlotDatas[0].ItemData as WeaponItemData).Damage;
+    public void Initali()
+    {
+        if (this.PlayerResource.EquipmentInventory.SlotDatas[0] != null)
+        {
+            this.HitBox.Damage = (
+                this.PlayerResource.EquipmentInventory.SlotDatas[0].ItemData as WeaponItemData
+            ).Damage;
+        }
+        else
+        {
+            this.HitBox.Damage = 100; ///TODO SOlo para pruebas
+        }
     }
 
     /// <summary>
@@ -206,14 +208,6 @@ public partial class Player : CharacterBody2D
         }
     }
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (Input.IsActionJustPressed("ToogleInventory"))
-        {
-            this.EmitSignal(SignalName.ToogleInventoryControl);
-        }
-    }
-
     /// <summary>
     /// Realiza el movimiento de <c>Player</c> y se llama a una pool de sonidos de caminar <c>PlayRandomPlayerWalkSound</c>
     /// </summary>
@@ -226,7 +220,7 @@ public partial class Player : CharacterBody2D
         this.Sprite.FlipH = this.MoveDirection.X == 1;
 
         //La velocidad se calcula con la direccion de movimiento normalizada por la velocidad aplicando un fuerza a mayores si se ha ejecutado el dash
-        this.Velocity = this.MoveDirection.Normalized() * this.MoveSpeed;
+        this.Velocity = this.MoveDirection.Normalized() * this.PlayerResource.MoveSpeed;
         this.MoveAndSlide();
     }
 
@@ -238,7 +232,10 @@ public partial class Player : CharacterBody2D
         this.Sprite.FlipH = this.MoveDirection.X == 1;
 
         //La velocidad se calcula con la direccion de movimiento normalizada por la velocidad aplicando un fuerza a mayores si se ha ejecutado el dash
-        this.Velocity = this.MoveDirection.Normalized() * this.MoveSpeed * this.DashSpeed;
+        this.Velocity =
+            this.MoveDirection.Normalized()
+            * this.PlayerResource.MoveSpeed
+            * this.PlayerResource.DashSpeed;
         this.MoveAndSlide();
     }
 
@@ -329,6 +326,6 @@ public partial class Player : CharacterBody2D
     /// <param name="damage">Danyo recibido</param>
     private void OnHurtBoxHurt(double damage)
     {
-        this.Life -= damage;
+        this.PlayerResource.Life -= damage;
     }
 }

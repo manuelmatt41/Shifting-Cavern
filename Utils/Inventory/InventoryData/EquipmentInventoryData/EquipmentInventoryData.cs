@@ -4,6 +4,11 @@ using MonoCustomResourceRegistry;
 [RegisteredType(nameof(EquipmentInventoryData), "", nameof(InventoryData))]
 public partial class EquipmentInventoryData : InventoryData
 {
+    public EquipmentInventoryData() : base(1)
+    {
+
+    }
+
     public override SlotData DropSlotData(SlotData grabbedSlotData, int index)
     {
         if (grabbedSlotData.ItemData is not WeaponItemData)

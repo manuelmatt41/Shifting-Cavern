@@ -44,6 +44,11 @@ public partial class InventoryData : Resource
         this.SlotDatas = null;
     }
 
+    public InventoryData(int capacity)
+    {
+        this.SlotDatas = new SlotData[capacity];
+    }
+
     /// <summary>
     /// Coge un <c>SlotData</c>, comprueba  que exista en el inventario, y si es asi lo elimina y lanza el evento <c>InventoryUpdate</c>
     /// </summary>

@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://d2y5sjwm2vxto"]
-
-[ext_resource type="Resource" uid="uid://bt7g3h3a8e3qi" path="res://Actors/Player/TEst1.tres" id="1_2icmb"]
-[ext_resource type="Script" path="res://Utils/Inventory/InventoryData/EquipmentInventoryData/EquipmentInventoryData.cs" id="1_d6i5j"]
-
-[resource]
-script = ExtResource("1_d6i5j")
-SlotDatas = Array[Resource]([ExtResource("1_2icmb")])

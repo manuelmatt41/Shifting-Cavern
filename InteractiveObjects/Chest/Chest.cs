@@ -7,8 +7,7 @@ public partial class Chest : RigidBody2D
     public delegate void OpenChestInventoryEventHandler(InventoryData chestInventory);
 
     [Export]
-    public InventoryData InventoryData { get; set; }
-
+    public ChestResource ChestResource { get; set; }
     private void OnInputEvent(Node viewport, InputEvent @event, int shapeIdx)
     {
         if (
@@ -17,7 +16,8 @@ public partial class Chest : RigidBody2D
             && mouseEvent.IsPressed()
         )
         {
-            this.EmitSignal(SignalName.OpenChestInventory, this.InventoryData);
+            this.EmitSignal(SignalName.OpenChestInventory, this.ChestResource.InventoryData);
+            this.GetTree().Paused = true;
         }
     }
 }

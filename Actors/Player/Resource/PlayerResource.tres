@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dw0myorosyv7j"]
+
+[ext_resource type="Script" path="res://Actors/Player/Resource/PlayerResource.cs" id="1_j2p6o"]
+
+[resource]
+script = ExtResource("1_j2p6o")
+Life = 100.0
+MoveSpeed = 100.0
+DashSpeed = 3.0
