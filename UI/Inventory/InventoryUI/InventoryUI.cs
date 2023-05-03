@@ -38,13 +38,16 @@ public partial class InventoryUI : PanelContainer
         this.OnInventoryUpdate(inventoryData);
     }
 
+    public void ClearInventoryData() =>
+        Array.ForEach(this.ItemGrid.GetChildren().ToArray(), children => children.QueueFree());
+
     /// <summary>
     /// Funcion que se ejecuta al actualizarse el <c>InventoryData</c> donde borra los <c>SlotUI</c> y los vuelve a instanciar con los datos actualizados
     /// </summary>
     /// <param name="inventoryData">Informacion actualizada del inventario</param>
     private void OnInventoryUpdate(InventoryData inventoryData)
     {
-        Array.ForEach(this.ItemGrid.GetChildren().ToArray(), children => children.QueueFree());
+        this.ClearInventoryData();
 
         foreach (var slotData in inventoryData.SlotDatas)
         {

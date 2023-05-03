@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 
 /// <summary>
@@ -12,6 +13,10 @@ public partial class InventoryControl : Control
     /// <param name="slotData"><c>SlotData</c> que se ha lanzado</param>
     [Signal]
     public delegate void DropSlotDataEventHandler(SlotData slotData);
+
+
+    [Signal]
+    public delegate void ToogleInventoryControlEventHandler();
 
     /// <summary>
     /// Interfaz que repsenta el inventario del juagador
@@ -53,6 +58,16 @@ public partial class InventoryControl : Control
         }
     }
 
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (Input.IsActionJustPressed("ToogleInventory"))
+        {
+            this.EmitSignal(SignalName.ToogleInventoryControl);
+            this.GetTree().Paused = !this.GetTree().Paused;
+            //OS.ShellOpen("https://github.com/manuelmatt41/Shifting-Cavern"); TODO Interesante para hacer link buttons para una pagina web
+        }
+    }
+
     /// <summary>
     /// Coloca la informacion del inventario de <c>Player</c> en el <c>InventoryUI</c>
     /// </summary>
@@ -73,16 +88,14 @@ public partial class InventoryControl : Control
         this.PlayerEquipmentInventory.SetInventoryData(inventoryData);
     }
 
-    /// <summary>
-    /// Coloca la informacion del inventario de una fuenta externa en el <c>ExternalInventoryUI</c>
-    /// </summary>
-    /// <param name="inventoryData">Informacion del inventario de <c>Player</c></param>
     public void SetExternalInventoryData(InventoryData inventoryData)
     {
         inventoryData.InventoryInteract -= this.OnInventoryInteract;
         inventoryData.InventoryInteract += this.OnInventoryInteract;
         this.ExternalInvetoryUI.SetInventoryData(inventoryData);
     }
+
+    public void ClearExternalInventoryData() => this.ExternalInvetoryUI.ClearInventoryData();
 
     /// <summary>
     /// Actualiza el <c>SlotUI</c> y se cogio con el raton si se coge nueva <c>SlotData</c>
