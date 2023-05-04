@@ -102,6 +102,8 @@ public partial class Main : Node2D
         }
     }
 
+    private void OnSpawnEnemies(CharacterBody2D enemy) => this.CallDeferred("add_child", enemy);
+
     private void OnChangePlayerPosition(Vector2 newPlayerPosition, Vector2I mapSize)
     {
         this.Player.CallDeferred("set_global_position", newPlayerPosition);
@@ -114,13 +116,12 @@ public partial class Main : Node2D
         this.InventoryControlUI = this.InventoryControlUIScene.Instantiate<CanvasLayer>();
         this.MapContainer = this.MapContainerScene.Instantiate<MapContainer>();
 
-        var tileMap = GD.Load<PackedScene>("res://Levels/test_map.tscn").Instantiate<TileMap>();
-        this.MapContainer.ChangePlayerPosition += this.OnChangePlayerPosition;
 
         this.AddChild(this.Player);
         this.AddChild(this.InventoryControlUI);
         this.AddChild(this.MapContainer);
 
+        var tileMap = GD.Load<PackedScene>("res://Levels/test_map.tscn").Instantiate<TileMap>();
         this.Player.Initialize(this._saveGame.PlayerResource, tileMap.GetUsedRect().Size * tileMap.CellQuadrantSize);
 
         this.InventoryControl = this.InventoryControlUI.GetNode<InventoryControl>(nameof(this.InventoryControl));
@@ -128,7 +129,9 @@ public partial class Main : Node2D
         this.InventoryControl.SetPlayerInventoryData(this.Player.PlayerResource.InventoryData);
         this.InventoryControl.SetPlayerEquipmentInventoryData(this.Player.PlayerResource.EquipmentInventoryData);
 
+        this.MapContainer.ChangePlayerPosition += this.OnChangePlayerPosition;
         this.MapContainer.OnChangeChangeMap(tileMap, this._saveGame.PlayerGlobalPosition, tileMap.GetUsedRect().Size * tileMap.CellQuadrantSize);
+        this.MapContainer.SpawnEnemies += this.OnSpawnEnemies;
         //this.CurrentMap.ChangeMap += this.OnChangeMap; //TODO Arreglar el cambio de mapa
 
         this.MainMenuUI.QueueFree();
