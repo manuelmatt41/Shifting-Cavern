@@ -89,17 +89,15 @@ public partial class Main : Node2D
     {
         if (Input.IsActionPressed("CloseGame"))
         {
-            var save = new SaveGame();
+            this._saveGame.PlayerResource = this.Player.PlayerResource;
+            this._saveGame.PlayerGlobalPosition = this.Player.GlobalPosition;
+            //save.ChestResources = new()
+            //{
+            //    [this.Chest.Name.ToString()] = this.Chest.ChestResource,
+            //    [this.Chest2.Name.ToString()] = this.Chest2.ChestResource
+            //};
 
-            save.PlayerResource = this.Player.PlayerResource;
-            save.PlayerGlobalPosition = this.Player.GlobalPosition;
-            save.ChestResources = new()
-            {
-                [this.Chest.Name.ToString()] = this.Chest.ChestResource,
-                [this.Chest2.Name.ToString()] = this.Chest2.ChestResource
-            };
-
-            save.Save();
+            this._saveGame.Save();
             this.GetTree().Quit();
         }
     }
@@ -130,7 +128,7 @@ public partial class Main : Node2D
         this.InventoryControl.SetPlayerInventoryData(this.Player.PlayerResource.InventoryData);
         this.InventoryControl.SetPlayerEquipmentInventoryData(this.Player.PlayerResource.EquipmentInventoryData);
 
-        this.MapContainer.OnChangeChangeMap(tileMap, new(100, 100), tileMap.GetUsedRect().Size * tileMap.CellQuadrantSize);
+        this.MapContainer.OnChangeChangeMap(tileMap, this._saveGame.PlayerGlobalPosition, tileMap.GetUsedRect().Size * tileMap.CellQuadrantSize);
         //this.CurrentMap.ChangeMap += this.OnChangeMap; //TODO Arreglar el cambio de mapa
 
         this.MainMenuUI.QueueFree();

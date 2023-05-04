@@ -1,12 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqqew1wcakh6c"]
+[gd_scene load_steps=5 format=3 uid="uid://dqqew1wcakh6c"]
 
 [ext_resource type="Script" path="res://UI/Inventory/SlotUi/SlotUI.cs" id="1_cjg48"]
+[ext_resource type="Texture2D" uid="uid://bwqmajmwkrx60" path="res://UI/MainMenu/Complete_GUI_Essential_Pack_Free_Version/01_Basic_Collection/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.png" id="1_l45n4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ff5a"]
+atlas = ExtResource("1_l45n4")
+region = Rect2(352, 160, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h4775"]
+texture = SubResource("AtlasTexture_2ff5a")
 
 [node name="SlotUI" type="PanelContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(64, 64)
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_h4775")
 script = ExtResource("1_cjg48")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

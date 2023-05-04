@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://Utils/Inventory/InventoryData/EquipmentInventoryData/EquipmentInventoryData.cs" id="1_cjxor"]
+[ext_resource type="Script" path="res://Utils/Inventory/InventoryData/InventoryData.cs" id="2_127tw"]
+[ext_resource type="Script" path="res://Actors/Player/Resource/PlayerResource.cs" id="3_pq76s"]
+[ext_resource type="Script" path="res://Utils/Save/SaveGame.cs" id="4_rbl1x"]
+
+[sub_resource type="Resource" id="Resource_7thrf"]
+script = ExtResource("1_cjxor")
+SlotDatas = [null]
+
+[sub_resource type="Resource" id="Resource_oeumj"]
+script = ExtResource("2_127tw")
+SlotDatas = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+
+[sub_resource type="Resource" id="Resource_0rj4p"]
+script = ExtResource("3_pq76s")
+Life = 100.0
+MoveSpeed = 100.0
+DashSpeed = 3.0
+InventoryData = SubResource("Resource_oeumj")
+EquipmentInventoryData = SubResource("Resource_7thrf")
+
+[resource]
+script = ExtResource("4_rbl1x")
+PlayerResource = SubResource("Resource_0rj4p")
+PlayerGlobalPosition = Vector2(659.944, 438.163)
+ChestResources = null
