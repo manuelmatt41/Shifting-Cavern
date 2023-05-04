@@ -177,17 +177,6 @@ public partial class Player : CharacterBody2D
             .As<AnimationNodeStateMachinePlayback>();
 
         this._defaultStateMachine = new(this, this.NextState);
-
-    }
-
-    public void Initialize()
-    {
-        if (this.PlayerResource.EquipmentInventory.SlotDatas[0] != null)
-        {
-            this.HitBox.Damage = (
-                this.PlayerResource.EquipmentInventory.SlotDatas[0].ItemData as WeaponItemData
-            ).Damage;
-        }
     }
 
     /// <summary>
@@ -203,7 +192,27 @@ public partial class Player : CharacterBody2D
             this._defaultStateMachine.ChangeState(this.NextState);
         }
     }
+    public void Initialize(PlayerResource playerResource, Vector2I cameraLimits)
+    {
+        this.PlayerResource = playerResource;
+        this.SetCameraLimits(cameraLimits);
 
+        if (this.PlayerResource.EquipmentInventoryData.SlotDatas[0] != null)
+        {
+            this.HitBox.Damage = (
+                this.PlayerResource.EquipmentInventoryData.SlotDatas[0].ItemData as WeaponItemData
+            ).Damage;
+        }
+    }
+
+    public void SetCameraLimits(Vector2I cameraLimits)
+    {
+
+        this.Camera.LimitTop = 0;
+        this.Camera.LimitLeft = 0;
+        this.Camera.LimitRight = cameraLimits.X;
+        this.Camera.LimitBottom = cameraLimits.Y;
+    }
     /// <summary>
     /// Realiza el movimiento de <c>Player</c> y se llama a una pool de sonidos de caminar <c>PlayRandomPlayerWalkSound</c>
     /// </summary>
@@ -219,6 +228,8 @@ public partial class Player : CharacterBody2D
         this.Velocity = this.MoveDirection.Normalized() * this.PlayerResource.MoveSpeed;
         this.MoveAndSlide();
     }
+
+
 
     /// <summary>
     /// Realiza el movimiento Dash de <c>Player</c>

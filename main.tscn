@@ -1,36 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://lgy1fh5dda2l"]
+[gd_scene load_steps=2 format=3 uid="uid://cjblgv7rdkfng"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_dvp8n"]
-[ext_resource type="PackedScene" uid="uid://dmwyvu2djr1mr" path="res://Actors/Player/player.tscn" id="2_4ar6s"]
-[ext_resource type="PackedScene" uid="uid://buyx3y3bmhv7e" path="res://Levels/test_map.tscn" id="2_o3n71"]
-[ext_resource type="PackedScene" uid="uid://bknsj4ktkx4x1" path="res://UI/Inventory/InventoryControl/inventory_control.tscn" id="3_u3x5j"]
-[ext_resource type="PackedScene" uid="uid://ddh7wus86aybl" path="res://InteractiveObjects/Chest/chest.tscn" id="4_xtjni"]
-[ext_resource type="PackedScene" uid="uid://bsisx04idcaub" path="res://Actors/Goblin/goblin.tscn" id="7_m2obc"]
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
 scale = Vector2(1.01645, 0.999798)
 script = ExtResource("1_dvp8n")
-
-[node name="TestMap" parent="." instance=ExtResource("2_o3n71")]
-
-[node name="Player" parent="." instance=ExtResource("2_4ar6s")]
-position = Vector2(95, 89)
-
-[node name="UI" type="CanvasLayer" parent="."]
-follow_viewport_scale = 0.25
-
-[node name="InventoryControl" parent="UI" instance=ExtResource("3_u3x5j")]
-visible = false
-
-[node name="Chest2" parent="." instance=ExtResource("4_xtjni")]
-position = Vector2(243.986, 168.034)
-
-[node name="Chest" parent="." instance=ExtResource("4_xtjni")]
-position = Vector2(133.799, 216.044)
-
-[node name="Goblin" parent="." instance=ExtResource("7_m2obc")]
-
-[connection signal="DropSlotData" from="UI/InventoryControl" to="." method="OnInventoryControlDropSlotData"]
-
-[editable path="UI/InventoryControl"]

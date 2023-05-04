@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://du3u17lju1mqy"]
+
+[ext_resource type="PackedScene" uid="uid://bknsj4ktkx4x1" path="res://UI/Inventory/InventoryControl/inventory_control.tscn" id="1_kp0a6"]
+
+[node name="UI" type="CanvasLayer"]
+follow_viewport_scale = 0.25
+
+[node name="InventoryControl" parent="." instance=ExtResource("1_kp0a6")]
+visible = false
+
+[editable path="InventoryControl"]

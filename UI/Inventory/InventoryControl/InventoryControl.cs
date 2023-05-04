@@ -14,7 +14,6 @@ public partial class InventoryControl : Control
     [Signal]
     public delegate void DropSlotDataEventHandler(SlotData slotData);
 
-
     [Signal]
     public delegate void ToogleInventoryControlEventHandler();
 
@@ -36,9 +35,7 @@ public partial class InventoryControl : Control
     /// </summary>
     public SlotData GrabbedSlotData { get; set; }
 
-    /// <summary>
-    /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de nodos subyacentes de <c>InventoryControl</c>
-    /// </summary>
+
     public override void _Ready()
     {
         this.PlayerInventory = this.GetNode<InventoryUI>("PlayerInventory");

@@ -12,17 +12,26 @@ public partial class PlayerResource : Resource
     public float DashSpeed { get; set; }
 
     [Export]
-    public InventoryData PlayerInventory { get; set; }
+    public InventoryData InventoryData { get; set; }
 
     [Export]
-    public EquipmentInventoryData EquipmentInventory { get; set; }
+    public EquipmentInventoryData EquipmentInventoryData { get; set; }
 
     public PlayerResource()
+        : this(100, 100, 3, new InventoryData(27), new EquipmentInventoryData()) { }
+
+    public PlayerResource(
+        double life,
+        float moveSpeed,
+        float dashSpeed,
+        InventoryData inventoryData,
+        EquipmentInventoryData equipmentInventoryData
+    )
     {
-        this.Life = 100;
-        this.MoveSpeed = 100f;
-        this.DashSpeed = 3f;
-        this.PlayerInventory = new InventoryData(27);
-        this.EquipmentInventory = new EquipmentInventoryData(); //TODO Arreglar contructor
+        this.Life = life;
+        this.MoveSpeed = moveSpeed;
+        this.DashSpeed = dashSpeed;
+        this.InventoryData = inventoryData;
+        this.EquipmentInventoryData = equipmentInventoryData;
     }
 }

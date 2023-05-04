@@ -15,15 +15,21 @@ public partial class SaveGame : Resource
     [Export]
     public Dictionary<string, ChestResource> ChestResources { get; set; }
 
+    public SaveGame()
+    {
+        this.PlayerResource = new();
+        this.PlayerGlobalPosition = Vector2.Zero;
+    }
+
     public void Save() => ResourceSaver.Save(this, SAVE_GAME_PATH);
 
-    public static Resource LoadGame()
+    public static SaveGame LoadGame()
     {
         if (ResourceLoader.Exists(SAVE_GAME_PATH))
         {
-            return GD.Load<Resource>(SAVE_GAME_PATH);
+            return GD.Load<SaveGame>(SAVE_GAME_PATH);
         }
 
-        return null;
+        return new();
     }
 }
