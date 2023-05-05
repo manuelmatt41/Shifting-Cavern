@@ -15,6 +15,9 @@ public partial class SaveGame : Resource
     [Export]
     public Dictionary<string, ChestResource> ChestResources { get; set; }
 
+    [Export]
+    public TileMap CurrentMap { get; set; }
+
     public SaveGame()
     {
         this.PlayerResource = new();

@@ -1,6 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://3by86d6akvu2"]
+[gd_scene load_steps=4 format=3 uid="uid://3by86d6akvu2"]
 
 [ext_resource type="Script" path="res://Utils/MapContainer/MapContainer.cs" id="1_hpm4n"]
+[ext_resource type="PackedScene" uid="uid://bga716l82re0m" path="res://Levels/Prueba.tscn" id="2_vq4h5"]
+[ext_resource type="PackedScene" uid="uid://bn2osp5f8ttnm" path="res://Levels/test_map.tscn" id="3_brq83"]
 
 [node name="MapContainer" type="Node2D"]
 script = ExtResource("1_hpm4n")
+metadata/_edit_horizontal_guides_ = []
+
+[node name="TileMap" parent="." instance=ExtResource("2_vq4h5")]
+position = Vector2(1008, -1436)
+
+[node name="ChangeMapArea" parent="TileMap" index="0" node_paths=PackedStringArray("MapChange")]
+MapChange = NodePath("../../TestMap")
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint" parent="TileMap/ChangeMapArea" index="1"]
+position = Vector2(5.62451, 905.679)
+
+[node name="TestMap" parent="." instance=ExtResource("3_brq83")]
+
+[node name="ChangeMapArea" parent="TestMap" index="0" node_paths=PackedStringArray("MapChange")]
+scale = Vector2(1.00932, 1.00872)
+MapChange = NodePath("../../TileMap")
+
+[node name="SpawnPoint" parent="TestMap/ChangeMapArea" index="1"]
+position = Vector2(-10, -873)
+
+[connection signal="ChangeMap" from="TileMap/ChangeMapArea" to="." method="OnChangeChangeMap"]
+[connection signal="ChangeMap" from="TestMap/ChangeMapArea" to="." method="OnChangeChangeMap"]
+
+[editable path="TileMap"]
+[editable path="TileMap/ChangeMapArea"]
+[editable path="TileMap/EnemySpawner"]
+[editable path="TileMap/Sign"]
+[editable path="TileMap/Sign/BalloonTextControl"]
+[editable path="TestMap"]
+[editable path="TestMap/ChangeMapArea"]
