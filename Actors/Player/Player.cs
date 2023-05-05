@@ -192,10 +192,9 @@ public partial class Player : CharacterBody2D
             this._defaultStateMachine.ChangeState(this.NextState);
         }
     }
-    public void Initialize(PlayerResource playerResource, Vector2I cameraLimits)
+    public void Initialize(PlayerResource playerResource)
     {
         this.PlayerResource = playerResource;
-        this.SetCameraLimits(cameraLimits);
 
         if (this.PlayerResource.EquipmentInventoryData.SlotDatas[0] != null)
         {
@@ -205,13 +204,13 @@ public partial class Player : CharacterBody2D
         }
     }
 
-    public void SetCameraLimits(Vector2I cameraLimits)
+    public void SetCameraLimits(Vector2I cameraLimitsStart, Vector2I cameraLimitsEnd)
     {
 
-        this.Camera.LimitTop = 0;
-        this.Camera.LimitLeft = 0;
-        this.Camera.LimitRight = cameraLimits.X;
-        this.Camera.LimitBottom = cameraLimits.Y;
+        this.Camera.LimitLeft = cameraLimitsStart.X;
+        this.Camera.LimitTop = cameraLimitsStart.Y;
+        this.Camera.LimitRight = cameraLimitsEnd.X;
+        this.Camera.LimitBottom = cameraLimitsEnd.Y;
     }
     /// <summary>
     /// Realiza el movimiento de <c>Player</c> y se llama a una pool de sonidos de caminar <c>PlayRandomPlayerWalkSound</c>
