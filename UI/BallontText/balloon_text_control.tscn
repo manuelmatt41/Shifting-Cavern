@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://djt4nx3rfu1jb"]
+
+[ext_resource type="Texture2D" uid="uid://bwqmajmwkrx60" path="res://UI/MainMenu/Complete_GUI_Essential_Pack_Free_Version/01_Basic_Collection/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.png" id="1_r40pd"]
+[ext_resource type="Script" path="res://UI/BallontText/BalloonTextControl.cs" id="1_sw6td"]
+[ext_resource type="FontFile" uid="uid://dt1wbs1dd145w" path="res://InteractiveObjects/Sign/Assets/HackbotFreeTrial-8MgA2.otf" id="3_eur45"]
+
+[node name="BalloonTextControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sw6td")
+TextSpeed = 0.05
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = -34.0
+offset_top = -11.0
+offset_right = 40.0
+offset_bottom = 3.0
+texture = ExtResource("1_r40pd")
+region_rect = Rect2(640, 160, 32, 32)
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 702.0
+offset_bottom = 54.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_eur45")
+theme_override_font_sizes/normal_font_size = 49
+fit_content = true
+scroll_active = false
+visible_characters = 0
+
+[connection signal="resized" from="NinePatchRect/RichTextLabel" to="." method="OnRichTextResized"]
