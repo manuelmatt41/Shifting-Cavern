@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Godot;
 
 public partial class Main : Node2D
@@ -20,7 +18,9 @@ public partial class Main : Node2D
         "res://UI/Inventory/inventory_control_ui.tscn"
     );
 
-    public readonly PackedScene MapContainerScene = GD.Load<PackedScene>("res://Utils/MapContainer/map_container.tscn");
+    public readonly PackedScene MapContainerScene = GD.Load<PackedScene>(
+        "res://Utils/MapContainer/map_container.tscn"
+    );
 
     public Player Player { get; private set; }
     public CanvasLayer MainMenuUI { get; private set; }
@@ -43,46 +43,12 @@ public partial class Main : Node2D
     {
         this.MainMenuUI = this.MainMenuControlUiScene.Instantiate<CanvasLayer>();
 
-        this.MainMenuControl = this.MainMenuUI.GetNode<MainMenuControl>(nameof(this.MainMenuControl));
+        this.MainMenuControl = this.MainMenuUI.GetNode<MainMenuControl>(
+            nameof(this.MainMenuControl)
+        );
         this.MainMenuControl.NewGame += this.OnNewGame;
 
         this.AddChild(this.MainMenuUI);
-        //this.Goblin = this.GetNode<Goblin>("Goblin");
-        ////this.Goblin2 = this.GetNode<Goblin>("Goblin2");
-        //this.Chest = this.GetNode<Chest>("Chest");
-        //this.Chest2 = this.GetNode<Chest>("Chest2");
-        //this.InventoryControl = this.GetNode<CanvasLayer>("UI")
-        //    .GetNode<InventoryControl>("InventoryControl");
-
-
-        //var gameLoad = SaveGame.LoadGame() as SaveGame;
-        //if (gameLoad != null)
-        //{
-        //    this.Player.PlayerResource = gameLoad.PlayerResource;
-        //    this.Player.GlobalPosition = gameLoad.PlayerGlobalPosition;
-        //    this.Player.Initialize();
-
-        //    this.Chest.ChestResource = gameLoad.ChestResources[Chest.Name];
-        //    this.Chest2.ChestResource = gameLoad.ChestResources[Chest2.Name];
-        //}
-        //else
-        //{
-        //    this.Player.PlayerResource = new();
-        //    this.Player.GlobalPosition = Vector2.Zero;
-        //    this.Player.Initialize();
-
-        //    this.Chest.ChestResource = new();
-        //    this.Chest2.ChestResource = new();
-        //}
-
-        //this.InventoryControl.ToogleInventoryControl += this.OnToogleInventoryInterface;
-        //this.Goblin.DropLoot += this.OnDropLoot;
-        ////this.Goblin2.DropLoot += this.OnDropLoot;
-
-        //this.InventoryControl.SetPlayerInventoryData(this.Player.PlayerResource.PlayerInventory);
-        //this.InventoryControl.SetPlayerEquipmentInventoryData(this.Player.PlayerResource.EquipmentInventory);
-        //this.Chest.OpenChestInventory += this.OnOpenChestInventory;
-        //this.Chest2.OpenChestInventory += this.OnOpenChestInventory;
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -94,20 +60,23 @@ public partial class Main : Node2D
             //save.ChestResources = new()
             //{
             //    [this.Chest.Name.ToString()] = this.Chest.ChestResource,
-            //    [this.Chest2.Name.ToString()] = this.Chest2.ChestResource
+            //    [this.Chest2.Name.ToString()] = this.Chest2.ChestResourceas
             //};
+            this._saveGame.CurrentMap = this.MapContainer.CurrentMap;
 
             this._saveGame.Save();
             this.GetTree().Quit();
         }
     }
 
-    private void OnSpawnEnemies(CharacterBody2D enemy) => this.CallDeferred("add_child", enemy);
-
-    private void OnChangePlayerPosition(Vector2 newPlayerPosition, Vector2I mapSize)
+    private void OnChangePlayerPosition(
+        Vector2 newPlayerPosition,
+        Vector2I cameraLimitsStart,
+        Vector2I cameraLimitsEnd
+    )
     {
-        this.Player.CallDeferred("set_global_position", newPlayerPosition);
-        this.Player.SetCameraLimits(mapSize);
+        this.Player.GlobalPosition = newPlayerPosition;
+        this.Player.SetCameraLimits(cameraLimitsStart, cameraLimitsEnd);
     }
 
     private void OnNewGame()
@@ -116,28 +85,29 @@ public partial class Main : Node2D
         this.InventoryControlUI = this.InventoryControlUIScene.Instantiate<CanvasLayer>();
         this.MapContainer = this.MapContainerScene.Instantiate<MapContainer>();
 
-
         this.AddChild(this.Player);
         this.AddChild(this.InventoryControlUI);
         this.AddChild(this.MapContainer);
 
-        var tileMap = GD.Load<PackedScene>("res://Levels/test_map.tscn").Instantiate<TileMap>();
-        this.Player.Initialize(this._saveGame.PlayerResource, tileMap.GetUsedRect().Size * tileMap.CellQuadrantSize);
+        this.Player.Initialize(this._saveGame.PlayerResource);
 
-        this.InventoryControl = this.InventoryControlUI.GetNode<InventoryControl>(nameof(this.InventoryControl));
+        this.InventoryControl = this.InventoryControlUI.GetNode<InventoryControl>(
+            nameof(this.InventoryControl)
+        );
         this.InventoryControl.ToogleInventoryControl += this.OnToogleInventoryInterface;
         this.InventoryControl.SetPlayerInventoryData(this.Player.PlayerResource.InventoryData);
-        this.InventoryControl.SetPlayerEquipmentInventoryData(this.Player.PlayerResource.EquipmentInventoryData);
+        this.InventoryControl.SetPlayerEquipmentInventoryData(
+            this.Player.PlayerResource.EquipmentInventoryData
+        );
 
         this.MapContainer.ChangePlayerPosition += this.OnChangePlayerPosition;
-        this.MapContainer.OnChangeChangeMap(tileMap, this._saveGame.PlayerGlobalPosition, tileMap.GetUsedRect().Size * tileMap.CellQuadrantSize);
-        this.MapContainer.SpawnEnemies += this.OnSpawnEnemies;
-        //this.CurrentMap.ChangeMap += this.OnChangeMap; //TODO Arreglar el cambio de mapa
+        this.MapContainer.OnChangeChangeMap(
+            this._saveGame.CurrentMap,
+            this._saveGame.PlayerGlobalPosition
+        );
 
         this.MainMenuUI.QueueFree();
     }
-
-
 
     private void OnToogleInventoryInterface()
     {
