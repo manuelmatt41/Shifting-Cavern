@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bh1605b3jtnay"]
+
+[ext_resource type="Script" path="res://UI/Inventory/LifeBar/LifeBarControl.cs" id="1_e7cyj"]
+[ext_resource type="Texture2D" uid="uid://bwqmajmwkrx60" path="res://UI/MainMenu/Complete_GUI_Essential_Pack_Free_Version/01_Basic_Collection/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.png" id="1_ntd85"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4prxu"]
+atlas = ExtResource("1_ntd85")
+region = Rect2(481, 271, 31, 2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4eksv"]
+atlas = ExtResource("1_ntd85")
+region = Rect2(480, 202, 32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnmla"]
+atlas = ExtResource("1_ntd85")
+region = Rect2(480, 271, 32, 2)
+
+[node name="LifeBarControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e7cyj")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 61.0
+offset_bottom = 26.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_4prxu")
+texture_over = SubResource("AtlasTexture_4eksv")
+texture_progress = SubResource("AtlasTexture_fnmla")
+tint_under = Color(1, 1, 1, 0)
