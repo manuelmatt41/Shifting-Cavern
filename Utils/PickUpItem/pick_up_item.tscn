@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://xsolmc6lxn2m"]
+[gd_scene load_steps=3 format=3 uid="uid://cs7cdbgo3xw7g"]
 
 [ext_resource type="Script" path="res://Utils/PickUpItem/PickUpItem.cs" id="1_psq6o"]
 
@@ -11,6 +11,7 @@ script = ExtResource("1_psq6o")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(0.35, 0.35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_e7p87")

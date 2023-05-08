@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public partial class SaveGame : Resource
 {
@@ -22,6 +21,8 @@ public partial class SaveGame : Resource
     {
         this.PlayerResource = new();
         this.PlayerGlobalPosition = Vector2.Zero;
+        this.ChestResources = new();
+        this.CurrentMap = GD.Load<PackedScene>("res://Levels/test_map.tscn").Instantiate<TileMap>();
     }
 
     public void Save() => ResourceSaver.Save(this, SAVE_GAME_PATH);

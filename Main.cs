@@ -32,12 +32,7 @@ public partial class Main : Node2D
 
     public MapContainer MapContainer { get; private set; }
 
-    public Goblin Goblin { get; set; }
-
-    public Chest Chest { get; set; }
-    public Chest Chest2 { get; set; }
-
-    private SaveGame _saveGame = SaveGame.LoadGame() as SaveGame;
+    public static SaveGame SaveGame = SaveGame.LoadGame() as SaveGame;
 
     public override void _Ready()
     {
@@ -55,18 +50,33 @@ public partial class Main : Node2D
     {
         if (Input.IsActionPressed("CloseGame"))
         {
-            this._saveGame.PlayerResource = this.Player.PlayerResource;
-            this._saveGame.PlayerGlobalPosition = this.Player.GlobalPosition;
-            //save.ChestResources = new()
-            //{
-            //    [this.Chest.Name.ToString()] = this.Chest.ChestResource,
-            //    [this.Chest2.Name.ToString()] = this.Chest2.ChestResourceas
-            //};
-            this._saveGame.CurrentMap = this.MapContainer.CurrentMap;
+            Main.SaveGame.PlayerResource = this.Player.PlayerResource;
+            Main.SaveGame.PlayerGlobalPosition = this.Player.GlobalPosition;
 
-            this._saveGame.Save();
+            foreach (var map in this.MapContainer.GetChildren())
+            {
+                if (map is TileMap)
+                {
+                    foreach (var tileMapChild in map.GetChildren())
+                    {
+                        if (tileMapChild is Chest chest)
+                        {
+                            Main.SaveGame.ChestResources[chest.Name] = chest.ChestResource;
+                        }
+                    }
+                }
+            }
+
+            Main.SaveGame.CurrentMap = this.MapContainer.CurrentMap;
+
+            Main.SaveGame.Save();
             this.GetTree().Quit();
         }
+    }
+
+    private void OnPlayerDamageChange(double newDamage)
+    {
+        this.Player.HitBox.Damage = newDamage;
     }
 
     private void OnChangePlayerPosition(
@@ -85,25 +95,28 @@ public partial class Main : Node2D
         this.InventoryControlUI = this.InventoryControlUIScene.Instantiate<CanvasLayer>();
         this.MapContainer = this.MapContainerScene.Instantiate<MapContainer>();
 
-        this.AddChild(this.Player);
         this.AddChild(this.InventoryControlUI);
         this.AddChild(this.MapContainer);
+        this.MapContainer.AddChild(this.Player);
 
-        this.Player.Initialize(this._saveGame.PlayerResource);
+        this.Player.Initialize(Main.SaveGame.PlayerResource);
 
         this.InventoryControl = this.InventoryControlUI.GetNode<InventoryControl>(
             nameof(this.InventoryControl)
         );
         this.InventoryControl.ToogleInventoryControl += this.OnToogleInventoryInterface;
+        this.InventoryControl.DropSlotData += this.OnInventoryControlDropSlotData;
+        this.InventoryControl.PlayerDamageChange += this.OnPlayerDamageChange;
         this.InventoryControl.SetPlayerInventoryData(this.Player.PlayerResource.InventoryData);
         this.InventoryControl.SetPlayerEquipmentInventoryData(
             this.Player.PlayerResource.EquipmentInventoryData
         );
 
         this.MapContainer.ChangePlayerPosition += this.OnChangePlayerPosition;
+        this.MapContainer.ViewExternalInventory += this.OnViewExternalInventory;
         this.MapContainer.OnChangeChangeMap(
-            this._saveGame.CurrentMap,
-            this._saveGame.PlayerGlobalPosition
+            Main.SaveGame.CurrentMap,
+            Main.SaveGame.PlayerGlobalPosition
         );
 
         this.MainMenuUI.QueueFree();
@@ -115,38 +128,24 @@ public partial class Main : Node2D
         this.InventoryControl.ExternalInvetoryUI.Visible = false;
         this.InventoryControl.PlayerInventory.AnchorsPreset = 8;
         this.Player.IsInventoryVisible = this.InventoryControl.Visible;
-        this.InventoryControl.ClearExternalInventoryData(); //TODO Comprobar si se puede arreglar de otra manera
+        this.InventoryControl.ClearExternalInventoryData();
     }
 
     private void OnInventoryControlDropSlotData(SlotData slotData)
     {
         var pickUpItem = this.PickUpItem.Instantiate<PickUpItem>();
-        GD.Print("aaa");
+
         pickUpItem.SlotData = slotData;
         pickUpItem.Position = new Vector2(
             this.Player.GlobalPosition.X + 20,
             this.Player.GlobalPosition.Y + 10
         );
-        this.CallDeferred("add_child", pickUpItem);
+        this.MapContainer.CallDeferred("add_child", pickUpItem);
     }
 
-    private void OnDropLoot(SlotData[] loot, Vector2 position)
-    {
-        foreach (var item in loot)
-        {
-            var itemPickUp = this.PickUpItem.Instantiate<PickUpItem>();
-
-            itemPickUp.SlotData = item;
-            itemPickUp.Position = position;
-
-            this.CallDeferred("add_child", itemPickUp);
-        }
-    }
-
-    private void OnOpenChestInventory(InventoryData inventoryData) // TODO cambiar anyadiendo nodos al inventoryControl
+    private void OnViewExternalInventory(InventoryData inventoryData)
     {
         this.InventoryControl.Visible = true;
-
         this.InventoryControl.SetExternalInventoryData(inventoryData);
         this.InventoryControl.ExternalInvetoryUI.Visible = true;
 
@@ -163,5 +162,6 @@ public partial class Main : Node2D
         );
 
         this.Player.IsInventoryVisible = true;
+        this.GetTree().Paused = true;
     }
 }

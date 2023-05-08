@@ -4,7 +4,10 @@ using MonoCustomResourceRegistry;
 [RegisteredType(nameof(EquipmentInventoryData), "", nameof(InventoryData))]
 public partial class EquipmentInventoryData : InventoryData
 {
-    public EquipmentInventoryData() : base(1)
+    [Signal]
+    public delegate void WeaponChangeEventHandler(WeaponItemData weaponitemData);
+
+    public EquipmentInventoryData() : base(4)
     {
 
     }
@@ -16,6 +19,7 @@ public partial class EquipmentInventoryData : InventoryData
             return grabbedSlotData;
         }
 
+        this.EmitSignal(SignalName.WeaponChange, grabbedSlotData.ItemData);
         return base.DropSlotData(grabbedSlotData, index);
 
     }
@@ -26,6 +30,7 @@ public partial class EquipmentInventoryData : InventoryData
             return grabbedSlotData;
         }
 
+        this.EmitSignal(SignalName.WeaponChange, grabbedSlotData.ItemData);
         return base.DropSingleSlotData(grabbedSlotData, index);
     }
 }

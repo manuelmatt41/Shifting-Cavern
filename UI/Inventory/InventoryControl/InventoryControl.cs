@@ -17,6 +17,9 @@ public partial class InventoryControl : Control
     [Signal]
     public delegate void ToogleInventoryControlEventHandler();
 
+    [Signal]
+    public delegate void PlayerDamageChangeEventHandler(double newDamage);
+
     /// <summary>
     /// Interfaz que repsenta el inventario del juagador
     /// </summary>
@@ -78,11 +81,12 @@ public partial class InventoryControl : Control
     /// <summary>
     /// Coloca la informacion del inventario de <c>Player</c> en el <c>InventoryUI</c>
     /// </summary>
-    /// <param name="inventoryData">Informacion del inventario de <c>Player</c></param>
-    public void SetPlayerEquipmentInventoryData(InventoryData inventoryData)
+    /// <param name="equipmentInventoryData">Informacion del inventario de <c>Player</c></param>
+    public void SetPlayerEquipmentInventoryData(EquipmentInventoryData equipmentInventoryData)
     {
-        inventoryData.InventoryInteract += this.OnInventoryInteract;
-        this.PlayerEquipmentInventory.SetInventoryData(inventoryData);
+        equipmentInventoryData.InventoryInteract += this.OnInventoryInteract;
+        equipmentInventoryData.WeaponChange += this.OnWeaponChange;
+        this.PlayerEquipmentInventory.SetInventoryData(equipmentInventoryData);
     }
 
     public void SetExternalInventoryData(InventoryData inventoryData)
@@ -191,4 +195,6 @@ public partial class InventoryControl : Control
             this.UpdateGrabbedSlot();
         }
     }
+
+    private void OnWeaponChange(WeaponItemData weaponItemData) => this.EmitSignal(SignalName.PlayerDamageChange, weaponItemData.Damage);
 }

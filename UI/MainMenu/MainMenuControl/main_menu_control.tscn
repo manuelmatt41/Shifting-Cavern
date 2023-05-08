@@ -29,6 +29,6 @@ grow_vertical = 2
 texture_filter = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "New Game"
+text = "NEW_GAME"
 
 [connection signal="pressed" from="ButtonsContainer/NewGameButton" to="." method="OnNewGameButtonPressed"]

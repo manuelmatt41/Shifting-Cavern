@@ -83,6 +83,10 @@ CloseGame={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://Languages/Traducciones.en.translation", "res://Languages/Traducciones.es.translation")
+
 [layer_names]
 
 2d_physics/layer_1="World"

@@ -29,7 +29,7 @@ public partial class ChangeMapArea : Area2D
     {
         if (Engine.IsEditorHint())
         {
-            this.DrawDashedLine(this.CollisionShape2D.Position, this.SpawnPoint.Position, Color.Color8(255, 0, 0));
+            this.DrawDashedLine(this.CollisionShape2D.Position, this.SpawnPoint.Position, Color.Color8(255, 0, 0), -1, 10);
         }
     }
 }

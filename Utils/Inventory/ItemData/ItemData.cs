@@ -38,4 +38,7 @@ public partial class ItemData : Resource
         this.Texture = null;
         this.IsStackable = true;
     }
+
+    public static bool operator ==(ItemData a, ItemData b) => a.Name == b.Name;
+    public static bool operator !=(ItemData a, ItemData b) => a.Name != b.Name;
 }

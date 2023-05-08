@@ -29,33 +29,6 @@ public partial class Player : CharacterBody2D
     [Export]
     public PlayerResource PlayerResource { get; set; }
 
-    ///// <summary>
-    ///// Velocidad de movimiento de <c>Player</c> en px/s
-    ///// </summary>
-    ///// <value>Por defecto: 150</value>
-    //[Export]
-    //public float MoveSpeed { get; set; } = 150f;
-
-    ///// <summary>
-    ///// Vida de <c>Player</c>
-    ///// </summary>
-    ///// <value>Por defecto: 100</value>
-    //[Export]
-    //public double Life { get; set; } = 100;
-
-    ///// <summary>
-    ///// Fuerza aplicado al movimiento al hacer un Dash
-    ///// </summary>
-    ///// <value>Por defecto: 3</value>
-    //[Export]
-    //public float DashSpeed { get; set; } = 3f;
-
-    //[Export]
-    //public InventoryData InventoryData { get; set; }
-
-    //[Export]
-    //public EquipmentInventoryData EquipmentInventoryData { get; set; }
-
     /// <summary>
     /// Camara principal del juego que sigue a <c>Player</c>
     /// </summary>

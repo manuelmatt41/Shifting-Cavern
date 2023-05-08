@@ -1,11 +1,10 @@
-[gd_scene load_steps=40 format=3 uid="uid://bsisx04idcaub"]
+[gd_scene load_steps=39 format=3 uid="uid://bsisx04idcaub"]
 
 [ext_resource type="Script" path="res://Actors/Goblin/Goblin.cs" id="1_8k5pl"]
 [ext_resource type="Texture2D" uid="uid://dx26k65li1gen" path="res://Actors/Goblin/Assets/AnimationSprite/goblin.png" id="2_w8n0p"]
 [ext_resource type="PackedScene" uid="uid://beqgcpoupiplq" path="res://Utils/HitBox/hit_box.tscn" id="3_2brno"]
 [ext_resource type="PackedScene" uid="uid://b1gy3wjutwxxt" path="res://Utils/HurtBox/hurt_box.tscn" id="4_n3v4g"]
 [ext_resource type="PackedScene" uid="uid://c7e2s7cin6dvs" path="res://Utils/WardArea/ward_area.tscn" id="5_2epep"]
-[ext_resource type="Resource" uid="uid://3lna3yj2vm1h" path="res://Actors/Goblin/LootTable/GoblinLootTable.tres" id="7_txfih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lk4pr"]
 size = Vector2(7.5, 18.5)
@@ -208,8 +207,6 @@ z_index = 3
 texture_filter = 1
 motion_mode = 1
 script = ExtResource("1_8k5pl")
-Life = 50.0
-LootTable = ExtResource("7_txfih")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.75, 0.75)

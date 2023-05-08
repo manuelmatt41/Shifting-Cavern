@@ -1,5 +1,7 @@
 using Godot;
+using MonoCustomResourceRegistry;
 
+[RegisteredType(nameof(PlayerResource), "", nameof(Resource))]
 public partial class PlayerResource : Resource
 {
     [Export]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://3by86d6akvu2"]
+[gd_scene load_steps=4 format=3 uid="uid://bbq15w3rsgafh"]
 
 [ext_resource type="Script" path="res://Utils/MapContainer/MapContainer.cs" id="1_hpm4n"]
 [ext_resource type="PackedScene" uid="uid://bga716l82re0m" path="res://Levels/Prueba.tscn" id="2_vq4h5"]
@@ -28,7 +28,10 @@ MapChange = NodePath("../../TileMap")
 position = Vector2(-10, -873)
 
 [connection signal="ChangeMap" from="TileMap/ChangeMapArea" to="." method="OnChangeChangeMap"]
+[connection signal="CreateEnemies" from="TileMap/EnemySpawner" to="." method="OnCreateEnemies"]
 [connection signal="ChangeMap" from="TestMap/ChangeMapArea" to="." method="OnChangeChangeMap"]
+[connection signal="OpenChestInventory" from="TestMap/TutoChest" to="." method="OnOpenChest"]
+[connection signal="OpenChestInventory" from="TestMap/SecretChest" to="." method="OnOpenChest"]
 
 [editable path="TileMap"]
 [editable path="TileMap/ChangeMapArea"]
@@ -37,3 +40,5 @@ position = Vector2(-10, -873)
 [editable path="TileMap/Sign/BalloonTextControl"]
 [editable path="TestMap"]
 [editable path="TestMap/ChangeMapArea"]
+[editable path="TestMap/Sign"]
+[editable path="TestMap/Sign/BalloonTextControl"]

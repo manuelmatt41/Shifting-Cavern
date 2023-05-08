@@ -34,6 +34,9 @@ grow_vertical = 2
 [node name="EquipmentInventory" parent="." instance=ExtResource("2_j7lgl")]
 layout_mode = 0
 
+[node name="ItemGrid" parent="EquipmentInventory/MarginContainer" index="0"]
+columns = 1
+
 [node name="ExternalInventoryUI" parent="." instance=ExtResource("2_j7lgl")]
 visible = false
 layout_mode = 1
@@ -58,3 +61,5 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_176kc")
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="OnInventoryControlVisibilityChanged"]
+
+[editable path="EquipmentInventory"]

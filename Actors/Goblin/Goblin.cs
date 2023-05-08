@@ -50,6 +50,8 @@ public partial class Goblin : CharacterBody2D
     [Export]
     public double ChangeDirectionTime { get; private set; } = 5;
 
+    public GoblinLootTable LootTable { get; set; } = new();
+
     /// <summary>
     /// Arbol de animaciones de <c>Goblin</c>
     /// </summary>
@@ -123,9 +125,6 @@ public partial class Goblin : CharacterBody2D
     /// Contador del tiempo para volver a mandar una direccion
     /// </summary>
     private double _changeDirectionTimeCount = 0;
-
-    [Export]
-    public InventoryData LootTable { get; set; }
 
     /// <summary>
     /// Funcion integrada de Godot que se ejecuta al crear el nodo en la escena, se usa para iniciar las variables de <c>Goblin</c>

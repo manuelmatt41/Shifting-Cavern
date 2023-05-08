@@ -54,9 +54,10 @@ public partial class InventoryUI : PanelContainer
             var slot = this._slot.Instantiate() as SlotUI;
             this.ItemGrid.AddChild(slot);
 
+            slot.SlotClicked += inventoryData.OnSlotClicked;
+
             if (slotData != null)
             {
-                slot.SlotClicked += inventoryData.OnSlotClicked;
                 slot.SetSlotData(slotData);
             }
         }

@@ -25,17 +25,16 @@ layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array(393220, 524290, 0, 655364, 524290, 6, 1835012, 524290, 0, 2097156, 524290, 6, 1900572, 524290, 0, 2162716, 524290, 6, 1769544, 524290, 0, 2031688, 524290, 6, 1441859, 524290, 6, 1179715, 524290, 0, 1638612, 524290, 0, 1900756, 524290, 6, 458964, 524290, 0, 721108, 524290, 6)
 
 [node name="ChangeMapArea" parent="." instance=ExtResource("3_8rhcd")]
-position = Vector2(220, 588)
+position = Vector2(217, 586)
 scale = Vector2(0.711165, 0.98048)
 
 [node name="CollisionShape2D" parent="ChangeMapArea" index="0"]
 position = Vector2(8.43686, 0)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_0qq8t")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_vhnjq")]
 position = Vector2(249, 315)
-TimeToSpawn = 5
+TimeToSpawn = 10
 EnemyScene = "res://Actors/Goblin/goblin.tscn"
 MaxEnemies = 3
 
