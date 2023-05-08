@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bn2osp5f8ttnm" path="res://Levels/test_map.tscn" id="3_brq83"]
 
 [node name="MapContainer" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_hpm4n")
 metadata/_edit_horizontal_guides_ = []
 
@@ -40,5 +41,3 @@ position = Vector2(-10, -873)
 [editable path="TileMap/Sign/BalloonTextControl"]
 [editable path="TestMap"]
 [editable path="TestMap/ChangeMapArea"]
-[editable path="TestMap/Sign"]
-[editable path="TestMap/Sign/BalloonTextControl"]

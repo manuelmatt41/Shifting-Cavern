@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Godot;
 
 /// <summary>
@@ -165,26 +164,24 @@ public partial class Player : CharacterBody2D
             this._defaultStateMachine.ChangeState(this.NextState);
         }
     }
+
     public void Initialize(PlayerResource playerResource)
     {
         this.PlayerResource = playerResource;
 
-        if (this.PlayerResource.EquipmentInventoryData.SlotDatas[0] != null)
-        {
-            this.HitBox.Damage = (
-                this.PlayerResource.EquipmentInventoryData.SlotDatas[0].ItemData as WeaponItemData
-            ).Damage;
-        }
+        this.HitBox.Damage = (
+            this.PlayerResource.EquipmentInventoryData.SlotDatas[0].ItemData as WeaponItemData
+        ).Damage;
     }
 
     public void SetCameraLimits(Vector2I cameraLimitsStart, Vector2I cameraLimitsEnd)
     {
-
         this.Camera.LimitLeft = cameraLimitsStart.X;
         this.Camera.LimitTop = cameraLimitsStart.Y;
         this.Camera.LimitRight = cameraLimitsEnd.X;
         this.Camera.LimitBottom = cameraLimitsEnd.Y;
     }
+
     /// <summary>
     /// Realiza el movimiento de <c>Player</c> y se llama a una pool de sonidos de caminar <c>PlayRandomPlayerWalkSound</c>
     /// </summary>
@@ -200,8 +197,6 @@ public partial class Player : CharacterBody2D
         this.Velocity = this.MoveDirection.Normalized() * this.PlayerResource.MoveSpeed;
         this.MoveAndSlide();
     }
-
-
 
     /// <summary>
     /// Realiza el movimiento Dash de <c>Player</c>

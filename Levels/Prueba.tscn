@@ -12,6 +12,7 @@ size = Vector2(88.744, 20)
 size = Vector2(279.5, 371.5)
 
 [node name="TileMap" type="TileMap"]
+y_sort_enabled = true
 texture_filter = 1
 tile_set = ExtResource("1_q1114")
 format = 2

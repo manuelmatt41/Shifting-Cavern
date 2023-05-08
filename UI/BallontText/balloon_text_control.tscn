@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bwqmajmwkrx60" path="res://UI/MainMenu/Complete_GUI_Essential_Pack_Free_Version/01_Basic_Collection/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.png" id="1_r40pd"]
 [ext_resource type="Script" path="res://UI/BallontText/BalloonTextControl.cs" id="1_sw6td"]
-[ext_resource type="FontFile" uid="uid://dt1wbs1dd145w" path="res://InteractiveObjects/Sign/Assets/HackbotFreeTrial-8MgA2.otf" id="3_eur45"]
+[ext_resource type="FontFile" uid="uid://d3kfbkxpsadur" path="res://InteractiveObjects/Sign/Assets/Roboto-Regular.ttf" id="3_cfiha"]
 
 [node name="BalloonTextControl" type="Control"]
 layout_mode = 3
@@ -37,7 +37,7 @@ offset_right = 702.0
 offset_bottom = 54.0
 scale = Vector2(0.1, 0.1)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("3_eur45")
+theme_override_fonts/normal_font = ExtResource("3_cfiha")
 theme_override_font_sizes/normal_font_size = 49
 fit_content = true
 scroll_active = false

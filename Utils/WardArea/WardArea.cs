@@ -69,7 +69,7 @@ public partial class WardArea : Area2D
     /// <param name="body">Cuerpo que ha entrado en <c>WardArea</c></param>
     private void OnBodyEntered(Node2D body)
     {
-        if (body.IsInGroup("Player"))
+        if (body.IsPlayer())
         {
             if (this.Player == null)
             {
@@ -86,7 +86,7 @@ public partial class WardArea : Area2D
     /// <param name="body">Cuerpo que ha salido de <c>WardArea</c></param>
     private void OnBodyExited(Node2D body)
     {
-        if (body.IsInGroup("Player"))
+        if (body.IsPlayer())
         {
             this.SetDeferred("IsPlayerInside", false);
         }

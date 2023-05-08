@@ -210,16 +210,6 @@ public partial class Goblin : CharacterBody2D
         this._finishPosition = newDirection;
     }
 
-    // TODO Revisar si me compensa los BlendPosition para mi proyecto
-    /// <summary>
-    /// Cambia la direccion de la animacion
-    /// </summary>
-    //private void UpdateAnimationParameters()
-    //{
-    //    //this.Sprite.FlipH = this.MoveDirection.X == 1;
-
-    //}
-
     /// <summary>
     /// Evento que se ejecuta al detectar una posicion aleatoria dentro de <c>WardArea</c> o la entrada de un <c>Player</c> dentro del area, y se cambia <c>MoveDirection</c> y <c>_finishPosition</c> a la nueva posicion
     /// </summary>

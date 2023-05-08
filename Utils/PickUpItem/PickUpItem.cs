@@ -40,7 +40,7 @@ public partial class PickUpItem : Area2D
     /// <param name="body"></param>
     private void OnBodyEntered(Node2D body)
     {
-        if (body.IsInGroup("Player"))
+        if (body.IsPlayer())
         {
             var player = body as Player;
 

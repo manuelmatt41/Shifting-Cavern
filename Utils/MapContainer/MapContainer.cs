@@ -20,23 +20,11 @@ public partial class MapContainer : Node2D
 
     public void OnChangeChangeMap(TileMap newMap, Vector2 spawnPosition)
     {
-        foreach (var child in this.GetChildren())
-        {
-            if (child is CharacterBody2D && child is not Player)
-            {
-                child.QueueFree();
-            }
-        }
+        this.DespawnEnemies();
 
         if (this.CurrentMap != null)
         {
-            foreach (var child in this.CurrentMap.GetChildren())
-            {
-                if (child is EnemySpawner enemySpawner)
-                {
-                    enemySpawner.Stop();
-                }
-            }
+            this.CurrentMap.StopMapComponents();
         }
 
         var mapSize = newMap.GetUsedRect().Size * newMap.CellQuadrantSize;
@@ -50,11 +38,16 @@ public partial class MapContainer : Node2D
 
         this.CurrentMap = newMap;
 
-        foreach (var child in newMap.GetChildren())
+        this.CurrentMap.StartMapComponents();
+    }
+
+    public void DespawnEnemies()
+    {
+        foreach (var child in this.GetChildren())
         {
-            if (child is EnemySpawner enemySpawner)
+            if (child is CharacterBody2D && child is not Player)
             {
-                enemySpawner.Start();
+                child.QueueFree();
             }
         }
     }

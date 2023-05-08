@@ -19,7 +19,7 @@ public partial class ChangeMapArea : Area2D
     }
     private void OnBodyEntered(Node2D body)
     {
-        if (body.IsInGroup("Player"))
+        if (body.IsPlayer())
         {
             this.EmitSignal(SignalName.ChangeMap, this.MapChange as TileMap, this.SpawnPoint.GlobalPosition);
         }

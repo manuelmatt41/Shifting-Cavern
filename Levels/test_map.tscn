@@ -9,6 +9,7 @@
 size = Vector2(92, 20)
 
 [node name="TestMap" type="TileMap"]
+y_sort_enabled = true
 texture_filter = 1
 tile_set = ExtResource("1_7tydv")
 format = 2
@@ -31,15 +32,60 @@ shape = SubResource("RectangleShape2D_g4fbs")
 [node name="TutoChest" parent="." instance=ExtResource("3_pksso")]
 position = Vector2(295, 420)
 
+[node name="SecretChest" parent="." instance=ExtResource("3_pksso")]
+position = Vector2(1347, 618)
+ChestLootType = 1
+
 [node name="Sign" parent="." instance=ExtResource("4_7dm0g")]
 position = Vector2(312, 418)
 
 [node name="RichTextLabel" parent="Sign/BalloonTextControl/NinePatchRect" index="0"]
-text = "Haz click derecho sobre el cofre, y coge el objet o para poder equiparlo"
+text = "Haz click derecho sobre el cofre, y coge el objeto para poder equiparlo"
 
-[node name="SecretChest" parent="." instance=ExtResource("3_pksso")]
-position = Vector2(1347, 618)
-ChestLootType = 1
+[node name="123498" type="VScrollBar" parent="Sign/BalloonTextControl/NinePatchRect/RichTextLabel" index="1"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="123003" type="VScrollBar" parent="Sign/BalloonTextControl/NinePatchRect/RichTextLabel" index="2"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+max_value = 0.0
+step = 1.0
+
+[node name="115506" type="VScrollBar" parent="Sign/BalloonTextControl/NinePatchRect/RichTextLabel" index="3"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="115005" type="VScrollBar" parent="Sign/BalloonTextControl/NinePatchRect/RichTextLabel" index="4"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+max_value = 0.0
+step = 1.0
+
+[node name="110208" type="VScrollBar" parent="Sign/BalloonTextControl/NinePatchRect/RichTextLabel" index="5"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="106405" type="VScrollBar" parent="Sign/BalloonTextControl/NinePatchRect/RichTextLabel" index="6"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+max_value = 0.0
+step = 1.0
 
 [editable path="ChangeMapArea"]
 [editable path="Sign"]
