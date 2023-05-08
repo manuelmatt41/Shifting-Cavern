@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-public static class Node2DExtensions
+public static class NodeExtensions
 {
-    public static bool IsPlayer(this Node2D node2D) => node2D.IsInGroup("Player");
+    public static bool IsPlayer(this Node node) => node.IsInGroup("Player");
 }

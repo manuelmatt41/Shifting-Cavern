@@ -35,7 +35,6 @@ public partial class MapContainer : Node2D
             newMap.GlobalPosition,
             mapSize + newMap.GlobalPosition
         );
-
         this.CurrentMap = newMap;
 
         this.CurrentMap.StartMapComponents();
