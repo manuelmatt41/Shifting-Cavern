@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=28 format=3]
+[gd_resource type="Resource" load_steps=32 format=3]
 
 [ext_resource type="Texture2D" path="res://Items/WoodBlade/WoodBladeTexture.tres" id="1_uqd3r"]
 [ext_resource type="Script" path="res://Items/WoodBlade/WoodBlade.cs" id="2_37dmj"]
@@ -8,7 +8,9 @@
 [ext_resource type="Script" path="res://Items/Coin/Coin.cs" id="4_6ndbj"]
 [ext_resource type="Script" path="res://InteractiveObjects/Chest/Resource/ChestResource.cs" id="5_bjmwa"]
 [ext_resource type="Script" path="res://InteractiveObjects/Chest/LootTable/SecretChest.cs" id="6_soe5y"]
+[ext_resource type="Texture2D" path="res://Items/RottenFish/RottenFishTexture.tres" id="6_xnt7s"]
 [ext_resource type="Texture2D" path="res://Items/MagicSword/MagicSwordTexture.tres" id="7_gcdlp"]
+[ext_resource type="Script" path="res://Items/RottenFish/RottenFish.cs" id="7_hdk3h"]
 [ext_resource type="Script" path="res://Items/MagicSword/MagicSword.cs" id="8_6ib81"]
 [ext_resource type="Script" path="res://Utils/Inventory/InventoryData/EquipmentInventoryData/EquipmentInventoryData.cs" id="9_qxtwo"]
 [ext_resource type="Script" path="res://Utils/Inventory/InventoryData/InventoryData.cs" id="10_owwcy"]
@@ -33,8 +35,29 @@ IsStackable = true
 [sub_resource type="Resource" id="Resource_kcsup"]
 script = ExtResource("3_idiok")
 ItemData = SubResource("Resource_3041j")
-Quantity = 10
+Quantity = 20
 DropRate = 75
+
+[sub_resource type="Resource" id="Resource_5lc7f"]
+script = ExtResource("7_hdk3h")
+Name = "Pescado podrido"
+Description = "Pescado con sabor"
+Texture = ExtResource("6_xnt7s")
+IsStackable = true
+
+[sub_resource type="Resource" id="Resource_0dfb2"]
+script = ExtResource("3_idiok")
+ItemData = SubResource("Resource_5lc7f")
+Quantity = 1
+DropRate = 25
+
+[sub_resource type="Resource" id="Resource_cdw8a"]
+script = ExtResource("4_2tpsy")
+SlotDatas = [SubResource("Resource_kcsup"), SubResource("Resource_0dfb2"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+
+[sub_resource type="Resource" id="Resource_lcubo"]
+script = ExtResource("5_bjmwa")
+InventoryData = SubResource("Resource_cdw8a")
 
 [sub_resource type="Resource" id="Resource_v1kpu"]
 script = ExtResource("2_37dmj")
@@ -50,13 +73,9 @@ ItemData = SubResource("Resource_v1kpu")
 Quantity = 1
 DropRate = 0
 
-[sub_resource type="Resource" id="Resource_cdw8a"]
-script = ExtResource("4_2tpsy")
-SlotDatas = [SubResource("Resource_kcsup"), SubResource("Resource_0j4x2"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-
-[sub_resource type="Resource" id="Resource_lcubo"]
-script = ExtResource("5_bjmwa")
-InventoryData = SubResource("Resource_cdw8a")
+[sub_resource type="Resource" id="Resource_msbnf"]
+script = ExtResource("9_qxtwo")
+SlotDatas = [SubResource("Resource_0j4x2"), null, null, null]
 
 [sub_resource type="Resource" id="Resource_8mu8x"]
 script = ExtResource("8_6ib81")
@@ -72,13 +91,9 @@ ItemData = SubResource("Resource_8mu8x")
 Quantity = 1
 DropRate = 0
 
-[sub_resource type="Resource" id="Resource_msbnf"]
-script = ExtResource("9_qxtwo")
-SlotDatas = [SubResource("Resource_ioqjl"), null, null, null]
-
 [sub_resource type="Resource" id="Resource_gpnel"]
 script = ExtResource("10_owwcy")
-SlotDatas = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+SlotDatas = [SubResource("Resource_ioqjl"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
 
 [sub_resource type="Resource" id="Resource_ho0k3"]
 script = ExtResource("11_spb07")
@@ -91,7 +106,7 @@ EquipmentInventoryData = SubResource("Resource_msbnf")
 [resource]
 script = ExtResource("12_1mmhp")
 PlayerResource = SubResource("Resource_ho0k3")
-PlayerGlobalPosition = Vector2(300.569, 422.741)
+PlayerGlobalPosition = Vector2(295.081, 422.741)
 ChestResources = {
 "SecretChest": SubResource("Resource_ms81y"),
 "TutoChest": SubResource("Resource_lcubo")

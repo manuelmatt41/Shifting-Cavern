@@ -74,6 +74,8 @@ public partial class Goblin : CharacterBody2D
 
     public WardArea WardArea { get; private set; }
 
+    public LifeBarControl LifeBarControl { get; private set; }
+
     /// <summary>
     /// Estado que al que se va cambiar en la maquina de estados
     /// </summary>
@@ -149,6 +151,9 @@ public partial class Goblin : CharacterBody2D
             this,
             this.NextState
         );
+
+        this.LifeBarControl = this.GetNode<LifeBarControl>(nameof(this.LifeBarControl));
+        this.LifeBarControl.TextureProgressBar.Value = this.Life;
     }
 
     /// <summary>
@@ -255,6 +260,7 @@ public partial class Goblin : CharacterBody2D
     private void OnHurtBoxHurt(double damage)
     {
         this.Life -= damage;
+        this.LifeBarControl.TextureProgressBar.Value = this.Life;
         this.NextState = GoblinHitState.Instance();
 
         if (this.Life <= 0)
