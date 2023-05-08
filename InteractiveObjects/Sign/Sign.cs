@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Sign : RigidBody2D
 {
@@ -11,7 +10,7 @@ public partial class Sign : RigidBody2D
     }
     private void OnArea2DBodyEntered(Node2D body)
     {
-        if (body.IsInGroup("Player"))
+        if (body.IsPlayer())
         {
             this.BalloonTextControl.Start();
         }
@@ -19,7 +18,7 @@ public partial class Sign : RigidBody2D
 
     private void OnArea2DBodyExited(Node2D body)
     {
-        if (body.IsInGroup("Player"))
+        if (body.IsPlayer())
         {
             this.BalloonTextControl.Reset();
         }

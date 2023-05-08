@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dt1wbs1dd145w"
-path="res://.godot/imported/HackbotFreeTrial-8MgA2.otf-573581a52be48ca7c23cbf27376c012b.fontdata"
+uid="uid://d3kfbkxpsadur"
+path="res://.godot/imported/Roboto-Regular.ttf-ad8589999f6de334892a07fc3fd5b7e7.fontdata"
 
 [deps]
 
-source_file="res://InteractiveObjects/Sign/Assets/HackbotFreeTrial-8MgA2.otf"
-dest_files=["res://.godot/imported/HackbotFreeTrial-8MgA2.otf-573581a52be48ca7c23cbf27376c012b.fontdata"]
+source_file="res://InteractiveObjects/Sign/Assets/Roboto-Regular.ttf"
+dest_files=["res://.godot/imported/Roboto-Regular.ttf-ad8589999f6de334892a07fc3fd5b7e7.fontdata"]
 
 [params]
 
