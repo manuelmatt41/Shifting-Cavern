@@ -5,3 +5,4 @@
 [node name="InventoryControlUI" type="CanvasLayer"]
 
 [node name="InventoryControl" parent="." instance=ExtResource("1_6ojm8")]
+visible = false

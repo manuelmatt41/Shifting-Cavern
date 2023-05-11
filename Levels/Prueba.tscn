@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bga716l82re0m"]
+[gd_scene load_steps=9 format=3 uid="uid://bga716l82re0m"]
 
 [ext_resource type="TileSet" uid="uid://bwi8rr0526p5e" path="res://Levels/new_tile_set.tres" id="1_q1114"]
 [ext_resource type="PackedScene" uid="uid://dtioq75t3q8gk" path="res://Utils/ChangeMapArea/change_map_area.tscn" id="3_8rhcd"]
 [ext_resource type="PackedScene" uid="uid://8i85t55mf6ow" path="res://Utils/EnemySpawner/enemy_spawner.tscn" id="3_vhnjq"]
 [ext_resource type="PackedScene" uid="uid://car0c1s038da0" path="res://InteractiveObjects/Sign/sign.tscn" id="4_h3u5m"]
+[ext_resource type="PackedScene" uid="uid://duwx5lsc6sv8x" path="res://Utils/NpcMovement/npc_movement.tscn" id="5_bom7h"]
+[ext_resource type="PackedScene" uid="uid://cr5rvdarsgcs8" path="res://Actors/KnightNpc/knight_npc.tscn" id="6_ej5vj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0qq8t"]
 size = Vector2(88.744, 20)
@@ -50,7 +52,19 @@ position = Vector2(310, 516)
 text = "Esot es solamente una prueba del componente"
 scroll_active = true
 
+[node name="NpcMovement" parent="." instance=ExtResource("5_bom7h")]
+position = Vector2(735, 235)
+
+[node name="Path2D" parent="NpcMovement" index="0"]
+position = Vector2(19.0139, 197.273)
+
+[node name="PathFollow2D" parent="NpcMovement/Path2D" index="0"]
+rotates = false
+
+[node name="KnightNpc" parent="NpcMovement/Path2D/PathFollow2D" index="0" instance=ExtResource("6_ej5vj")]
+
 [editable path="ChangeMapArea"]
 [editable path="EnemySpawner"]
 [editable path="Sign"]
 [editable path="Sign/BalloonTextControl"]
+[editable path="NpcMovement"]
