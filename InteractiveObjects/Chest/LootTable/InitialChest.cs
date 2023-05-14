@@ -1,3 +1,6 @@
+/// <summary>
+/// Clase que genera un inventario para un cofre con una espada
+/// </summary>
 public partial class InitialChest : InventoryData
 {
     public InitialChest()

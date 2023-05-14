@@ -1,6 +1,6 @@
-using Godot;
-using System;
-
+/// <summary>
+/// Clase que genera un inventario para un cofre con una espada magica
+/// </summary>
 public partial class SecretChest : InventoryData
 {
     public SecretChest()

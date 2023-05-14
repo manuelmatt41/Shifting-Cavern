@@ -50,6 +50,9 @@ public partial class Goblin : CharacterBody2D
     [Export]
     public double ChangeDirectionTime { get; private set; } = 5;
 
+    /// <summary>
+    /// Objetos que puede soltar el <c>Goblin</c> al morir
+    /// </summary>
     public GoblinLootTable LootTable { get; set; } = new();
 
     /// <summary>
@@ -72,6 +75,9 @@ public partial class Goblin : CharacterBody2D
     /// </summary>
     public AnimationNodeStateMachinePlayback AnimationStateMachineTree { get; private set; }
 
+    /// <summary>
+    /// Area para detectar al <c>Player</c>
+    /// </summary>
     public WardArea WardArea { get; private set; }
 
     public LifeBarControl LifeBarControl { get; private set; }
@@ -196,6 +202,9 @@ public partial class Goblin : CharacterBody2D
         this.MoveAndSlide();
     }
 
+    /// <summary>
+    /// Escoge una direccion aleatoria dentro del <c>WardArea</c> para moverse a ese punto
+    /// </summary>
     private void PickNewDirection()
     {
         var halfWidth = (this.WardArea.AreaSize.X / 2);

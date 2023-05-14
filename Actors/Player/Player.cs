@@ -165,15 +165,27 @@ public partial class Player : CharacterBody2D
         }
     }
 
+    /// <summary>
+    /// Inicializa los parametros del <c>Player</c>
+    /// </summary>
+    /// <param name="playerResource"></param>
     public void Initialize(PlayerResource playerResource)
     {
         this.PlayerResource = playerResource;
 
-        this.HitBox.Damage = (
-            this.PlayerResource.EquipmentInventoryData.SlotDatas[0].ItemData as WeaponItemData
-        ).Damage;
+        if (this.PlayerResource.EquipmentInventoryData.SlotDatas[0] != null)
+        {
+            this.HitBox.Damage = (
+                this.PlayerResource.EquipmentInventoryData.SlotDatas[0].ItemData as WeaponItemData
+            ).Damage;
+        }
     }
 
+    /// <summary>
+    /// Posiciona los limites de la camera que sigue al jugador
+    /// </summary>
+    /// <param name="cameraLimitsStart">Donde se limita el inicio de la camara</param>
+    /// <param name="cameraLimitsEnd">Donde se limita el final de la camara</param>
     public void SetCameraLimits(Vector2I cameraLimitsStart, Vector2I cameraLimitsEnd)
     {
         this.Camera.LimitLeft = cameraLimitsStart.X;

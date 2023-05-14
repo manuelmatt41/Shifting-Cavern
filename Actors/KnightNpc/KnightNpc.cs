@@ -1,6 +1,8 @@
 using Godot;
-using System;
 
+/// <summary>
+/// Representa a la prueba de un Npc
+/// </summary>
 public partial class KnightNpc : CharacterBody2D
 {
     [Export]

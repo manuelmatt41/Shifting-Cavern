@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// Clase que inicializa los posibles objetos que puede soltar el Goblin
+/// </summary>
 public partial class GoblinLootTable : InventoryData
 {
     public GoblinLootTable()

@@ -31,8 +31,6 @@ position = Vector2(-10, -873)
 [connection signal="ChangeMap" from="TileMap/ChangeMapArea" to="." method="OnChangeChangeMap"]
 [connection signal="CreateEnemies" from="TileMap/EnemySpawner" to="." method="OnCreateEnemies"]
 [connection signal="ChangeMap" from="TestMap/ChangeMapArea" to="." method="OnChangeChangeMap"]
-[connection signal="OpenChestInventory" from="TestMap/TutoChest" to="." method="OnOpenChest"]
-[connection signal="OpenChestInventory" from="TestMap/SecretChest" to="." method="OnOpenChest"]
 
 [editable path="TileMap"]
 [editable path="TileMap/ChangeMapArea"]
